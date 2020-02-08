@@ -1,0 +1,61 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\Debug\</OutputPath>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\Release\</OutputPath>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectGuid>{DBB3A705-10A8-40C4-99BA-F5F50C8AB488}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.DirectX" />
+    <Reference Include="Microsoft.DirectX.Direct3D" />
+    <Reference Include="Microsoft.DirectX.Direct3DX" />
+    <Reference Include="mscorlib" />
+    <Reference Include="PluginSDK">
+      <HintPath>..\bin\Debug\PluginSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Utilities">
+      <HintPath>..\bin\Debug\Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="WorldWind">
+      <HintPath>..\bin\Debug\WorldWind.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <Compile Include="Multispectral\GeoPortal3D\Widgets\Compass.cs" />
+    <Compile Include="Multispectral\GeoPortal3D\OldWidgets\Form.cs" />
+    <Compile Include="Multispectral\GeoPortal3D\Plugins\*.cs" />
+    <Compile Include="Multispectral\GeoPortal3D\Widgets\Slider.cs" />
+    <Compile Include="Multispectral\GeoPortal3D\Widgets\SliderType.cs" />
+    <Compile Include="Multispectral\GeoPortal3D\OldWidgets\TextLabel.cs" />
+    <Compile Include="Multispectral\GeoPortal3D\OldWidgets\VisibleChangedHandler.cs" />
+  </ItemGroup>
+  <Import Condition="" Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(SolutionDir)\bin\Debug\Plugins\NavigationPanel\"
+copy $(TargetFileName) "$(SolutionDir)\bin\Debug\Plugins\NavigationPanel\"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
