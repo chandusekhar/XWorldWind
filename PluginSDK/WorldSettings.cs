@@ -5,7 +5,6 @@ using System.Drawing.Design;
 using System.Xml.Serialization;
 using SharpDX.Direct3D9;
 using WorldWind.Configuration;
-using WorldWind.Menu;
 
 namespace WorldWind
 {

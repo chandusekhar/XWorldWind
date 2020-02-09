@@ -47,7 +47,7 @@ namespace WorldWind.Widgets
 	/// <summary>
 	/// Base Interface for DirectX GUI Widgets
 	/// </summary>
-	public interface IWidget
+	public partial interface IWidget
 	{
 		#region Properties
 

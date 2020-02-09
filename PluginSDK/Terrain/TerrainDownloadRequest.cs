@@ -4,8 +4,6 @@ using System.IO;
 using System.Net;
 using System.Diagnostics;
 using System.Globalization;
-using WorldWind.Net;
-
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace WorldWind.Terrain

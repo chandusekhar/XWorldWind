@@ -1,9 +1,13 @@
 using System;
-using System.Drawing;
 using System.IO;
 using System.Threading;
+using SharpDX;
+using SharpDX.Direct3D9;
 using Utility;
 using WorldWind.Net;
+using WorldWind.Terrain;
+using Color = System.Drawing.Color;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace WorldWind
 {

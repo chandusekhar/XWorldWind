@@ -1,6 +1,5 @@
 using System;
 using SharpDX;
-using SharpDX.Direct3D9;
 
 
 namespace WorldWind.Renderable
@@ -9,29 +8,29 @@ namespace WorldWind.Renderable
     public class Bar3D : RenderableObject
     {
 
-        double m_distanceAboveSurface;
+        double m_distanceAboveSurface = 0;
 
-        double m_latitude;
+        double m_latitude = 0;
 
-        double m_longitude;
+        double m_longitude = 0;
 
-        double m_height;
+        double m_height = 0;
 
-        int m_color;
+        int m_color = 0;
 
         float m_currentVerticalExaggeration = World.Settings.VerticalExaggeration;
 
-        Point3d m_cartesianPoint;
+        Point3d m_cartesianPoint = null;
 
 
 
-        private bool m_useScaling;
+        private bool m_useScaling = false;
 
-        private double m_scalarMinimum;
+        private double m_scalarMinimum = 0;
 
         private double m_scalarMaximum = 1;
 
-        private double m_currentPercent;
+        private double m_currentPercent = 0;
 
         private double m_targetScalar = 1;
 
@@ -44,13 +43,14 @@ namespace WorldWind.Renderable
         public double Latitude
         {
 
-            get { return this.m_latitude; }
+            get { return m_latitude; }
 
             set
             {
-                this.m_latitude = value;
 
-                this.UpdateCartesianPoint();
+                m_latitude = value;
+
+                UpdateCartesianPoint();
 
             }
 
@@ -61,13 +61,14 @@ namespace WorldWind.Renderable
         public double Longitude
         {
 
-            get { return this.m_longitude; }
+            get { return m_longitude; }
 
             set
             {
-                this.m_longitude = value;
 
-                this.UpdateCartesianPoint();
+                m_longitude = value;
+
+                UpdateCartesianPoint();
 
             }
 
@@ -78,13 +79,14 @@ namespace WorldWind.Renderable
         public double DistanceAboveSurface
         {
 
-            get { return this.m_distanceAboveSurface; }
+            get { return m_distanceAboveSurface; }
 
             set
             {
-                this.m_distanceAboveSurface = value;
 
-                this.UpdateCartesianPoint();
+                m_distanceAboveSurface = value;
+
+                UpdateCartesianPoint();
 
             }
 
@@ -95,9 +97,9 @@ namespace WorldWind.Renderable
         public double Height
         {
 
-            get { return this.m_height; }
+            get { return m_height; }
 
-            set { this.m_height = value; }
+            set { m_height = value; }
 
         }
 
@@ -106,9 +108,9 @@ namespace WorldWind.Renderable
         public bool UseScaling
         {
 
-            get { return this.m_useScaling; }
+            get { return m_useScaling; }
 
-            set { this.m_useScaling = value; }
+            set { m_useScaling = value; }
 
         }
 
@@ -117,9 +119,9 @@ namespace WorldWind.Renderable
         public double ScalarMinimum
         {
 
-            get { return this.m_scalarMinimum; }
+            get { return m_scalarMinimum; }
 
-            set { this.m_scalarMinimum = value; }
+            set { m_scalarMinimum = value; }
 
         }
 
@@ -128,9 +130,9 @@ namespace WorldWind.Renderable
         public double ScalarMaximum
         {
 
-            get { return this.m_scalarMaximum; }
+            get { return m_scalarMaximum; }
 
-            set { this.m_scalarMaximum = value; }
+            set { m_scalarMaximum = value; }
 
         }
 
@@ -139,9 +141,9 @@ namespace WorldWind.Renderable
         public double ScalarValue
         {
 
-            get { return this.m_targetScalar; }
+            get { return m_targetScalar; }
 
-            set { this.m_targetScalar = value; }
+            set { m_targetScalar = value; }
 
         }
 
@@ -150,9 +152,9 @@ namespace WorldWind.Renderable
         public float ScaleX
         {
 
-            get { return this.m_scaleX; }
+            get { return m_scaleX; }
 
-            set { this.m_scaleX = value; }
+            set { m_scaleX = value; }
 
         }
 
@@ -161,9 +163,9 @@ namespace WorldWind.Renderable
         public float ScaleY
         {
 
-            get { return this.m_scaleY; }
+            get { return m_scaleY; }
 
-            set { this.m_scaleY = value; }
+            set { m_scaleY = value; }
 
         }
 
@@ -187,18 +189,20 @@ namespace WorldWind.Renderable
 
             : base(name, parentWorld)
         {
-            this.m_latitude = latitude;
 
-            this.m_longitude = longitude;
+            m_latitude = latitude;
 
-            this.m_distanceAboveSurface = distanceAboveSurface;
+            m_longitude = longitude;
 
-            this.m_height = height;
+            m_distanceAboveSurface = distanceAboveSurface;
 
-            this.m_color = color.ToArgb();
+            m_height = height;
+
+            m_color = color.ToArgb();
 
 
-            this.UpdateCartesianPoint();
+
+            UpdateCartesianPoint();
 
         }
 
@@ -206,12 +210,14 @@ namespace WorldWind.Renderable
 
         private void UpdateCartesianPoint()
         {
-            this.m_cartesianPoint = MathEngine.SphericalToCartesianD(
 
-                Angle.FromDegrees(this.m_latitude), Angle.FromDegrees(this.m_longitude), this.m_world.EquatorialRadius + this.m_distanceAboveSurface * World.Settings.VerticalExaggeration);
+            m_cartesianPoint = MathEngine.SphericalToCartesianD(
+
+                Angle.FromDegrees(m_latitude), Angle.FromDegrees(m_longitude), m_world.EquatorialRadius + m_distanceAboveSurface * World.Settings.VerticalExaggeration);
 
 
-            this.m_currentVerticalExaggeration = World.Settings.VerticalExaggeration;
+
+            m_currentVerticalExaggeration = World.Settings.VerticalExaggeration;
 
         }
 
@@ -219,7 +225,8 @@ namespace WorldWind.Renderable
 
         public override void Initialize(DrawArgs drawArgs)
         {
-            this.isInitialized = true;
+
+            isInitialized = true;
 
         }
 
@@ -228,7 +235,9 @@ namespace WorldWind.Renderable
         public override void Update(DrawArgs drawArgs)
         {
 
-            if (!this.isInitialized) this.Initialize(drawArgs);
+            if (!isInitialized)
+
+                Initialize(drawArgs);
 
         }
 
@@ -236,7 +245,8 @@ namespace WorldWind.Renderable
 
         public override void Render(DrawArgs drawArgs)
         {
-            this.RenderBar(drawArgs);
+
+            RenderBar(drawArgs);
 
 
 
@@ -262,23 +272,23 @@ namespace WorldWind.Renderable
 
 
 
-        public double RenderedHeight;
+        public double RenderedHeight = 0;
 
 
 
         private void RenderBar(DrawArgs drawArgs)
         {
 
-            bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
-            drawArgs.device.SetRenderState(RenderState.Lighting , false);
+            bool lighting = drawArgs.device.RenderState.Lighting;
+            drawArgs.device.RenderState.Lighting = false;
 
             Matrix translation = Matrix.Translation(
 
-                    (float)(this.m_cartesianPoint.X - drawArgs.WorldCamera.ReferenceCenter.X),
+                    (float)(m_cartesianPoint.X - drawArgs.WorldCamera.ReferenceCenter.X),
 
-                    (float)(this.m_cartesianPoint.Y - drawArgs.WorldCamera.ReferenceCenter.Y),
+                    (float)(m_cartesianPoint.Y - drawArgs.WorldCamera.ReferenceCenter.Y),
 
-                    (float)(this.m_cartesianPoint.Z - drawArgs.WorldCamera.ReferenceCenter.Z)
+                    (float)(m_cartesianPoint.Z - drawArgs.WorldCamera.ReferenceCenter.Z)
 
                         );
 
@@ -286,7 +296,7 @@ namespace WorldWind.Renderable
 
 
 
-            if (this.m_extrudeVertices == null)
+            if (m_extrudeVertices == null)
             {
 
                 CreateExtrude(drawArgs.device);
@@ -295,52 +305,56 @@ namespace WorldWind.Renderable
 
 
 
-            if (this.m_useScaling)
+            if (m_useScaling)
             {
 
-                double targetPercent = (this.m_targetScalar - this.m_scalarMinimum) / (this.m_scalarMaximum - this.m_scalarMinimum);
+                double targetPercent = (m_targetScalar - m_scalarMinimum) / (m_scalarMaximum - m_scalarMinimum);
 
-                if (this.m_currentPercent != targetPercent)
+                if (m_currentPercent != targetPercent)
                 {
 
-                    double delta = Math.Abs(targetPercent - this.m_currentPercent);
+                    double delta = Math.Abs(targetPercent - m_currentPercent);
 
                     delta *= 0.1;
 
-                    if (this.m_currentPercent < targetPercent)
-                        this.m_currentPercent += delta;
+                    if (m_currentPercent < targetPercent)
+
+                        m_currentPercent += delta;
 
                     else
-                        this.m_currentPercent -= delta;
+
+                        m_currentPercent -= delta;
 
                 }
 
 
 
-                if (this.getColor(this.m_currentPercent).ToArgb() != this.m_extrudeVertices[0].Color)
+                if (getColor(m_currentPercent).ToArgb() != m_extrudeVertices[0].Color)
                 {
-                    this.UpdateColor(this.m_currentPercent);
+
+                    UpdateColor(m_currentPercent);
 
                 }
 
-                this.RenderedHeight = this.m_currentPercent * World.Settings.VerticalExaggeration * this.m_height;
+                RenderedHeight = m_currentPercent * World.Settings.VerticalExaggeration * m_height;
 
-                drawArgs.device.SetTransform(TransformState.World, Matrix.Scaling(this.m_scaleX, this.m_scaleY, (float)-this.m_currentPercent * World.Settings.VerticalExaggeration * (float) this.m_height);
+                drawArgs.device.Transform.World = Matrix.Scaling(m_scaleX, m_scaleY, (float)-m_currentPercent * World.Settings.VerticalExaggeration * (float)m_height);
 
             }
 
             else
             {
 
-                if (this.m_color != this.m_extrudeVertices[0].Color)
+                if (m_color != m_extrudeVertices[0].Color)
                 {
-                    this.UpdateColor(this.m_color);
+
+                    UpdateColor(m_color);
 
                 }
 
-                this.RenderedHeight = this.m_height * World.Settings.VerticalExaggeration;
+                RenderedHeight = m_height * World.Settings.VerticalExaggeration;
 
-                drawArgs.device.SetTransform(TransformState.World, Matrix.Scaling(this.m_scaleX, this.m_scaleY, (float)-this.m_height * World.Settings.VerticalExaggeration);
+                drawArgs.device.Transform.World = Matrix.Scaling(m_scaleX, m_scaleY, (float)-m_height * World.Settings.VerticalExaggeration);
 
             }
 
@@ -348,9 +362,9 @@ namespace WorldWind.Renderable
 
             drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(90));
 
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude));
+            drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(m_latitude));
 
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude));
+            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(m_longitude));
 
             drawArgs.device.Transform.World *= translation;
 
@@ -358,19 +372,19 @@ namespace WorldWind.Renderable
 
             drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
 
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.SelectArg1);
+            drawArgs.device.TextureState[0].ColorOperation = TextureOperation.SelectArg1;
 
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
+            drawArgs.device.TextureState[0].ColorArgument1 = TextureArgument.Diffuse;
 
-            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse);
+            drawArgs.device.TextureState[0].AlphaArgument1 = TextureArgument.Diffuse;
 
-            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1);
+            drawArgs.device.TextureState[0].AlphaOperation = TextureOperation.SelectArg1;
 
-            drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.m_extrudeVertices.Length, this.m_extrudeIndices.Length / 3, this.m_extrudeIndices, true, this.m_extrudeVertices);
+            drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, m_extrudeVertices.Length, m_extrudeIndices.Length / 3, m_extrudeIndices, true, m_extrudeVertices);
 
-            drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.LineList, 0, this.m_outlineVertices.Length, this.m_outlineIndices.Length / 2, this.m_outlineIndices, true, this.m_outlineVertices);
+            drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.LineList, 0, m_outlineVertices.Length, m_outlineIndices.Length / 2, m_outlineIndices, true, m_outlineVertices);
 
-            drawArgs.device.SetRenderState(RenderState.Lighting , lighting);
+            drawArgs.device.RenderState.Lighting = lighting;
         }
 
 
@@ -461,9 +475,9 @@ namespace WorldWind.Renderable
         private void UpdateColor(double percent)
         {
 
-            int color = this.getColor(percent).ToArgb();
+            int color = getColor(percent).ToArgb();
 
-            this.UpdateColor(color);
+            UpdateColor(color);
 
         }
 
@@ -472,9 +486,10 @@ namespace WorldWind.Renderable
         private void UpdateColor(int color)
         {
 
-            for (int i = 0; i < this.m_extrudeVertices.Length; i++)
+            for (int i = 0; i < m_extrudeVertices.Length; i++)
             {
-                this.m_extrudeVertices[i].Color = color;
+
+                m_extrudeVertices[i].Color = color;
 
             }
 
@@ -482,66 +497,72 @@ namespace WorldWind.Renderable
 
 
 
-        short[] m_extrudeIndices;
+        short[] m_extrudeIndices = null;
 
-        CustomVertex.PositionColored[] m_extrudeVertices;
+        CustomVertex.PositionColored[] m_extrudeVertices = null;
 
 
 
-        short[] m_outlineIndices;
+        short[] m_outlineIndices = null;
 
-        CustomVertex.PositionColored[] m_outlineVertices;
+        CustomVertex.PositionColored[] m_outlineVertices = null;
 
 
 
         private void CreateExtrude(Device device)
         {
-            this.m_extrudeVertices = new CustomVertex.PositionColored[8];
 
-            this.m_outlineVertices = new CustomVertex.PositionColored[8];
+            m_extrudeVertices = new CustomVertex.PositionColored[8];
+
+            m_outlineVertices = new CustomVertex.PositionColored[8];
 
             int c = System.Drawing.Color.Red.ToArgb();
 
             int outline = System.Drawing.Color.DarkGray.ToArgb();
 
 
-            this.m_extrudeVertices[0] = new CustomVertex.PositionColored(-1, -1, 1, c);
 
-            this.m_extrudeVertices[1] = new CustomVertex.PositionColored(-1, 1, 1, c);
+            m_extrudeVertices[0] = new CustomVertex.PositionColored(-1, -1, 1, c);
 
-            this.m_extrudeVertices[2] = new CustomVertex.PositionColored(1, -1, 1, c);
+            m_extrudeVertices[1] = new CustomVertex.PositionColored(-1, 1, 1, c);
 
-            this.m_extrudeVertices[3] = new CustomVertex.PositionColored(1, 1, 1, c);
+            m_extrudeVertices[2] = new CustomVertex.PositionColored(1, -1, 1, c);
 
-
-            this.m_extrudeVertices[4] = new CustomVertex.PositionColored(-1, -1, 0, c);
-
-            this.m_extrudeVertices[5] = new CustomVertex.PositionColored(-1, 1, 0, c);
-
-            this.m_extrudeVertices[6] = new CustomVertex.PositionColored(1, -1, 0, c);
-
-            this.m_extrudeVertices[7] = new CustomVertex.PositionColored(1, 1, 0, c);
+            m_extrudeVertices[3] = new CustomVertex.PositionColored(1, 1, 1, c);
 
 
-            this.m_outlineVertices[0] = new CustomVertex.PositionColored(-1, -1, 1, outline);
 
-            this.m_outlineVertices[1] = new CustomVertex.PositionColored(-1, 1, 1, outline);
+            m_extrudeVertices[4] = new CustomVertex.PositionColored(-1, -1, 0, c);
 
-            this.m_outlineVertices[2] = new CustomVertex.PositionColored(1, -1, 1, outline);
+            m_extrudeVertices[5] = new CustomVertex.PositionColored(-1, 1, 0, c);
 
-            this.m_outlineVertices[3] = new CustomVertex.PositionColored(1, 1, 1, outline);
+            m_extrudeVertices[6] = new CustomVertex.PositionColored(1, -1, 0, c);
 
-
-            this.m_outlineVertices[4] = new CustomVertex.PositionColored(-1, -1, 0, outline);
-
-            this.m_outlineVertices[5] = new CustomVertex.PositionColored(-1, 1, 0, outline);
-
-            this.m_outlineVertices[6] = new CustomVertex.PositionColored(1, -1, 0, outline);
-
-            this.m_outlineVertices[7] = new CustomVertex.PositionColored(1, 1, 0, outline);
+            m_extrudeVertices[7] = new CustomVertex.PositionColored(1, 1, 0, c);
 
 
-            this.m_extrudeIndices = new short[] {
+
+            m_outlineVertices[0] = new CustomVertex.PositionColored(-1, -1, 1, outline);
+
+            m_outlineVertices[1] = new CustomVertex.PositionColored(-1, 1, 1, outline);
+
+            m_outlineVertices[2] = new CustomVertex.PositionColored(1, -1, 1, outline);
+
+            m_outlineVertices[3] = new CustomVertex.PositionColored(1, 1, 1, outline);
+
+
+
+            m_outlineVertices[4] = new CustomVertex.PositionColored(-1, -1, 0, outline);
+
+            m_outlineVertices[5] = new CustomVertex.PositionColored(-1, 1, 0, outline);
+
+            m_outlineVertices[6] = new CustomVertex.PositionColored(1, -1, 0, outline);
+
+            m_outlineVertices[7] = new CustomVertex.PositionColored(1, 1, 0, outline);
+
+
+
+            m_extrudeIndices = new short[] {
  
                 // top face
  
@@ -582,7 +603,8 @@ namespace WorldWind.Renderable
             };
 
 
-            this.m_outlineIndices = new short[] {
+
+            m_outlineIndices = new short[] {
  
                 0,1, 1,3, 3,2, 2,0,
  

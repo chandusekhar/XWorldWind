@@ -47,7 +47,7 @@ namespace WorldWind.Widgets
 	/// <summary>
 	/// Collection of IWidgets
 	/// </summary>
-	public interface IWidgetCollection
+	public partial interface IWidgetCollection
 	{
 		#region Methods
 		void BringToFront(int index);

@@ -1171,18 +1171,18 @@ namespace WorldWind
                     param = (EffectHandle) this.QuadTileSet.EffectParameters["WorldViewProj"];
                     if (param != null)
                         effect.SetValue(param,
-                                        Matrix.Multiply(device.Transform.World,
-                                                        Matrix.Multiply(device.Transform.View,
-                                                                        device.Transform.Projection)));
+                                        Matrix.Multiply(device.SetTransform(TransformState.World,
+                                                        Matrix.Multiply(device.SetTransform(TransformState.View,
+                                                                        device.SetTransform(TransformState.Projection)));
                     try
                     {
                         param = (EffectHandle) this.QuadTileSet.EffectParameters["World"];
                         if (param != null)
-                            effect.SetValue(param, device.Transform.World);
+                            effect.SetValue(param, device.SetTransform(TransformState.World);
                         param = (EffectHandle) this.QuadTileSet.EffectParameters["ViewInverse"];
                         if (param != null)
                         {
-                            Matrix viewInv = Matrix.Invert(device.Transform.View);
+                            Matrix viewInv = Matrix.Invert(device.SetTransform(TransformState.View);
                             effect.SetValue(param, viewInv);
                         }
 
@@ -1262,7 +1262,7 @@ namespace WorldWind
                             Point3d localFrameOrigin = northHalf + eastHalf - centerPoint - this.localOrigin;
                             Vector4 lfoW = localFrameOrigin.Vector4;
                             lfoW.W = 1;
-                            lfoW.Transform(device.Transform.World);
+                            lfoW.Transform(device.SetTransform(TransformState.World);
                             effect.SetValue(param, localFrameOrigin.Vector4);
 
                             param = (EffectHandle) this.QuadTileSet.EffectParameters["LocalFrameXAxis"];
@@ -1343,9 +1343,9 @@ namespace WorldWind
 
                     grayscaleEffect.Technique = "RenderGrayscaleBrightness";
                     grayscaleEffect.SetValue("WorldViewProj",
-                                             Matrix.Multiply(device.Transform.World,
-                                                             Matrix.Multiply(device.Transform.View,
-                                                                             device.Transform.Projection)));
+                                             Matrix.Multiply(device.SetTransform(TransformState.World,
+                                                             Matrix.Multiply(device.SetTransform(TransformState.View,
+                                                                             device.SetTransform(TransformState.Projection)));
                     grayscaleEffect.SetValue("Tex0", this.textures[0]);
                     grayscaleEffect.SetValue("Brightness", this.QuadTileSet.GrayscaleBrightness);
                     float opacity = (float) this.QuadTileSet.Opacity/255.0f;

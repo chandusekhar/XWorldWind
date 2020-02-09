@@ -1,7 +1,5 @@
 using System;
 using System.Diagnostics;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using Utility;
 using System.Windows.Forms;
 

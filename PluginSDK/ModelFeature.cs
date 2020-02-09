@@ -264,7 +264,7 @@ namespace WorldWind
             }
 
             // save current state
-            Matrix currentWorld = drawArgs.device.Transform.World;
+            Matrix currentWorld = drawArgs.device.SetTransform(TransformState.World;
             Cull cullMode , drawArgs.device.SetRenderState(RenderState.CullMode);
             bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
             int ambientColor , drawArgs.device.SetRenderState(RenderState.AmbientColor);
@@ -295,21 +295,21 @@ namespace WorldWind
                 (float) this.worldXyz.Z * 1.5f);
 
             drawArgs.device.SetTransform(TransformState.World, Matrix.RotationX((float)MathEngine.DegreesToRadians(this.RotX));
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(this.RotY));
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotZ));
-            drawArgs.device.Transform.World *= Matrix.Scaling(this.Scale, this.Scale, this.Scale);
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(this.RotY));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotZ));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Scaling(this.Scale, this.Scale, this.Scale);
 
             // Move the mesh to desired location on earth
             if (this.IsVertExaggerable == true)
                 this.vertExaggeration = World.Settings.VerticalExaggeration;
             else
                 this.vertExaggeration = 1;
-            drawArgs.device.Transform.World *= Matrix.Translation(0, 0, (float)(drawArgs.WorldCamera.WorldRadius + ((this.currentElevation + this.Altitude) * this.vertExaggeration)));
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(90 - this.Latitude));
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.Longitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(0, 0, (float)(drawArgs.WorldCamera.WorldRadius + ((this.currentElevation + this.Altitude) * this.vertExaggeration)));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(90 - this.Latitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.Longitude));
 
 
-            drawArgs.device.Transform.World *= Matrix.Translation(
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(
                 (float)-drawArgs.WorldCamera.ReferenceCenter.X,
                 (float)-drawArgs.WorldCamera.ReferenceCenter.Y,
                 (float)-drawArgs.WorldCamera.ReferenceCenter.Z
@@ -743,7 +743,7 @@ namespace WorldWind
         {
             // Note: The following assignment to m is
             // to match the assignment to 
-            // drawArgs.device.Transform.World in Render().
+            // drawArgs.device.SetTransform(TransformState.World in Render().
             // Changes to that matrix should be mirrored here
             // until the assignment is centralized.
 

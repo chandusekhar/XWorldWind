@@ -149,7 +149,7 @@ namespace WorldWind
             PresentParameters presentParameters = new PresentParameters();
             presentParameters.Windowed = true;
             presentParameters.SwapEffect = SwapEffect.Discard;
-            presentParameters.AutoDepthStencilFormat = DepthFormat.D16;
+            presentParameters.AutoDepthStencilFormat =Format.D16;
             presentParameters.EnableAutoDepthStencil = true;
 
             this.m_ReferenceForm = new System.Windows.Forms.Control("Reference", 0, 0, 1, 1);
@@ -170,7 +170,7 @@ namespace WorldWind
 
             CreateFlags flags = CreateFlags.SoftwareVertexProcessing;
 
-            flags |= CreateFlags.MultiThreaded | CreateFlags.FpuPreserve;
+            flags |= CreateFlags.Multithreaded | CreateFlags.FpuPreserve;
         }
 
         private void OnDeviceReset(object sender, EventArgs e)

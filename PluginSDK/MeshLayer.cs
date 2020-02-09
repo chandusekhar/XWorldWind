@@ -95,15 +95,15 @@ namespace WorldWind
 			drawArgs.device.Lights[0].Enabled = true ; 
 
 			drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
-			drawArgs.device.SetTransform(TransformState.World, Matrix.Identity;
-			drawArgs.device.Transform.World *= Matrix.Scaling(this.scaleFactor, this.scaleFactor, this.scaleFactor);
-			//drawArgs.device.Transform.World *= Matrix.RotationX(MathEngine.RadiansToDegrees(90));
-			drawArgs.device.Transform.World *= Matrix.Translation(0,0,-this.layerRadius);
+			drawArgs.device.SetTransform(TransformState.World, Matrix.Identity);
+			drawArgs.device.SetTransform(TransformState.World *= Matrix.Scaling(this.scaleFactor, this.scaleFactor, this.scaleFactor);
+			//drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationX(MathEngine.RadiansToDegrees(90));
+			drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(0,0,-this.layerRadius);
 			
-			drawArgs.device.Transform.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(90-this.lat));
-			drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(180+this.lon));
+			drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(90-this.lat));
+			drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(180+this.lon));
 			
-			//drawArgs.device.Transform.World *= Matrix.RotationQuaternion(drawArgs.WorldCamera.CurrentOrientation);
+			//drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationQuaternion(drawArgs.WorldCamera.CurrentOrientation);
 		
 			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			drawArgs.device.SetRenderState(RenderState.NormalizeNormals , true);

@@ -262,10 +262,10 @@ namespace WorldWind.Renderable
                 HighlightTexture = ImageHelper.LoadTexture(this.highlightTexturePath);
 
             drawArgs.device.SetTransform(TransformState.World, Matrix.RotationY((float)MathEngine.DegreesToRadians(90));
-            drawArgs.device.Transform.World *= Matrix.Scaling(World.Settings.VerticalExaggeration * this.ScaleX,
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Scaling(World.Settings.VerticalExaggeration * this.ScaleX,
                 World.Settings.VerticalExaggeration * this.ScaleY, World.Settings.VerticalExaggeration * this.ScaleZ);
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude));
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude));
 
             Vector3 surfacePos = MathEngine.SphericalToCartesian(this.m_latitude, this.m_longitude, this.World.EquatorialRadius);
 
@@ -275,7 +275,7 @@ namespace WorldWind.Renderable
                 (float)drawArgs.WorldCamera.ReferenceCenter.Z
                 );
 
-            drawArgs.device.Transform.World *= Matrix.Translation(surfacePos - rc);
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(surfacePos - rc);
             drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
             drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
             drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor);
@@ -398,10 +398,10 @@ namespace WorldWind.Renderable
 
             drawArgs.device.SetTransform(TransformState.World, Matrix.Scaling(World.Settings.VerticalExaggeration * this.ScaleX * 0.01f, 
                 World.Settings.VerticalExaggeration * this.ScaleY * 0.01f, -World.Settings.VerticalExaggeration * 2 * this.ScaleZ);
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(90));
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude));
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude));
-            drawArgs.device.Transform.World *= Matrix.Translation(surfacePos - rc);
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(90));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(surfacePos - rc);
 
             drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
             drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
@@ -426,12 +426,12 @@ namespace WorldWind.Renderable
 
             drawArgs.device.SetTransform(TransformState.World, Matrix.Scaling(World.Settings.VerticalExaggeration * this.ScaleX, 
                 World.Settings.VerticalExaggeration * this.ScaleY, World.Settings.VerticalExaggeration * this.ScaleZ);
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude));
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude));
-            drawArgs.device.Transform.World *= Matrix.Translation(pos - rc);
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(pos - rc);
 
-            Matrix worldViewProj = drawArgs.device.Transform.World * 
-                drawArgs.device.Transform.View * drawArgs.device.Transform.Projection;
+            Matrix worldViewProj = drawArgs.device.SetTransform(TransformState.World * 
+                drawArgs.device.SetTransform(TransformState.View * drawArgs.device.SetTransform(TransformState.Projection;
 
             DateTime currentTime = TimeKeeper.CurrentTimeUtc;
             Point3d sunPosition = SunCalculator.GetGeocentricPosition(currentTime);
@@ -444,9 +444,9 @@ namespace WorldWind.Renderable
             m_effect.Technique = "VertexAndPixelShader";
             m_effect.SetValue("angle", (float) this.m_angle);
             m_effect.SetValue("attentuation", this.Attentuation);
-            m_effect.SetValue("World", drawArgs.device.Transform.World);
-            m_effect.SetValue("View", drawArgs.device.Transform.View);
-            m_effect.SetValue("Projection", drawArgs.device.Transform.Projection);
+            m_effect.SetValue("World", drawArgs.device.SetTransform(TransformState.World);
+            m_effect.SetValue("View", drawArgs.device.SetTransform(TransformState.View);
+            m_effect.SetValue("Projection", drawArgs.device.SetTransform(TransformState.Projection);
             m_effect.SetValue("Tex0", this.m_texture);
             m_effect.SetValue("lightDir", new Vector4(sunVector.X, sunVector.Y, sunVector.Z, 0));
 
@@ -466,7 +466,7 @@ namespace WorldWind.Renderable
             m_effect.End();
             drawArgs.device.Indices = null;
             drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
-            drawArgs.device.Transform.View = drawArgs.WorldCamera.ViewMatrix;
+            drawArgs.device.SetTransform(TransformState.View = drawArgs.WorldCamera.ViewMatrix;
         }
 
         private void CreateFlagPole(Device device)

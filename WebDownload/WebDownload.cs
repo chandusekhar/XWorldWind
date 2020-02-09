@@ -3,11 +3,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Net;
 using System.IO;
-using System.IO.Compression;
 using System.Threading;
 using System.Xml;
 using Utility;
-using WorldWind;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 

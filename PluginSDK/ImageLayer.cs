@@ -752,7 +752,7 @@ namespace WorldWind
                     }
 
                     grayscaleEffect.Technique = "RenderGrayscaleBrightness";
-                    grayscaleEffect.SetValue("WorldViewProj", Matrix.Multiply(this.device.Transform.World, Matrix.Multiply(this.device.Transform.View, this.device.Transform.Projection)));
+                    grayscaleEffect.SetValue("WorldViewProj", Matrix.Multiply(this.device.SetTransform(TransformState.World, Matrix.Multiply(this.device.SetTransform(TransformState.View, this.device.SetTransform(TransformState.Projection)));
                     grayscaleEffect.SetValue("Tex0", this.texture);
                     grayscaleEffect.SetValue("Brightness", this.GrayscaleBrightness);
                     float opacity = (float) this.m_opacity / 255.0f;
@@ -825,7 +825,7 @@ namespace WorldWind
 				MathEngine.SphericalDistanceDegrees(centerLat, centerLon, drawArgs.WorldCamera.Latitude.Degrees, drawArgs.WorldCamera.Longitude.Degrees) < 2 * drawArgs.WorldCamera.ViewRange.Degrees
 				)
 			{
-				v.Project(drawArgs.device.Viewport, drawArgs.device.Transform.Projection, drawArgs.device.Transform.View, drawArgs.device.Transform.World);
+				v.Project(drawArgs.device.Viewport, drawArgs.device.SetTransform(TransformState.Projection, drawArgs.device.SetTransform(TransformState.View, drawArgs.device.SetTransform(TransformState.World);
 
 				MenuUtils.DrawBox((int)v.X, (int)v.Y, 200, 40, 0.0f, this.progressBarBackColor, drawArgs.device);
 				Vector2[] boxOutline = new Vector2[5];

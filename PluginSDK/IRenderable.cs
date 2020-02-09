@@ -1,5 +1,4 @@
 using System;
-using WorldWind;
 
 namespace WorldWind
 {

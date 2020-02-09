@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Rss;
 using System.ComponentModel;
 using System.Windows.Forms;
 using WorldWind.Renderable;

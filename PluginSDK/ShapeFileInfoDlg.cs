@@ -1,11 +1,6 @@
-using System;
 using System.IO;
 using System.Data;
 using System.Data.Odbc;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace WorldWind

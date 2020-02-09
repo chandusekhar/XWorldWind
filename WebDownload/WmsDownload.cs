@@ -1,5 +1,3 @@
-using System;
-
 namespace WorldWind.Net
 {
 	public class WMSDownload

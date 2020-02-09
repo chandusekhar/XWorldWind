@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Rss;
-using System.Threading;
 using WorldWind.Renderable;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;

@@ -1,6 +1,10 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
+using SharpDX;
+using SharpDX.Direct3D9;
+using Color = System.Drawing.Color;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace WorldWind.Menu
 {

@@ -1,6 +1,6 @@
 //========================= (UNCLASSIFIED) ==============================
 // Copyright © 2005-2006 The Johns Hopkins University /
-// Applied Physics Laboratory.SetSamplerState(0, SamplerState  All rights reserved.SetSamplerState(0, SamplerState
+// Applied Physics Laboratory.  All rights reserved.
 //
 // WorldWind Source Code - Copyright 2005 NASA World Wind 
 // Modified under the NOSA License
@@ -9,11 +9,11 @@
 //
 // LICENSE AND DISCLAIMER 
 //
-// Copyright (c) 2006 The Johns Hopkins University.SetSamplerState(0, SamplerState 
+// Copyright (c) 2006 The Johns Hopkins University. 
 //
 // This software was developed at The Johns Hopkins University/Applied 
 // Physics Laboratory (“JHU/APL”) that is the author thereof under the 
-// “work made for hire” provisions of the copyright law.SetSamplerState(0, SamplerState  Permission is 
+// “work made for hire” provisions of the copyright law.  Permission is 
 // hereby granted, free of charge, to any person obtaining a copy of this 
 // software and associated documentation (the “Software”), to use the 
 // Software without restriction, including without limitation the rights 
@@ -21,38 +21,37 @@
 // copies of the Software, and to permit others to do so, subject to the 
 // following conditions: 
 //
-// 1.SetSamplerState(0, SamplerState  This LICENSE AND DISCLAIMER, including the copyright notice, shall 
+// 1.  This LICENSE AND DISCLAIMER, including the copyright notice, shall 
 //     be included in all copies of the Software, including copies of 
 //     substantial portions of the Software; 
 //
-// 2.SetSamplerState(0, SamplerState  JHU/APL assumes no obligation to provide support of any kind with 
-//     regard to the Software.SetSamplerState(0, SamplerState  This includes no obligation to provide 
+// 2.  JHU/APL assumes no obligation to provide support of any kind with 
+//     regard to the Software.  This includes no obligation to provide 
 //     assistance in using the Software nor to provide updated versions of 
 //     the Software; and 
 //
-// 3.SetSamplerState(0, SamplerState  THE SOFTWARE AND ITS DOCUMENTATION ARE PROVIDED AS IS AND WITHOUT 
-//     ANY EXPRESS OR IMPLIED WARRANTIES WHATSOEVER.SetSamplerState(0, SamplerState  ALL WARRANTIES 
+// 3.  THE SOFTWARE AND ITS DOCUMENTATION ARE PROVIDED AS IS AND WITHOUT 
+//     ANY EXPRESS OR IMPLIED WARRANTIES WHATSOEVER.  ALL WARRANTIES 
 //     INCLUDING, BUT NOT LIMITED TO, PERFORMANCE, MERCHANTABILITY, FITNESS
-//     FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT ARE HEREBY DISCLAIMED.SetSamplerState(0, SamplerState  
-//     USERS ASSUME THE ENTIRE RISK AND LIABILITY OF USING THE SOFTWARE.SetSamplerState(0, SamplerState  
+//     FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT ARE HEREBY DISCLAIMED.  
+//     USERS ASSUME THE ENTIRE RISK AND LIABILITY OF USING THE SOFTWARE.  
 //     USERS ARE ADVISED TO TEST THE SOFTWARE THOROUGHLY BEFORE RELYING ON 
-//     IT.SetSamplerState(0, SamplerState  IN NO EVENT SHALL THE JOHNS HOPKINS UNIVERSITY BE LIABLE FOR 
+//     IT.  IN NO EVENT SHALL THE JOHNS HOPKINS UNIVERSITY BE LIABLE FOR 
 //     ANY DAMAGES WHATSOEVER, INCLUDING, WITHOUT LIMITATION, ANY LOST 
 //     PROFITS, LOST SAVINGS OR OTHER INCIDENTAL OR CONSEQUENTIAL DAMAGES, 
-//     ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE.SetSamplerState(0, SamplerState 
+//     ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE. 
 //
-
 using System;
 
-namespace WorldWind.Widgets(0, SamplerStateNewWidgets
+namespace WorldWind.NewWidgets
 {
 	/// <summary>
-	/// Summary description for JHU_Enums.SetSamplerState(0, SamplerState
+	/// Summary description for JHU_Enums.
 	/// </summary>
 	public class WidgetEnums
 	{
 		/// <summary>
-		/// Widget Anchor Styles.SetSamplerState(0, SamplerState  Same values as Forms AnchorStyles
+		/// Widget Anchor Styles.  Same values as Forms AnchorStyles
 		/// </summary>
 		[Flags]
 		public enum AnchorStyles

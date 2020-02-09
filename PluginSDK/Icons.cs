@@ -1,21 +1,20 @@
 //
-// Copyright ï¿½ 2005 NASA. Available under the NOSA License
+// Copyright © 2005 NASA. Available under the NOSA License
 //
-// Portions copied from JHU_Icons - Copyright ï¿½ 2005-2006 The Johns Hopkins University 
+// Portions copied from JHU_Icons - Copyright © 2005-2006 The Johns Hopkins University 
 // Applied Physics Laboratory.  Available under the JHU/APL Open Source Agreement.
 //
-
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
+using Utility;
 using System.Threading;
 using SharpDX;
 using SharpDX.Direct3D9;
-using Utility;
 using Color = System.Drawing.Color;
 using Rectangle = System.Drawing.Rectangle;
 
-namespace WorldWind
+namespace WorldWind.Renderable
 {
     /// <summary>
     /// Holds a collection of icons
@@ -75,8 +74,8 @@ namespace WorldWind
         /// </summary>
         public DateTime EarliestTime
         {
-            get { return this.m_earlisettime; }
-            set { this.m_earlisettime = value; }
+            get { return m_earlisettime; }
+            set { m_earlisettime = value; }
         }
 
         /// <summary>
@@ -84,24 +83,24 @@ namespace WorldWind
         /// </summary>
         public DateTime LatestTime
         {
-            get { return this.m_latesttime; }
-            set { this.m_latesttime = value; }
+            get { return m_latesttime; }
+            set { m_latesttime = value; }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref= "T:WorldWind.Icons"/> class 
+        /// Initializes a new instance of the <see cref= "T:WorldWind.Renderable.Icons"/> class 
         /// </summary>
         /// <param name="name">The name of the icons layer</param>
         public Icons(string name)
             : base(name)
         {
-            this.m_mouseOver = true;
-            this.isInitialized = false;
-            this.isSelectable = true;
+            m_mouseOver = true;
+            isInitialized = false;
+            isSelectable = true;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref= "T:WorldWind.Icons"/> class 
+        /// Initializes a new instance of the <see cref= "T:WorldWind.Renderable.Icons"/> class 
         /// Sets up refresh of this layer from a data source.
         /// </summary>
         /// <param name="name"></param>
@@ -116,9 +115,9 @@ namespace WorldWind
             Cache cache)
             : base(name, dataSource, refreshInterval, parentWorld, cache)
         {
-            this.m_mouseOver = true;
-            this.isInitialized = false;
-            this.isSelectable = true;
+            m_mouseOver = true;
+            isInitialized = false;
+            isSelectable = true;
         }
 
         /// <summary>
@@ -128,7 +127,7 @@ namespace WorldWind
         [Obsolete]
         public virtual void AddIcon(Icon icon)
         {
-            this.Add(icon);
+            Add(icon);
         }
 
         #region RenderableObject methods
@@ -146,42 +145,42 @@ namespace WorldWind
 
         public override void Initialize(DrawArgs drawArgs)
         {
-            if (!this.isOn)
+            if (!isOn)
                 return;
 
-            TimeSpan smallestRefreshInterval = TimeSpan.MaxValue;
+            System.TimeSpan smallestRefreshInterval = System.TimeSpan.MaxValue;
 
-            if (!this.isInitialized)
+            if (!isInitialized)
             {
-                if (this.m_sprite != null)
+                if (m_sprite != null)
                 {
-                    this.m_sprite.Dispose();
-                    this.m_sprite = null;
+                    m_sprite.Dispose();
+                    m_sprite = null;
                 }
 
                 // init Icons layer
-                this.m_sprite = new Sprite(drawArgs.device);
+                m_sprite = new Sprite(drawArgs.device);
 
                 string textureFilePath = Path.Combine(Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), @"Data\Icons\sol_wh.gif");
 
-                this.m_pointTexture = new IconTexture(drawArgs.device, textureFilePath);
+                m_pointTexture = new IconTexture(drawArgs.device, textureFilePath);
 
                             // if the device can't do point sprites don't use them
-                if (drawArgs.device.Capabilities.MaxPointSize == 1)
+                if (drawArgs.device.DeviceCaps.MaxPointSize == 1)
                 {
-                    this.m_canUsePointSprites = false;
+                    m_canUsePointSprites = false;
                 }
                 else
                 {
-                    this.m_canUsePointSprites = true;
+                    m_canUsePointSprites = true;
                 }
             }
 
             // figure out refresh period
-            this.m_childrenRWLock.AcquireReaderLock(Timeout.Infinite);
+            m_childrenRWLock.AcquireReaderLock(Timeout.Infinite);
             try
             {
-                foreach (RenderableObject ro in this.m_children)
+                foreach (RenderableObject ro in m_children)
                 {
                     Icon icon = ro as Icon;
                     if (icon != null)
@@ -193,18 +192,18 @@ namespace WorldWind
             }
             finally
             {
-                this.m_childrenRWLock.ReleaseReaderLock();
+                m_childrenRWLock.ReleaseReaderLock();
             }
 
 
-            if (this.refreshTimer == null && smallestRefreshInterval != TimeSpan.MaxValue)
+            if (refreshTimer == null && smallestRefreshInterval != TimeSpan.MaxValue)
             {
-                this.refreshTimer = new System.Timers.Timer(smallestRefreshInterval.TotalMilliseconds);
-                this.refreshTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.refreshTimer_Elapsed);
-                this.refreshTimer.Start();
+                refreshTimer = new System.Timers.Timer(smallestRefreshInterval.TotalMilliseconds);
+                refreshTimer.Elapsed += new System.Timers.ElapsedEventHandler(refreshTimer_Elapsed);
+                refreshTimer.Start();
             }
 
-            this.isInitialized = true;
+            isInitialized = true;
         }
 
         public override void Dispose()
@@ -236,22 +235,22 @@ namespace WorldWind
                     }
                 }
 
-                if (this.m_sprite != null)
+                if (m_sprite != null)
                 {
-                    this.m_sprite.Dispose();
-                    this.m_sprite = null;
+                    m_sprite.Dispose();
+                    m_sprite = null;
                 }
 
-                if (this.refreshTimer != null)
+                if (refreshTimer != null)
                 {
-                    this.refreshTimer.Stop();
-                    this.refreshTimer.Dispose();
-                    this.refreshTimer = null;
+                    refreshTimer.Stop();
+                    refreshTimer.Dispose();
+                    refreshTimer = null;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message.ToString());
+                System.Console.WriteLine(ex.Message.ToString());
             }
         }
 
@@ -261,15 +260,15 @@ namespace WorldWind
             Icon closestIcon = null;
 
             //Respect icon set temporal extents
-            if (TimeKeeper.CurrentTimeUtc < this.EarliestTime || TimeKeeper.CurrentTimeUtc > this.LatestTime)
+            if (TimeKeeper.CurrentTimeUtc < EarliestTime || TimeKeeper.CurrentTimeUtc > LatestTime)
             {
                 return false;
             }
 
-            this.m_childrenRWLock.AcquireReaderLock(Timeout.Infinite);
+            m_childrenRWLock.AcquireReaderLock(Timeout.Infinite);
             try
             {
-                foreach (RenderableObject ro in this.m_children)
+                foreach (RenderableObject ro in m_children)
                 {
                     if (!ro.IsOn)
                         continue;
@@ -297,7 +296,7 @@ namespace WorldWind
                                 (float)drawArgs.WorldCamera.ReferenceCenter.Y,
                                 (float)drawArgs.WorldCamera.ReferenceCenter.Z);
 
-                            Vector3 projectedPoint = drawArgs.WorldCamera.Project(Vector3.Subtract(icon.Position, referenceCenter));
+                            Vector3 projectedPoint = drawArgs.WorldCamera.Project(icon.Position - referenceCenter);
 
                             int dx = DrawArgs.LastMousePosition.X - (int)projectedPoint.X;
                             int dy = DrawArgs.LastMousePosition.Y - (int)projectedPoint.Y;
@@ -318,7 +317,7 @@ namespace WorldWind
             }
             finally
             {
-                this.m_childrenRWLock.ReleaseReaderLock();
+                m_childrenRWLock.ReleaseReaderLock();
             }
 
 
@@ -346,15 +345,15 @@ namespace WorldWind
         public override void RenderChildren(DrawArgs drawArgs, RenderPriority priority)
         {
             //Respect icon set temporal extents
-            if (TimeKeeper.CurrentTimeUtc < this.EarliestTime || TimeKeeper.CurrentTimeUtc > this.LatestTime)
+            if (TimeKeeper.CurrentTimeUtc < EarliestTime || TimeKeeper.CurrentTimeUtc > LatestTime)
             {
                 return;
             }
 
-            if (!this.isOn)
+            if (!isOn)
                 return;
 
-            if (!this.isInitialized)
+            if (!isInitialized)
                 return;
 
             if (priority != RenderPriority.Icons)
@@ -363,14 +362,15 @@ namespace WorldWind
             // render ourselves
             this.Render(drawArgs);
 
-            if (this.m_canUsePointSprites) this.pointSprites.Clear();
+            if (m_canUsePointSprites)
+                pointSprites.Clear();
 
             // First render everything except icons - we need to do this twice since the other loop is INSIDE the
             // sprite.begin which can mess up the rendering of other ROs.  This is why prerender is in this loop.
-            this.m_childrenRWLock.AcquireReaderLock(Timeout.Infinite);
+            m_childrenRWLock.AcquireReaderLock(Timeout.Infinite);
             try
             {
-                foreach (RenderableObject ro in this.m_children)
+                foreach (RenderableObject ro in m_children)
                 {
                     if (!ro.IsOn)
                         continue;
@@ -387,7 +387,7 @@ namespace WorldWind
                         // do PreRender regardless of everything else
                         // note that mouseover actions happen one render cycle after mouse is over icon
 
-                        icon.PreRender(drawArgs, (this.mouseOverIcon != null) && (icon == this.mouseOverIcon));
+                        icon.PreRender(drawArgs, (mouseOverIcon != null) && (icon == mouseOverIcon));
                     }
                     else if (ro is RenderableObjectList)
                     {
@@ -413,10 +413,10 @@ namespace WorldWind
             }
             finally
             {
-                this.m_childrenRWLock.ReleaseReaderLock();
+                m_childrenRWLock.ReleaseReaderLock();
             }
 
-            this.m_labelRectangles.Clear();
+            m_labelRectangles.Clear();
 
             int closestIconDistanceSquared = int.MaxValue;
             Icon closestIcon = null;
@@ -425,13 +425,13 @@ namespace WorldWind
             {
                 try
                 {
-                    this.m_sprite.Begin(SpriteFlags.AlphaBlend);
+                    m_sprite.Begin(SpriteFlags.AlphaBlend);
 
                     // Now render just the icons
-                    this.m_childrenRWLock.AcquireReaderLock(Timeout.Infinite);
+                    m_childrenRWLock.AcquireReaderLock(Timeout.Infinite);
                     try
                     {
-                        foreach (RenderableObject ro in this.m_children)
+                        foreach (RenderableObject ro in m_children)
                         {
                             if (!ro.IsOn)
                                 continue;
@@ -469,13 +469,13 @@ namespace WorldWind
                                 // mouseover is always one render cycle behind...we mark that an icon is the mouseover
                                 // icon and render it normally.  On the NEXT pass it renders as a mouseover icon
 
-                                if (icon != this.mouseOverIcon)
+                                if (icon != mouseOverIcon)
                                 {
                                     // Note: Always render hooked icons as a real icon rather than a sprite.
-                                    if (icon.UsePointSprite && (icon.DistanceToIcon > icon.PointSpriteDistance) && this.m_canUsePointSprites && !icon.IsHooked)
+                                    if (icon.UsePointSprite && (icon.DistanceToIcon > icon.PointSpriteDistance) && m_canUsePointSprites && !icon.IsHooked)
                                     {
                                         PointSpriteVertex pv = new PointSpriteVertex(translationVector.X, translationVector.Y, translationVector.Z, icon.PointSpriteSize, icon.PointSpriteColor.ToArgb());
-                                        this.pointSprites.Add(pv);
+                                        pointSprites.Add(pv);
                                     }
                                     else
                                     {
@@ -483,10 +483,10 @@ namespace WorldWind
                                         if (icon.UsePointSprite && icon.AlwaysRenderPointSprite)
                                         {
                                             PointSpriteVertex pv = new PointSpriteVertex(translationVector.X, translationVector.Y, translationVector.Z, icon.PointSpriteSize, icon.PointSpriteColor.ToArgb());
-                                            this.pointSprites.Add(pv);
+                                            pointSprites.Add(pv);
                                         }
 
-                                        icon.FastRender(drawArgs, this.m_sprite, projectedPoint, false, this.m_labelRectangles);
+                                        icon.FastRender(drawArgs, m_sprite, projectedPoint, false, m_labelRectangles);
                                     }
                                 }
                             }
@@ -498,104 +498,104 @@ namespace WorldWind
 
                             // do post rendering even if we don't render
                             // note that mouseover actions happen one render cycle after mouse is over icon
-                            icon.PostRender(drawArgs, icon == this.mouseOverIcon);
+                            icon.PostRender(drawArgs, icon == mouseOverIcon);
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message.ToString());
+                        System.Console.WriteLine(ex.Message.ToString());
                     }
                     finally
                     {
-                        this.m_childrenRWLock.ReleaseReaderLock();
+                        m_childrenRWLock.ReleaseReaderLock();
                     }
 
                     // Clear the rectangles so that mouseover label always appears
-                    this.m_labelRectangles.Clear();
+                    m_labelRectangles.Clear();
 
                     // Render the mouse over icon last (on top)
-                    if (this.mouseOverIcon != null)
+                    if (mouseOverIcon != null)
                     {
                         Vector3 translationVector = new Vector3(
-                            (float)(this.mouseOverIcon.PositionD.X - drawArgs.WorldCamera.ReferenceCenter.X),
-                            (float)(this.mouseOverIcon.PositionD.Y - drawArgs.WorldCamera.ReferenceCenter.Y),
-                            (float)(this.mouseOverIcon.PositionD.Z - drawArgs.WorldCamera.ReferenceCenter.Z));
+                            (float)(mouseOverIcon.PositionD.X - drawArgs.WorldCamera.ReferenceCenter.X),
+                            (float)(mouseOverIcon.PositionD.Y - drawArgs.WorldCamera.ReferenceCenter.Y),
+                            (float)(mouseOverIcon.PositionD.Z - drawArgs.WorldCamera.ReferenceCenter.Z));
 
                         Vector3 projectedPoint = drawArgs.WorldCamera.Project(translationVector);
 
-                        if (this.mouseOverIcon.UsePointSprite && this.mouseOverIcon.AlwaysRenderPointSprite && this.m_canUsePointSprites)
+                        if (mouseOverIcon.UsePointSprite && mouseOverIcon.AlwaysRenderPointSprite && m_canUsePointSprites)
                         {
                             // add pointsprite anyway
-                            PointSpriteVertex pv = new PointSpriteVertex(translationVector.X, translationVector.Y, translationVector.Z, this.mouseOverIcon.PointSpriteSize, this.mouseOverIcon.PointSpriteColor.ToArgb());
-                            this.pointSprites.Add(pv);
+                            PointSpriteVertex pv = new PointSpriteVertex(translationVector.X, translationVector.Y, translationVector.Z, mouseOverIcon.PointSpriteSize, mouseOverIcon.PointSpriteColor.ToArgb());
+                            pointSprites.Add(pv);
                         }
 
-                        this.mouseOverIcon.FastRender(drawArgs, this.m_sprite, projectedPoint, true, this.m_labelRectangles);
+                        mouseOverIcon.FastRender(drawArgs, m_sprite, projectedPoint, true, m_labelRectangles);
                     }
 
                     // set new mouseover icon
-                    this.mouseOverIcon = closestIcon;
+                    mouseOverIcon = closestIcon;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message.ToString());
+                    System.Console.WriteLine(ex.Message.ToString());
                 }
                 finally
                 {
-                    this.m_sprite.End();
+                    m_sprite.End();
                 }
 
                 // render point sprites if any in the list
                 try
                 {
-                    if (this.pointSprites.Count > 0)
+                    if (pointSprites.Count > 0)
                     {
                         // save device state
                         Texture origTexture = drawArgs.device.GetTexture(0);
                         VertexFormat origVertexFormat = drawArgs.device.VertexFormat;
-                        float origPointScaleA , drawArgs.device.SetRenderState(RenderState.PointScaleA);
-                        float origPointScaleB , drawArgs.device.SetRenderState(RenderState.PointScaleB);
-                        float origPointScaleC , drawArgs.device.SetRenderState(RenderState.PointScaleC);
-                        bool origPointSpriteEnable , drawArgs.device.SetRenderState(RenderState.PointSpriteEnable);
-                        bool origPointScaleEnable , drawArgs.device.SetRenderState(RenderState.PointScaleEnable);
-                        Blend origSourceBlend , drawArgs.device.SetRenderState(RenderState.SourceBlend);
-                        Blend origDestBlend , drawArgs.device.SetRenderState(RenderState.DestinationBlend);
+                        float origPointScaleA = drawArgs.device.RenderState.PointScaleA;
+                        float origPointScaleB = drawArgs.device.RenderState.PointScaleB;
+                        float origPointScaleC = drawArgs.device.RenderState.PointScaleC;
+                        bool origPointSpriteEnable = drawArgs.device.RenderState.PointSpriteEnable;
+                        bool origPointScaleEnable = drawArgs.device.RenderState.PointScaleEnable;
+                        Blend origSourceBlend = drawArgs.device.RenderState.SourceBlend;
+                        Blend origDestBlend = drawArgs.device.RenderState.DestinationBlend;
 
                         // set device to do point sprites
-                        drawArgs.device.SetTexture(0, this.m_pointTexture.Texture);
-                        drawArgs.device.VertexFormat = VertexFormat.Position | VertexFormat.PointSize | VertexFormat.Diffuse;
-                        drawArgs.device.SetRenderState(RenderState.PointScaleA, 1f);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleB, 0f);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleC, 0f);
-                        //drawArgs.device.SetRenderState(RenderState.PointScaleA , 0f);
-                        //drawArgs.device.SetRenderState(RenderState.PointScaleB , 0f);
-                        //drawArgs.device.SetRenderState(RenderState.PointScaleC , .0000000000001f);
-                        drawArgs.device.SetRenderState(RenderState.PointSpriteEnable, true);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleEnable, true);
-                        drawArgs.device.SetRenderState(RenderState.SourceBlend, Blend.One);
-                        drawArgs.device.SetRenderState(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
+                        drawArgs.device.SetTexture(0, m_pointTexture.Texture);
+                        drawArgs.device.VertexFormat = VertexFormats.Position | VertexFormats.PointSize | VertexFormats.Diffuse;
+                        drawArgs.device.RenderState.PointScaleA = 1f;
+                        drawArgs.device.RenderState.PointScaleB = 0f;
+                        drawArgs.device.RenderState.PointScaleC = 0f;
+                        //drawArgs.device.RenderState.PointScaleA = 0f;
+                        //drawArgs.device.RenderState.PointScaleB = 0f;
+                        //drawArgs.device.RenderState.PointScaleC = .0000000000001f;
+                        drawArgs.device.RenderState.PointSpriteEnable = true;
+                        drawArgs.device.RenderState.PointScaleEnable = true;
+                        drawArgs.device.RenderState.SourceBlend = Blend.One;
+                        drawArgs.device.RenderState.DestinationBlend = Blend.InvSourceAlpha;
 
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation, (int)TextureOperation.Modulate);
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, (int)TextureArgument.Texture);
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg2, (int)TextureArgument.Diffuse);
+                        drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorOperation, (int)TextureOperation.Modulate);
+                        drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorArgument1, (int)TextureArgument.TextureColor);
+                        drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorArgument2, (int)TextureArgument.Diffuse);
 
-                        drawArgs.device.DrawUserPrimitives(PrimitiveType.PointList, this.pointSprites.Count, this.pointSprites.ToArray());
+                        drawArgs.device.DrawUserPrimitives(PrimitiveType.PointList, pointSprites.Count, pointSprites.ToArray());
 
                         // restore device state
                         drawArgs.device.SetTexture(0, origTexture);
                         drawArgs.device.VertexFormat = origVertexFormat;
-                        drawArgs.device.SetRenderState(RenderState.PointScaleA, , origPointScaleA);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleB, , origPointScaleB);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleC, , origPointScaleC);
-                        drawArgs.device.SetRenderState(RenderState.PointSpriteEnable, , origPointSpriteEnable);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleEnable, , origPointScaleEnable);
-                        drawArgs.device.SetRenderState(RenderState.SourceBlend, , origSourceBlend);
-                        drawArgs.device.SetRenderState(RenderState.DestinationBlend, , origDestBlend);
+                        drawArgs.device.RenderState.PointScaleA = origPointScaleA;
+                        drawArgs.device.RenderState.PointScaleB = origPointScaleB;
+                        drawArgs.device.RenderState.PointScaleC = origPointScaleC;
+                        drawArgs.device.RenderState.PointSpriteEnable = origPointSpriteEnable;
+                        drawArgs.device.RenderState.PointScaleEnable = origPointScaleEnable;
+                        drawArgs.device.RenderState.SourceBlend = origSourceBlend;
+                        drawArgs.device.RenderState.DestinationBlend = origDestBlend;
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message.ToString());
+                    System.Console.WriteLine(ex.Message.ToString());
                 }
             }
         }
@@ -740,7 +740,7 @@ namespace WorldWind
         //        m_sprite.Transform *= Matrix.Translation(projectedPoint.X, projectedPoint.Y, 0);
         //        m_sprite.Draw(iconTexture.Texture,
         //            new Vector3(iconTexture.Width >> 1, iconTexture.Height >> 1, 0),
-        //            Vector3.Zero,
+        //            Vector3.Empty,
         //            color);
 
         //        // Reset transform to prepare for text rendering later
@@ -770,12 +770,12 @@ namespace WorldWind
             return res;
         }
 
-        bool isUpdating;
+        bool isUpdating = false;
         private void refreshTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (this.isUpdating)
+            if (isUpdating)
                 return;
-            this.isUpdating = true;
+            isUpdating = true;
             try
             {
                 for (int i = 0; i < this.ChildObjects.Count; i++)
@@ -785,7 +785,7 @@ namespace WorldWind
                     {
                         Icon icon = (Icon)ro;
 
-                        if (icon.RefreshInterval == TimeSpan.MaxValue || icon.LastRefresh > DateTime.Now - icon.RefreshInterval)
+                        if (icon.RefreshInterval == TimeSpan.MaxValue || icon.LastRefresh > System.DateTime.Now - icon.RefreshInterval)
                             continue;
 
                         object key = null;
@@ -845,14 +845,14 @@ namespace WorldWind
                             }
                         }
 
-                        icon.LastRefresh = DateTime.Now;
+                        icon.LastRefresh = System.DateTime.Now;
                     }
                 }
             }
             catch { }
             finally
             {
-                this.isUpdating = false;
+                isUpdating = false;
             }
         }
     }

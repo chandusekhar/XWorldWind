@@ -1,15 +1,14 @@
 using System;
 using System.Windows.Forms;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using WorldWind;
+using SharpDX;
+using SharpDX.Direct3D9;
 
 namespace WorldWind.Widgets
 {
 	/// <summary>
 	/// Interface must be implemented in order to recieve user input.  Can be used by IRenderables and IWidgets.
 	/// </summary>
-	public interface IInteractive
+	public partial interface IInteractive
 	{
 		#region Methods
 		bool OnKeyDown(KeyEventArgs e);
@@ -35,7 +34,7 @@ namespace WorldWind.Widgets
 	/// <summary>
 	/// Base Interface for DirectX GUI Widgets
 	/// </summary>
-	public interface IWidget
+	public partial interface IWidget
 	{
 		#region Methods
 		void Render(DrawArgs drawArgs);
@@ -57,7 +56,7 @@ namespace WorldWind.Widgets
 	/// <summary>
 	/// Collection of IWidgets
 	/// </summary>
-	public interface IWidgetCollection
+	public partial interface IWidgetCollection
 	{
 		#region Methods
 		void BringToFront(int index);

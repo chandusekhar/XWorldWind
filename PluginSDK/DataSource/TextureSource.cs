@@ -1,12 +1,7 @@
 //#define VERBOSE
 using System;
 using System.Drawing;
-using System.Net;
 using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using Utility;
 using System.Reflection;
 

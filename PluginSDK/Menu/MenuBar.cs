@@ -24,7 +24,7 @@ namespace WorldWind.Menu
         protected bool _isHideable;
         protected const float padRatio = 1 / 9.0f;
         protected CursorType mouseCursor;
-        protected int chevronColor = Color.Black.ToArgb();
+        protected int mChevronColor = Color.Black.ToArgb();
         protected CustomVertex.TransformedColored[] enabledChevron = new CustomVertex.TransformedColored[3];
         protected Sprite m_sprite;
 
@@ -561,9 +561,9 @@ namespace WorldWind.Menu
                             // Draw the chevron
                             float chevronSize = button.CurrentSize * padRatio;
 
-                            this.enabledChevron[0].Color = this.chevronColor;
-                            this.enabledChevron[1].Color = this.chevronColor;
-                            this.enabledChevron[2].Color = this.chevronColor;
+                            this.enabledChevron[0].Color = this.mChevronColor;
+                            this.enabledChevron[1].Color = this.mChevronColor;
+                            this.enabledChevron[2].Color = this.mChevronColor;
 
                             if (this.m_anchor == MenuAnchor.Bottom)
                             {

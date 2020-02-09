@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using WorldWind.Renderable;
 using WorldWind.Configuration;
 using WorldWind.Terrain;
 using Utility;
@@ -407,14 +406,14 @@ namespace WorldWind
                     double distToCenterOfPlanet = (drawArgs.WorldCamera.Altitude + this.equatorialRadius);
                     double tangentalDistance = Math.Sqrt(distToCenterOfPlanet * distToCenterOfPlanet - this.equatorialRadius * this.equatorialRadius);
                     double amosphereThickness = Math.Sqrt(this.m_outerSphere.m_radius * this.m_outerSphere.m_radius + this.equatorialRadius * this.equatorialRadius);
-                    Matrix proj = drawArgs.device.Transform.Projection;
-                    drawArgs.device.Transform.Projection = Matrix.PerspectiveFovRH((float)drawArgs.WorldCamera.Fov.Radians, aspectRatio, zNear, (float)(tangentalDistance + amosphereThickness));
+                    Matrix proj = drawArgs.device.SetTransform(TransformState.Projection;
+                    drawArgs.device.SetTransform(TransformState.Projection = Matrix.PerspectiveFovRH((float)drawArgs.WorldCamera.Fov.Radians, aspectRatio, zNear, (float)(tangentalDistance + amosphereThickness));
                     drawArgs.device.SetRenderState(RenderState.ZEnable,false);
                     drawArgs.device.SetRenderState(RenderState.CullMode,Cull.Counterclockwise);
                     this.m_outerSphere.Render(drawArgs);
                     drawArgs.device.SetRenderState(RenderState.CullMode,Cull.Clockwise);
                     drawArgs.device.SetRenderState(RenderState.ZEnable,true);
-                    drawArgs.device.Transform.Projection = proj;
+                    drawArgs.device.SetTransform(TransformState.Projection = proj;
                     drawArgs.device.SetRenderState(RenderState.FogEnable,origFog);
                 }
 
@@ -1404,8 +1403,8 @@ namespace WorldWind
 					Frustum frustum = new Frustum();
 
 					frustum.Update(
-						Matrix.Multiply(drawArgs.device.Transform.World,
-						Matrix.Multiply(drawArgs.device.Transform.View, drawArgs.device.Transform.Projection)));
+						Matrix.Multiply(drawArgs.device.SetTransform(TransformState.World,
+						Matrix.Multiply(drawArgs.device.SetTransform(TransformState.View, drawArgs.device.SetTransform(TransformState.Projection)));
 
 					if (!World.Settings.ForceCpuAtmosphere && this.m_canDoShaders)
 					{
@@ -1420,7 +1419,7 @@ namespace WorldWind
 						shader.Technique = "Sky";
 						shader.SetValue("v3CameraPos", new Vector4(this.vCamera.X, this.vCamera.Y, this.vCamera.Z, 0));
 						shader.SetValue("v3LightPos", Vector4.Normalize(new Vector4(this.m_vLightDirection.X, this.m_vLightDirection.Y, this.m_vLightDirection.Z, 0)));
-						shader.SetValue("WorldViewProj", Matrix.Multiply(drawArgs.device.Transform.World, Matrix.Multiply(drawArgs.device.Transform.View, drawArgs.device.Transform.Projection)));
+						shader.SetValue("WorldViewProj", Matrix.Multiply(drawArgs.device.SetTransform(TransformState.World, Matrix.Multiply(drawArgs.device.SetTransform(TransformState.View, drawArgs.device.SetTransform(TransformState.Projection)));
 						shader.SetValue("v3InvWavelength", new Vector4(1.0f / this.m_fWavelength4[0], 1.0f / this.m_fWavelength4[1], 1.0f / this.m_fWavelength4[2], 0));
 						shader.SetValue("fCameraHeight", this.vCamera.Length());
 						shader.SetValue("fCameraHeight2", this.vCamera.LengthSq());

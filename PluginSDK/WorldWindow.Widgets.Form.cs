@@ -1,10 +1,6 @@
 using System;
 using System.IO;
-using System.Collections;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using System.Runtime.InteropServices;
-using WorldWind;
 
 namespace WorldWind.Widgets
 {

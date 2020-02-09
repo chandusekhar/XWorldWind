@@ -151,23 +151,23 @@ namespace WorldWind
                 (float) this.worldXyz.Y * 1f,
                 (float) this.worldXyz.Z * 1.5f);
             
-            Matrix currentWorld = drawArgs.device.Transform.World;
+            Matrix currentWorld = drawArgs.device.SetTransform(TransformState.World;
             drawArgs.device.SetTransform(TransformState.World, Matrix.RotationX((float)MathEngine.DegreesToRadians(this.RotX));
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotY));
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotZ));
-            drawArgs.device.Transform.World *= Matrix.Scaling(this.Scale, this.Scale, this.Scale);
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotY));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotZ));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Scaling(this.Scale, this.Scale, this.Scale);
 
             // Move the mesh to desired location on earth
             if (this.IsVertExaggerable)
                 this.vertExaggeration = World.Settings.VerticalExaggeration;
             else
                 this.vertExaggeration = 1;
-            drawArgs.device.Transform.World *= Matrix.Translation(0, 0, (float)drawArgs.WorldCamera.WorldRadius + this.Altitude * this.vertExaggeration);
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(90 - this.Latitude));
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.Longitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(0, 0, (float)drawArgs.WorldCamera.WorldRadius + this.Altitude * this.vertExaggeration);
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(90 - this.Latitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.Longitude));
 
 
-            drawArgs.device.Transform.World *= Matrix.Translation(
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(
                 (float)-drawArgs.WorldCamera.ReferenceCenter.X,
                 (float)-drawArgs.WorldCamera.ReferenceCenter.Y,
                 (float)-drawArgs.WorldCamera.ReferenceCenter.Z
@@ -203,8 +203,8 @@ namespace WorldWind
             float time = (float)(Environment.TickCount * 0.001);
             waterTime += 0.002f;
             //Calculate the matrices
-            Matrix modelViewProj = drawArgs.device.Transform.World * drawArgs.device.Transform.View * drawArgs.device.Transform.Projection;
-            Matrix modelViewIT = drawArgs.device.Transform.World * drawArgs.device.Transform.View * drawArgs.device.Transform.Projection;
+            Matrix modelViewProj = drawArgs.device.SetTransform(TransformState.World * drawArgs.device.SetTransform(TransformState.View * drawArgs.device.SetTransform(TransformState.Projection;
+            Matrix modelViewIT = drawArgs.device.SetTransform(TransformState.World * drawArgs.device.SetTransform(TransformState.View * drawArgs.device.SetTransform(TransformState.Projection;
             modelViewIT.Invert();
             modelViewIT = Matrix.TransposeMatrix(modelViewIT);
             //set the technique
@@ -214,7 +214,7 @@ namespace WorldWind
             this.effect.SetValue("texture1", this.texCube);
             //set the matrices
             this.effect.SetValue("ModelViewProj", modelViewProj);
-            this.effect.SetValue("ModelWorld", drawArgs.device.Transform.World);
+            this.effect.SetValue("ModelWorld", drawArgs.device.SetTransform(TransformState.World);
             //set eye position
             this.effect.SetValue("eyePos", new Vector4(450.0f, 250.0f, 750.0f, 1.0f));
             //set the light position
@@ -227,11 +227,11 @@ namespace WorldWind
         private void setupReflectionEffect(DrawArgs drawArgs)
         {
             //Calculate the matrices
-            Matrix worldViewProj = drawArgs.device.Transform.World * drawArgs.device.Transform.View * drawArgs.device.Transform.Projection;
-            Matrix worldIT = drawArgs.device.Transform.World;
+            Matrix worldViewProj = drawArgs.device.SetTransform(TransformState.World * drawArgs.device.SetTransform(TransformState.View * drawArgs.device.SetTransform(TransformState.Projection;
+            Matrix worldIT = drawArgs.device.SetTransform(TransformState.World;
             worldIT.Invert();
             worldIT = Matrix.TransposeMatrix(worldIT);
-            Matrix viewI = drawArgs.device.Transform.View;
+            Matrix viewI = drawArgs.device.SetTransform(TransformState.View;
             viewI.Invert();
             //Point3d sunPosition = SunCalculator.GetGeocentricPosition(currentTime);
 
@@ -243,7 +243,7 @@ namespace WorldWind
             //set the matrices
             this.effect.SetValue("WorldViewProj", worldViewProj);
             this.effect.SetValue("WorldIT", worldIT);
-            this.effect.SetValue("World", drawArgs.device.Transform.World);
+            this.effect.SetValue("World", drawArgs.device.SetTransform(TransformState.World);
             this.effect.SetValue("ViewI", viewI);
         }
         /*

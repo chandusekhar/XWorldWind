@@ -1,4 +1,3 @@
-using WorldWind.Renderable;
 using System;
 using System.IO;
 using System.Xml;

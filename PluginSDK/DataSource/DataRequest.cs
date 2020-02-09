@@ -1,10 +1,7 @@
 //#define VERBOSE
 using System;
 using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using Utility;
 
 namespace WorldWind.DataSource
 {

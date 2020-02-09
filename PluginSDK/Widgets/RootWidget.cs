@@ -43,7 +43,6 @@
 //
 using System;
 
-using WorldWind;
 //using WorldWind.Renderable;
 
 namespace WorldWind.NewWidgets

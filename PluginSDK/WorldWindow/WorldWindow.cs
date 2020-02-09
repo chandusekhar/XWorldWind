@@ -298,6 +298,7 @@ using System.Security.Permissions;
 using SharpDX;
 using SharpDX.Direct3D9;
 using WorldWind.DataSource;
+using WorldWind.Net.Wms;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;

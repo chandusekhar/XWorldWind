@@ -596,8 +596,8 @@ namespace WorldWind
             // Compute matrices
             this.ComputeProjectionMatrix(this.viewPort);
             this.ComputeViewMatrix();
-			device.Transform.Projection = this.m_ProjectionMatrix;
-			device.Transform.View = this.m_ViewMatrix;
+			device.SetTransform(TransformState.Projection = this.m_ProjectionMatrix;
+			device.SetTransform(TransformState.View = this.m_ViewMatrix;
 			device.SetTransform(TransformState.World, this.m_WorldMatrix;
 
             this.ViewFrustum.Update(
@@ -873,9 +873,9 @@ namespace WorldWind
             World world)
         {
             // Get near and far points on the ray
-            Vector3 v1 = new Vector3(screenX, screenY, this.viewPort.MinZ);
+            Vector3 v1 = new Vector3(screenX, screenY, this.viewPort.MinDepth);
             v1.Unproject(this.viewPort, this.m_absoluteProjectionMatrix, this.m_absoluteViewMatrix, this.m_absoluteWorldMatrix);
-            Vector3 v2 = new Vector3(screenX, screenY, this.viewPort.MaxZ);
+            Vector3 v2 = new Vector3(screenX, screenY, this.viewPort.MaxDepth);
             v2.Unproject(this.viewPort, this.m_absoluteProjectionMatrix, this.m_absoluteViewMatrix, this.m_absoluteWorldMatrix);
             Point3d p1 = new Point3d(v1.X, v1.Y, v1.Z);
             Point3d p2 = new Point3d(v2.X, v2.Y, v2.Z);
