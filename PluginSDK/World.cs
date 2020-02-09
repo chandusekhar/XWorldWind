@@ -1389,7 +1389,7 @@ namespace WorldWind
 
 					drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
 					drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
-					if (drawArgs.device.SetRenderState(RenderState.Lighting)
+					if (drawArgs.device.GetRenderState<bool>(RenderState.Lighting))
 						drawArgs.device.SetRenderState(RenderState.Lighting , false);
 
 					drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
@@ -1403,8 +1403,8 @@ namespace WorldWind
 					Frustum frustum = new Frustum();
 
 					frustum.Update(
-						Matrix.Multiply(drawArgs.device.SetTransform(TransformState.World,
-						Matrix.Multiply(drawArgs.device.SetTransform(TransformState.View, drawArgs.device.SetTransform(TransformState.Projection)));
+						Matrix.Multiply(drawArgs.device.GetTransform(TransformState.World,
+						Matrix.Multiply(drawArgs.device.GetTransform(TransformState.View, drawArgs.device.GetTransform(TransformState.Projection))));
 
 					if (!World.Settings.ForceCpuAtmosphere && this.m_canDoShaders)
 					{

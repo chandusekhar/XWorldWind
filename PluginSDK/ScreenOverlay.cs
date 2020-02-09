@@ -17,7 +17,7 @@ namespace WorldWind.Renderable
 	/// <summary>
 	/// Summary description for ScreenOverlay.
 	/// </summary>
-	public class ScreenOverlay : WorldWind.Renderable.RenderableObject
+	public class ScreenOverlay : RenderableObject
 	{
 		WorldWind.Widgets.Form overlay = null;
 

@@ -584,7 +584,7 @@ namespace WorldWind
 			{
 				drawArgs.defaultDrawingFont.DrawText(null, this.caption, 
 					new Rectangle((int)projectedPoint.X + halfIconWidth + 5, (int)projectedPoint.Y - halfIconHeight, drawArgs.screenWidth, drawArgs.screenHeight),
-					DrawTextFormat.WordBreak | DrawTextFormat.NoClip,
+					FontDrawFlags.WordBreak | FontDrawFlags.NoClip,
 					Color.White.ToArgb());
 			}
 

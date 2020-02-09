@@ -1,5 +1,6 @@
 using System;
 using SharpDX;
+using SharpDX.Direct3D9;
 
 
 namespace WorldWind.Renderable
@@ -279,8 +280,8 @@ namespace WorldWind.Renderable
         private void RenderBar(DrawArgs drawArgs)
         {
 
-            bool lighting = drawArgs.device.RenderState.Lighting;
-            drawArgs.device.RenderState.Lighting = false;
+            bool lighting = drawArgs.device.GetRenderState(RenderState.Lighting);
+            drawArgs.device.SetRenderState(RenderState.Lighting, false);
 
             Matrix translation = Matrix.Translation(
 

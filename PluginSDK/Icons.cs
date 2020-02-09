@@ -551,46 +551,43 @@ namespace WorldWind.Renderable
                     if (pointSprites.Count > 0)
                     {
                         // save device state
-                        Texture origTexture = drawArgs.device.GetTexture(0);
+                        BaseTexture origTexture = drawArgs.device.GetTexture(0);
                         VertexFormat origVertexFormat = drawArgs.device.VertexFormat;
-                        float origPointScaleA = drawArgs.device.RenderState.PointScaleA;
-                        float origPointScaleB = drawArgs.device.RenderState.PointScaleB;
-                        float origPointScaleC = drawArgs.device.RenderState.PointScaleC;
-                        bool origPointSpriteEnable = drawArgs.device.RenderState.PointSpriteEnable;
-                        bool origPointScaleEnable = drawArgs.device.RenderState.PointScaleEnable;
-                        Blend origSourceBlend = drawArgs.device.RenderState.SourceBlend;
-                        Blend origDestBlend = drawArgs.device.RenderState.DestinationBlend;
+                        float origPointScaleA = drawArgs.device.GetRenderState<float>(RenderState.PointScaleA);
+                        float origPointScaleB = drawArgs.device.GetRenderState<float>(RenderState.PointScaleB);
+                        float origPointScaleC = drawArgs.device.GetRenderState<float>(RenderState.PointScaleC);
+                        bool origPointSpriteEnable = drawArgs.device.GetRenderState<bool>(RenderState.PointSpriteEnable);
+                        bool origPointScaleEnable = drawArgs.device.GetRenderState<bool>(RenderState.PointScaleEnable);
+                        Blend origSourceBlend = drawArgs.device.GetRenderState<Blend>(RenderState.SourceBlend);
+                        Blend origDestBlend = drawArgs.device.GetRenderState<Blend>(RenderState.DestinationBlend);
 
                         // set device to do point sprites
                         drawArgs.device.SetTexture(0, m_pointTexture.Texture);
-                        drawArgs.device.VertexFormat = VertexFormats.Position | VertexFormats.PointSize | VertexFormats.Diffuse;
-                        drawArgs.device.RenderState.PointScaleA = 1f;
-                        drawArgs.device.RenderState.PointScaleB = 0f;
-                        drawArgs.device.RenderState.PointScaleC = 0f;
-                        //drawArgs.device.RenderState.PointScaleA = 0f;
-                        //drawArgs.device.RenderState.PointScaleB = 0f;
-                        //drawArgs.device.RenderState.PointScaleC = .0000000000001f;
-                        drawArgs.device.RenderState.PointSpriteEnable = true;
-                        drawArgs.device.RenderState.PointScaleEnable = true;
-                        drawArgs.device.RenderState.SourceBlend = Blend.One;
-                        drawArgs.device.RenderState.DestinationBlend = Blend.InvSourceAlpha;
+                        drawArgs.device.VertexFormat = VertexFormat.Position | VertexFormat.PointSize | VertexFormat.Diffuse;
+                        drawArgs.device.SetRenderState(RenderState.PointScaleA, 1f);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleB, 0f);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleC, 0f);
+                        drawArgs.device.SetRenderState(RenderState.PointSpriteEnable, true);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleEnable, true);
+                        drawArgs.device.SetRenderState(RenderState.SourceBlend, Blend.One);
+                        drawArgs.device.SetRenderState(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
 
-                        drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorOperation, (int)TextureOperation.Modulate);
-                        drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorArgument1, (int)TextureArgument.TextureColor);
-                        drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorArgument2, (int)TextureArgument.Diffuse);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation, (int)TextureOperation.Modulate);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, (int)TextureArgument.Texture);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg2, (int)TextureArgument.Diffuse);
 
                         drawArgs.device.DrawUserPrimitives(PrimitiveType.PointList, pointSprites.Count, pointSprites.ToArray());
 
                         // restore device state
                         drawArgs.device.SetTexture(0, origTexture);
                         drawArgs.device.VertexFormat = origVertexFormat;
-                        drawArgs.device.RenderState.PointScaleA = origPointScaleA;
-                        drawArgs.device.RenderState.PointScaleB = origPointScaleB;
-                        drawArgs.device.RenderState.PointScaleC = origPointScaleC;
-                        drawArgs.device.RenderState.PointSpriteEnable = origPointSpriteEnable;
-                        drawArgs.device.RenderState.PointScaleEnable = origPointScaleEnable;
-                        drawArgs.device.RenderState.SourceBlend = origSourceBlend;
-                        drawArgs.device.RenderState.DestinationBlend = origDestBlend;
+                        drawArgs.device.SetRenderState(RenderState.PointScaleA,origPointScaleA);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleB,origPointScaleB);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleC,origPointScaleC);
+                        drawArgs.device.SetRenderState(RenderState.PointSpriteEnable,origPointSpriteEnable);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleEnable,origPointScaleEnable);
+                        drawArgs.device.SetRenderState(RenderState.SourceBlend,origSourceBlend);
+                        drawArgs.device.SetRenderState(RenderState.DestinationBlend,origDestBlend);
                     }
                 }
                 catch (Exception ex)
@@ -601,152 +598,6 @@ namespace WorldWind.Renderable
         }
 
         #endregion
-
-        /// <summary>
-        /// Draw the icon
-        /// </summary>
-        //[Obsolete]
-        //protected virtual void Render(DrawArgs drawArgs, Icon icon, Vector3 projectedPoint)
-        //{
-        //    if (!icon.isInitialized)
-        //        icon.Initialize(drawArgs);
-
-        //    if (!drawArgs.WorldCamera.ViewFrustum.ContainsPoint(icon.Position))
-        //        return;
-
-        //    // Check icons for within "visual" range
-        //    double distanceToIcon = Vector3.Length(icon.Position - drawArgs.WorldCamera.Position);
-        //    if (distanceToIcon > icon.MaximumDisplayDistance)
-        //        return;
-        //    if (distanceToIcon < icon.MinimumDisplayDistance)
-        //        return;
-
-        //    //Respect icon set temporal extents
-        //    if (TimeKeeper.CurrentTimeUtc < EarliestTime || TimeKeeper.CurrentTimeUtc > LatestTime)
-        //        return;
-
-        //    IconTexture iconTexture = GetTexture(icon);
-        //    bool isMouseOver = icon == mouseOverIcon;
-
-        //    //Show description for normal Icons at the bottom
-        //    //of the page
-        //    if (isMouseOver) // && !icon.IsKMLIcon)
-        //    {
-        //        // Mouse is over
-        //        isMouseOver = true;
-
-        //        if (icon.isSelectable)
-        //            DrawArgs.MouseCursor = CursorType.Hand;
-
-        //        string description = icon.Description;
-        //        if (description == null)
-        //            description = icon.ClickableActionURL;
-        //        if (description != null)
-        //        {
-        //            // Render description field
-        //            DrawTextFormat format = DrawTextFormat.NoClip | DrawTextFormat.WordBreak | DrawTextFormat.Bottom;
-        //            int left = 10;
-        //            if (World.Settings.showLayerManager)
-        //                left += World.Settings.layerManagerWidth;
-        //            Rectangle rect = Rectangle.FromLTRB(left, 10, drawArgs.screenWidth - 10, drawArgs.screenHeight - 10);
-
-        //            // Draw outline
-        //            drawArgs.defaultDrawingFont.DrawText(
-        //                m_sprite, description,
-        //                rect,
-        //                format, 0xb0 << 24);
-
-        //            rect.Offset(2, 0);
-        //            drawArgs.defaultDrawingFont.DrawText(
-        //                m_sprite, description,
-        //                rect,
-        //                format, 0xb0 << 24);
-
-        //            rect.Offset(0, 2);
-        //            drawArgs.defaultDrawingFont.DrawText(
-        //                m_sprite, description,
-        //                rect,
-        //                format, 0xb0 << 24);
-
-        //            rect.Offset(-2, 0);
-        //            drawArgs.defaultDrawingFont.DrawText(
-        //                m_sprite, description,
-        //                rect,
-        //                format, 0xb0 << 24);
-
-        //            // Draw description
-        //            rect.Offset(1, -1);
-        //            drawArgs.defaultDrawingFont.DrawText(
-        //                m_sprite, description,
-        //                rect,
-        //                format, descriptionColor);
-        //        }
-        //    }
-
-        //    int color = isMouseOver ? hotColor : normalColor;
-        //    if (iconTexture == null || isMouseOver || icon.NameAlwaysVisible)
-        //    {
-        //        // Render label
-        //        if (icon.Name != null)
-        //        {
-        //            // Render name field
-        //            const int labelWidth = 1000; // Dummy value needed for centering the text
-        //            if (iconTexture == null)
-        //            {
-        //                // Center over target as we have no bitmap
-        //                Rectangle rect = new Rectangle(
-        //                    (int)projectedPoint.X - (labelWidth >> 1),
-        //                    (int)(projectedPoint.Y - (drawArgs.defaultDrawingFont.Description.Height >> 1)),
-        //                    labelWidth,
-        //                    drawArgs.screenHeight);
-
-        //                drawArgs.defaultDrawingFont.DrawText(m_sprite, icon.Name, rect, DrawTextFormat.Center, color);
-        //            }
-        //            else
-        //            {
-        //                // Adjust text to make room for icon
-        //                int spacing = (int)(icon.Width * 0.3f);
-        //                if (spacing > 10)
-        //                    spacing = 10;
-        //                int offsetForIcon = (icon.Width >> 1) + spacing;
-
-        //                Rectangle rect = new Rectangle(
-        //                    (int)projectedPoint.X + offsetForIcon,
-        //                    (int)(projectedPoint.Y - (drawArgs.defaultDrawingFont.Description.Height >> 1)),
-        //                    labelWidth,
-        //                    drawArgs.screenHeight);
-
-        //                drawArgs.defaultDrawingFont.DrawText(m_sprite, icon.Name, rect, DrawTextFormat.WordBreak, color);
-        //            }
-        //        }
-        //    }
-
-        //    if (iconTexture != null)
-        //    {
-        //        // Render icon
-        //        float factor = 1;
-        //        //Do Altitude depedent scaling for KMLIcons
-        //        //if(icon.IsKMLIcon)
-        //        //    if (drawArgs.WorldCamera.Altitude > MinIconZoomDistance)
-        //        //        factor -= (float)((drawArgs.WorldCamera.Altitude - MinIconZoomDistance) / drawArgs.WorldCamera.Altitude);
-
-        //        float xscale = factor * ((float)icon.Width / iconTexture.Width);
-        //        float yscale = factor * ((float)icon.Height / iconTexture.Height);
-        //        m_sprite.Transform = Matrix.Scaling(xscale, yscale, 0);
-
-        //        if (icon.IsRotated)
-        //            m_sprite.Transform *= Matrix.RotationZ((float)icon.Rotation.Radians - (float)drawArgs.WorldCamera.Heading.Radians);
-
-        //        m_sprite.Transform *= Matrix.Translation(projectedPoint.X, projectedPoint.Y, 0);
-        //        m_sprite.Draw(iconTexture.Texture,
-        //            new Vector3(iconTexture.Width >> 1, iconTexture.Height >> 1, 0),
-        //            Vector3.Empty,
-        //            color);
-
-        //        // Reset transform to prepare for text rendering later
-        //        m_sprite.Transform = Matrix.Identity;
-        //    }
-        //}
 
         /// <summary>
         /// Retrieve an icon's texture

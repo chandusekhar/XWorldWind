@@ -451,27 +451,6 @@
     <Compile Include="Widgets.LayerManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Widgets\CompassWidget.cs" />
-    <Compile Include="Widgets\ControlWidget.cs" />
-    <Compile Include="Widgets\IWidgetCollection.cs" />
-    <Compile Include="Widgets\IWidget.cs" />
-    <Compile Include="Widgets\IInteractive.cs" />
-    <Compile Include="Widgets\FormWidget.cs" />
-    <Compile Include="Widgets\ButtonWidget.cs" />
-    <Compile Include="Widgets\LabelWidget.cs" />
-    <Compile Include="Widgets\PanelWidget.cs" />
-    <Compile Include="Widgets\Scrollbar.cs" />
-    <Compile Include="Widgets\SimpleTreeNodeWidget.cs" />
-    <Compile Include="Widgets\TreeNodeWidget.cs" />
-    <Compile Include="Widgets\UpdateWidget.cs" />
-    <Compile Include="Widgets\WidgetMenuButton.cs" />
-    <Compile Include="Widgets\WidgetUtilities.cs" />
-    <Compile Include="Widgets\WidgetCollection.cs" />
-    <Compile Include="Widgets\RootWidget.cs" />
-    <Compile Include="Widgets\WidgetEnums.cs" />
-    <Compile Include="Widgets\PictureBox.cs" />
-    <Compile Include="Widgets\TextBox.cs" />
-    <Compile Include="Widgets\TextLabel.cs" />
     <Compile Include="WMSLayerAccessor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -485,24 +464,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WorldSurfaceRenderer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WorldWind.Widgets.PictureBox.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WorldWind.Widgets.RootWidget.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WorldWind.Widgets.TextBox.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WorldWind.Widgets.TextLabel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WorldWindow.Widgets.Form.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WorldWindow.Widgets.Utilities.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WorldWindow\NativeMethods.cs" />
@@ -592,6 +553,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CustomVertex\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

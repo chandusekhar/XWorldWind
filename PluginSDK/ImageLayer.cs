@@ -6,6 +6,7 @@ using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
 using WorldWind.Net;
+using WorldWind.Terrain;
 using WorldWind.VisualControl;
 
 namespace WorldWind
@@ -659,33 +660,17 @@ namespace WorldWind
 
 				if(this._disableZbuffer)
 				{
-					if(drawArgs.device.SetRenderState(RenderState.ZEnable)
+					if(drawArgs.device.GetRenderState<bool>(RenderState.ZEnable))
 						drawArgs.device.SetRenderState(RenderState.ZEnable , false);
 				}
 				else
 				{
-					if(!drawArgs.device.SetRenderState(RenderState.ZEnable)
+					if(!drawArgs.device.GetRenderState<bool>(RenderState.ZEnable))
 						drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 				}
 
 				drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 				drawArgs.device.Clear(ClearFlags.ZBuffer, 0, 1.0f, 0);
-
-			/*	if (m_opacity < 255 && device.Capabilities.DestinationBlendCaps.SupportsBlendFactor)
-				{
-					// Blend
-					device.SetRenderState(RenderState.AlphaBlendEnable , true);
-					device.SetRenderState(RenderState.SourceBlend , m_sourceBlend);
-					device.SetRenderState(RenderState.DestinationBlend , m_destinationBlend);
-					// Set Red, Green and Blue = opacity
-					device.SetRenderState(RenderState.BlendFactorColor , (m_opacity << 16) | (m_opacity << 8) | m_opacity;
-				}*/
-			//	else if (EnableColorKeying && device.Capabilities.TextureCaps.SupportsAlpha)
-			//	{
-			//		device.SetRenderState(RenderState.AlphaBlendEnable , true);
-			//		device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
-			//		device.SetRenderState(RenderState.DestinationBlend , Blend.InvSourceAlpha);
-			//	}
 
                 drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
                         (float)-drawArgs.WorldCamera.ReferenceCenter.X,
@@ -710,7 +695,7 @@ namespace WorldWind
                         material.Ambient = System.Drawing.Color.White;
 
                         this.device.Material = material;
-                        this.device.SetRenderState(RenderState.AmbientColor , World.Settings.ShadingAmbientColor.ToArgb();
+                        this.device.SetRenderState(RenderState.Ambient , World.Settings.ShadingAmbientColor.ToArgb();
                         this.device.SetRenderState(RenderState.NormalizeNormals , true);
                         this.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 
@@ -721,7 +706,7 @@ namespace WorldWind
 
                         this.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Modulate);
                         this.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
-                        this.device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.TextureColor);
+                        this.device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.Texture);
                     }
                     else
                     {
@@ -729,12 +714,12 @@ namespace WorldWind
                         this.device.SetRenderState(RenderState.Ambient , World.Settings.StandardAmbientColor);
 
                         drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
                     }
 
                     this.device.SetRenderState(RenderState.TextureFactor , System.Drawing.Color.FromArgb(this.m_opacity, 255, 255, 255).ToArgb();
                     this.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate);
-                    this.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor);
+                    this.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Texture);
                     this.device.SetTextureStageState(0, TextureStage.AlphaArg2,TextureArgument.TFactor);
 
                     drawArgs.device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
@@ -753,7 +738,7 @@ namespace WorldWind
 
                     grayscaleEffect.Technique = "RenderGrayscaleBrightness";
                     grayscaleEffect.SetValue("WorldViewProj", Matrix.Multiply(this.device.SetTransform(TransformState.World, Matrix.Multiply(this.device.SetTransform(TransformState.View, this.device.SetTransform(TransformState.Projection)));
-                    grayscaleEffect.SetValue("Tex0", this.texture);
+                    grayscaleEffect.SetValue("Tex0", this.texture.NativePointer);
                     grayscaleEffect.SetValue("Brightness", this.GrayscaleBrightness);
                     float opacity = (float) this.m_opacity / 255.0f;
                     grayscaleEffect.SetValue("Opacity", opacity);
@@ -780,7 +765,7 @@ namespace WorldWind
 				{
 					// Restore alpha blend state
                     this.device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
-                    this.device.SetRenderState(RenderState.DestinationBlend , Blend.InvSourceAlpha);
+                    this.device.SetRenderState(RenderState.DestinationBlend , Blend.InverseSourceAlpha);
 				}
 
 				if(this._disableZbuffer)

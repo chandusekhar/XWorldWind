@@ -53,7 +53,7 @@ namespace WorldWind
 				new VertexElement(0, 12, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.Normal, 0),
 				new VertexElement(0, 24, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.TextureCoordinate, 0),
 				new VertexElement(0, 36, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.Tangent, 0),
-				new VertexElement(0, 48, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.BiNormal, 0),
+				new VertexElement(0, 48, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.Binormal, 0),
 				VertexElement.VertexDeclarationEnd,
 			};
             VertexDeclaration decl = new VertexDeclaration(device, elements);
@@ -133,11 +133,14 @@ namespace WorldWind
             drawArgs.device.SetRenderState(RenderState.Ambient, 0x808080);
             drawArgs.device.SetRenderState(RenderState.NormalizeNormals, true);
 
-            drawArgs.device.Lights[0].Diffuse = Color.FromArgb(255, 255, 255);
-            drawArgs.device.Lights[0].Type = LightType.Directional;
-            drawArgs.device.Lights[0].Direction = new Vector3(1f, 1f, 1f);
-            drawArgs.device.Lights[0].Enabled = true;
-
+            Light lLight = new Light();
+            lLight.Ambient = Color.FromArgb(255, 255, 255);
+            lLight.Type = LightType.Directional;
+            lLight.Direction = new Vector3(1f, 1f, 1f);
+            // Put the light somewhere up in space
+            lLight.Position = new Vector3((float) this.worldXyz.X * 2f, (float) this.worldXyz.Y * 1f, (float) this.worldXyz.Z * 1.5f);
+            drawArgs.device.SetLight(0, ref lLight);
+            
             drawArgs.device.SetSamplerState(0, SamplerState.AddressU, TextureAddress.Wrap);
             drawArgs.device.SetSamplerState(0, SamplerState.AddressV,TextureAddress.Wrap);
 
@@ -145,14 +148,11 @@ namespace WorldWind
             drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
             drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.SelectArg1);
 
-            // Put the light somewhere up in space
-            drawArgs.device.Lights[0].Position = new Vector3(
-                (float) this.worldXyz.X * 2f,
-                (float) this.worldXyz.Y * 1f,
-                (float) this.worldXyz.Z * 1.5f);
             
-            Matrix currentWorld = drawArgs.device.SetTransform(TransformState.World;
-            drawArgs.device.SetTransform(TransformState.World, Matrix.RotationX((float)MathEngine.DegreesToRadians(this.RotX));
+            
+            Matrix currentWorld = drawArgs.device.GetTransform(TransformState.World);
+            
+            drawArgs.device.SetTransform(TransformState.World, Matrix.RotationX((float)MathEngine.DegreesToRadians(this.RotX)));
             drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotY));
             drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotZ));
             drawArgs.device.SetTransform(TransformState.World *= Matrix.Scaling(this.Scale, this.Scale, this.Scale);
@@ -181,8 +181,8 @@ namespace WorldWind
                 this.setupReflectionEffect(drawArgs);
 
 			//render the effect
-            bool alphastate , device.SetRenderState(RenderState.AlphaBlendEnable);
-			device.SetRenderState(RenderState.AlphaBlendEnable , true);
+            bool alphastate = device.GetRenderState<bool>(RenderState.AlphaBlendEnable);
+            device.SetRenderState(RenderState.AlphaBlendEnable , true);
             this.effect.Begin(0);
             this.effect.BeginPass(0);
              
@@ -214,7 +214,7 @@ namespace WorldWind
             this.effect.SetValue("texture1", this.texCube);
             //set the matrices
             this.effect.SetValue("ModelViewProj", modelViewProj);
-            this.effect.SetValue("ModelWorld", drawArgs.device.SetTransform(TransformState.World);
+            this.effect.SetValue("ModelWorld", drawArgs.device.GetTransform(TransformState.World));
             //set eye position
             this.effect.SetValue("eyePos", new Vector4(450.0f, 250.0f, 750.0f, 1.0f));
             //set the light position
@@ -227,8 +227,8 @@ namespace WorldWind
         private void setupReflectionEffect(DrawArgs drawArgs)
         {
             //Calculate the matrices
-            Matrix worldViewProj = drawArgs.device.SetTransform(TransformState.World * drawArgs.device.SetTransform(TransformState.View * drawArgs.device.SetTransform(TransformState.Projection;
-            Matrix worldIT = drawArgs.device.SetTransform(TransformState.World;
+            Matrix worldViewProj = drawArgs.device.SetTransform(TransformState.World * drawArgs.device.GetTransform(TransformState.View) * drawArgs.device.GetTransform(TransformState.Projection));
+            Matrix worldIT = drawArgs.device.GetTransform(TransformState.World);
             worldIT.Invert();
             worldIT = Matrix.TransposeMatrix(worldIT);
             Matrix viewI = drawArgs.device.SetTransform(TransformState.View;
@@ -243,7 +243,7 @@ namespace WorldWind
             //set the matrices
             this.effect.SetValue("WorldViewProj", worldViewProj);
             this.effect.SetValue("WorldIT", worldIT);
-            this.effect.SetValue("World", drawArgs.device.SetTransform(TransformState.World);
+            this.effect.SetValue("World", drawArgs.device.GetTransform(TransformState.World);
             this.effect.SetValue("ViewI", viewI);
         }
         /*

@@ -444,9 +444,9 @@ namespace WorldWind.Renderable
             m_effect.Technique = "VertexAndPixelShader";
             m_effect.SetValue("angle", (float) this.m_angle);
             m_effect.SetValue("attentuation", this.Attentuation);
-            m_effect.SetValue("World", drawArgs.device.SetTransform(TransformState.World);
-            m_effect.SetValue("View", drawArgs.device.SetTransform(TransformState.View);
-            m_effect.SetValue("Projection", drawArgs.device.SetTransform(TransformState.Projection);
+            m_effect.SetValue("World", drawArgs.device.GetTransform(TransformState.World);
+            m_effect.SetValue("View", drawArgs.device.GetTransform(TransformState.View);
+            m_effect.SetValue("Projection", drawArgs.device.GetTransform(TransformState.Projection);
             m_effect.SetValue("Tex0", this.m_texture);
             m_effect.SetValue("lightDir", new Vector4(sunVector.X, sunVector.Y, sunVector.Z, 0));
 

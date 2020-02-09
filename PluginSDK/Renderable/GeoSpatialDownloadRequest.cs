@@ -20,10 +20,10 @@ namespace WorldWind.Renderable
 		/// <param name="quadTile"></param>
 		public GeoSpatialDownloadRequest(QuadTile quadTile, ImageStore imageStore, string localFilePath, string downloadUrl)
 		{
-			m_quadTile = quadTile;
-			m_url = downloadUrl;
-			m_localFilePath = localFilePath;
-            m_imageStore = imageStore;
+            this.m_quadTile = quadTile;
+            this.m_url = downloadUrl;
+            this.m_localFilePath = localFilePath;
+            this.m_imageStore = imageStore;
             
 		}
 
@@ -34,7 +34,7 @@ namespace WorldWind.Renderable
 		{
 			get
 			{
-				return (download != null);
+				return (this.download != null);
 			}
 		}
 
@@ -42,22 +42,22 @@ namespace WorldWind.Renderable
 		{
 			get
 			{
-				if(download==null)
+				if(this.download==null)
 					return true;
-				return download.IsComplete;
+				return this.download.IsComplete;
 			}
 		}
 
         public string LocalFilePath
         {
-            get { return m_localFilePath; }
+            get { return this.m_localFilePath; }
         }
 
 		public QuadTile QuadTile
 		{
 			get
 			{
-				return m_quadTile;
+				return this.m_quadTile;
 			}
 		}
 
@@ -65,7 +65,7 @@ namespace WorldWind.Renderable
 		{
 			get
 			{
-				return m_quadTile.East - m_quadTile.West;
+				return this.m_quadTile.East - this.m_quadTile.West;
 			}
 		}
 
@@ -79,11 +79,11 @@ namespace WorldWind.Renderable
 				//m_quadTile.QuadTileSet.NumberRetries = 0;
 
 				// Rename temp file to real name
-				File.Delete(m_localFilePath);
-				File.Move(downloadInfo.SavedFilePath, m_localFilePath);
+				File.Delete(this.m_localFilePath);
+				File.Move(downloadInfo.SavedFilePath, this.m_localFilePath);
 
 				// Make the quad tile reload the new image
-				m_quadTile.DownloadRequests.Remove(this);
+                this.m_quadTile.DownloadRequests.Remove(this);
 // ### ??!??				m_quadTile.Initialize();
 			}
 			catch(System.Net.WebException caught)
@@ -94,7 +94,7 @@ namespace WorldWind.Renderable
                  */
                 if (response == null)
                 {
-                    m_quadTile.QuadTileSet.RecordFailedRequest(this);
+                    this.m_quadTile.QuadTileSet.RecordFailedRequest(this);
                 }
                 /* 4xx - Client error
                  * 400 Bad Request
@@ -112,7 +112,7 @@ namespace WorldWind.Renderable
                     (response.StatusCode == System.Net.HttpStatusCode.OK && 
                         response.ContentLength == 0))
 				{
-                    m_quadTile.QuadTileSet.RecordFailedRequest(this);
+                    this.m_quadTile.QuadTileSet.RecordFailedRequest(this);
                     
 				}
                 /* 
@@ -143,19 +143,19 @@ namespace WorldWind.Renderable
                             double retryAfterNumber = Convert.ToDouble(retryAfter);
                             waitTime = TimeSpan.FromSeconds(retryAfterNumber);
                         }
-                        catch (System.FormatException fe)
+                        catch (FormatException fe)
                         {
                             //ignore retry-after, just wait for 60 seconds
                         }
                     }
                     //wait before retrying
-                    m_quadTile.QuadTileSet.setTimeoutAndWait(waitTime);
+                    this.m_quadTile.QuadTileSet.setTimeoutAndWait(waitTime);
                 }
                 
 			}
 			catch
 			{
-				using(File.Create(m_localFilePath + ".txt"))
+				using(File.Create(this.m_localFilePath + ".txt"))
 				{}
                 if (File.Exists(downloadInfo.SavedFilePath))
                 {
@@ -172,13 +172,12 @@ namespace WorldWind.Renderable
 			}
 			finally
 			{
-                if(download != null)
-    				download.IsComplete = true;
-				m_quadTile.QuadTileSet.RemoveFromDownloadQueue(this);
+                if(this.download != null) this.download.IsComplete = true;
+                this.m_quadTile.QuadTileSet.RemoveFromDownloadQueue(this);
 
                 // potential deadlock! -step
                 // Immediately queue next download
-                m_quadTile.QuadTileSet.ServiceDownloadQueue();
+                this.m_quadTile.QuadTileSet.ServiceDownloadQueue();
 			}
 		}
 
@@ -191,23 +190,23 @@ namespace WorldWind.Renderable
             if (World.Settings.WorkOffline)
                 return;
 
-            Log.Write(Log.Levels.Debug, "GSDR", "Starting download for " + m_url);
+            Log.Write(Log.Levels.Debug, "GSDR", "Starting download for " + this.m_url);
             //			Log.Write(Log.Levels.Debug, "GSDR", "to be stored in "+this.m_imageStore.GetLocalPath(QuadTile));
 
-            WorldWind.Net.Wms.WmsImageStore wmsImageStore = m_imageStore as WorldWind.Net.Wms.WmsImageStore;
+            WmsImageStore wmsImageStore = this.m_imageStore as WmsImageStore;
             System.Net.NetworkCredential downloadCredentials = null;
 
             if (wmsImageStore != null)
                 downloadCredentials = new System.Net.NetworkCredential(wmsImageStore.Username, wmsImageStore.Password);
 
-            QuadTile.IsDownloadingImage = true;
-            download = new WebDownload(m_url, downloadCredentials);
+            this.QuadTile.IsDownloadingImage = true;
+            this.download = new WebDownload(this.m_url, downloadCredentials);
 
-			download.DownloadType = DownloadType.Wms;
-			download.SavedFilePath = m_localFilePath + ".tmp";
-			download.ProgressCallback += new DownloadProgressHandler(UpdateProgress);
-			download.CompleteCallback += new WorldWind.Net.DownloadCompleteHandler(DownloadComplete);
-			download.BackgroundDownloadFile();
+            this.download.DownloadType = DownloadType.Wms;
+            this.download.SavedFilePath = this.m_localFilePath + ".tmp";
+            this.download.ProgressCallback += this.UpdateProgress;
+            this.download.CompleteCallback += this.DownloadComplete;
+            this.download.BackgroundDownloadFile();
 		}
 
 		void UpdateProgress( int pos, int total )
@@ -216,28 +215,27 @@ namespace WorldWind.Renderable
 				// When server doesn't provide content-length, use this dummy value to at least show some progress.
 				total = 50*1024; 
 			pos = pos % (total+1);
-			ProgressPercent = (float)pos/total;
+            this.ProgressPercent = (float)pos/total;
 		}
 
 		public virtual void Cancel()
 		{
-			if (download!=null)
-				download.Cancel();
+			if (this.download!=null) this.download.Cancel();
 		}
 
 		public override string ToString()
 		{
-			return m_imageStore.GetLocalPath(QuadTile);
+			return this.m_imageStore.GetLocalPath(this.QuadTile);
 		}
 
 		#region IDisposable Members
 
 		public virtual void Dispose()
 		{
-			if(download!=null)
+			if(this.download!=null)
 			{
-				download.Dispose();
-				download=null;
+                this.download.Dispose();
+                this.download=null;
 			}
 			GC.SuppressFinalize(this);
 		}

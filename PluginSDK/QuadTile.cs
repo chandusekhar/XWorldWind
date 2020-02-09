@@ -40,7 +40,7 @@ namespace WorldWind
 
         public bool isInitialized;
         public BoundingBox BoundingBox;
-        public List<global::GeoSpatialDownloadRequest> DownloadRequests;
+        public List<GeoSpatialDownloadRequest> DownloadRequests;
         //public GeoSpatialDownloadRequest DownloadRequest;
 
         protected Texture[] textures;
@@ -233,7 +233,7 @@ namespace WorldWind
                 {
                     for (int i = 0; i < this.textures.Length; i++)
                     {
-                        if (this.textures[i] != null && !this.textures[i].Disposed)
+                        if (this.textures[i] != null && !this.textures[i].IsDisposed)
                         {
                             this.textures[i].Dispose();
                             this.textures[i] = null;
@@ -1019,7 +1019,7 @@ namespace WorldWind
                         drawArgs.defaultDrawingFont.DrawText(
                             null, this.ImageFilePath,
                             rect,
-                            DrawTextFormat.WordBreak,
+                            FontDrawFlags.WordBreak,
                             Color.Red);
                     }
                 }
@@ -1033,7 +1033,7 @@ namespace WorldWind
 
                 for (int i = 0; i < this.textures.Length; i++)
                 {
-                    if (this.textures[i] == null || this.textures[i].Disposed)
+                    if (this.textures[i] == null || this.textures[i].IsDisposed)
                         return false;
 
                     device.SetTexture(i, this.textures[i]);
@@ -1044,7 +1044,7 @@ namespace WorldWind
                 int numpasses = 1;
                 int pass;
 
-                DrawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
+                drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
                     (float) (this.localOrigin.X - drawArgs.WorldCamera.ReferenceCenter.X),
                     (float) (this.localOrigin.Y - drawArgs.WorldCamera.ReferenceCenter.Y),
                     (float) (this.localOrigin.Z - drawArgs.WorldCamera.ReferenceCenter.Z)
@@ -1058,7 +1058,7 @@ namespace WorldWind
                     if (!southEastChildRendered) this.Render(device, this.southEastVertices, this.southEastChild);
                 }
 
-                DrawArgs.device.SetTransform(TransformState.World, DrawArgs.Camera.WorldMatrix;
+                drawArgs.device.SetTransform(TransformState.World, DrawArgs.Camera.WorldMatrix;
 
                 return true;
             }
@@ -1152,7 +1152,7 @@ namespace WorldWind
             }
 
             if (isMultitexturing)
-                device.SetTextureStageState(1, TextureStageStates.ColorOperation,
+                device.SetTextureStageState(1, TextureStage.ColorOperation,
                                             (int) TextureOperation.BlendTextureAlpha);
 
             if (verts != null && this.vertexIndexes != null)
@@ -1161,8 +1161,8 @@ namespace WorldWind
                 {
                     Effect effect = this.QuadTileSet.Effect;
 
-                    int tc1 = device.GetTextureStageStateInt32(1, TextureStageStates.TextureCoordinateIndex);
-                    device.SetTextureStageState(1, TextureStageStates.TextureCoordinateIndex, 1);
+                    int tc1 = device.GetTextureStageState(1, TextureStage.TexCoordIndex);
+                    device.SetTextureStageState(1, TextureStage.TexCoordIndex, 1);
 
 
                     // FIXME: just use the first technique for now
@@ -1170,19 +1170,16 @@ namespace WorldWind
                     EffectHandle param;
                     param = (EffectHandle) this.QuadTileSet.EffectParameters["WorldViewProj"];
                     if (param != null)
-                        effect.SetValue(param,
-                                        Matrix.Multiply(device.SetTransform(TransformState.World,
-                                                        Matrix.Multiply(device.SetTransform(TransformState.View,
-                                                                        device.SetTransform(TransformState.Projection)));
+                        effect.SetValue(param, Matrix.Multiply(device.GetTransform(TransformState.World), Matrix.Multiply(device.GetTransform(TransformState.View), device.GetTransform(TransformState.Projection))));
                     try
                     {
                         param = (EffectHandle) this.QuadTileSet.EffectParameters["World"];
                         if (param != null)
-                            effect.SetValue(param, device.SetTransform(TransformState.World);
+                            effect.SetValue(param, device.GetTransform(TransformState.World));
                         param = (EffectHandle) this.QuadTileSet.EffectParameters["ViewInverse"];
                         if (param != null)
                         {
-                            Matrix viewInv = Matrix.Invert(device.SetTransform(TransformState.View);
+                            Matrix viewInv = Matrix.Invert(device.GetTransform(TransformState.View));
                             effect.SetValue(param, viewInv);
                         }
 
@@ -1194,7 +1191,7 @@ namespace WorldWind
                             if (param != null)
                             {
                                 SurfaceDescription sd = this.textures[i].GetLevelDescription(0);
-                                effect.SetValue(param, this.textures[i]);
+                                effect.SetValue(param, this.textures[i].NativePointer);
                             }
                         }
 
@@ -1262,7 +1259,7 @@ namespace WorldWind
                             Point3d localFrameOrigin = northHalf + eastHalf - centerPoint - this.localOrigin;
                             Vector4 lfoW = localFrameOrigin.Vector4;
                             lfoW.W = 1;
-                            lfoW.Transform(device.SetTransform(TransformState.World);
+                            lfoW.Transform(device.GetTransform(TransformState.World);
                             effect.SetValue(param, localFrameOrigin.Vector4);
 
                             param = (EffectHandle) this.QuadTileSet.EffectParameters["LocalFrameXAxis"];
@@ -1289,7 +1286,7 @@ namespace WorldWind
                     }
 
                     effect.End();
-                    device.SetTextureStageState(1, TextureStageStates.TextureCoordinateIndex, tc1);
+                    device.SetTextureStageState(1, TextureStage.TexCoordIndex, tc1);
                 }
                 else if (!this.QuadTileSet.RenderGrayscale || (device.Capabilities.PixelShaderVersion.Major < 1))
                 {
@@ -1346,7 +1343,7 @@ namespace WorldWind
                                              Matrix.Multiply(device.SetTransform(TransformState.World,
                                                              Matrix.Multiply(device.SetTransform(TransformState.View,
                                                                              device.SetTransform(TransformState.Projection)));
-                    grayscaleEffect.SetValue("Tex0", this.textures[0]);
+                    grayscaleEffect.SetValue("Tex0", this.textures[0].NativePointer);
                     grayscaleEffect.SetValue("Brightness", this.QuadTileSet.GrayscaleBrightness);
                     float opacity = (float) this.QuadTileSet.Opacity/255.0f;
                     grayscaleEffect.SetValue("Opacity", opacity);
@@ -1366,7 +1363,7 @@ namespace WorldWind
                 }
             }
             if (isMultitexturing)
-                device.SetTextureStageState(1, TextureStageStates.ColorOperation, (int) TextureOperation.Disable);
+                device.SetTextureStageState(1, TextureStage.ColorOperation, (int) TextureOperation.Disable);
         }
 
         private void device_DeviceReset(object sender, EventArgs e)
