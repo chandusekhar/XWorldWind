@@ -1,5 +1,5 @@
-<?xml version="1.SetSamplerState(0, SamplerState0" encoding="utf-8"?>
-<xs:schema id="GeoRssDataSet" targetNamespace="http://tempuri.SetSamplerState(0, SamplerStateorg/GeoRssDataSet.SetSamplerState(0, SamplerStatexsd" xmlns:mstns="http://tempuri.SetSamplerState(0, SamplerStateorg/GeoRssDataSet.SetSamplerState(0, SamplerStatexsd" xmlns="http://tempuri.SetSamplerState(0, SamplerStateorg/GeoRssDataSet.SetSamplerState(0, SamplerStatexsd" xmlns:xs="http://www.SetSamplerState(0, SamplerStatew3.SetSamplerState(0, SamplerStateorg/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="GeoRssDataSet" targetNamespace="http://tempuri.org/GeoRssDataSet.xsd" xmlns:mstns="http://tempuri.org/GeoRssDataSet.xsd" xmlns="http://tempuri.org/GeoRssDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">

@@ -5,6 +5,8 @@ using WorldWind.Configuration;
 using WorldWind.Terrain;
 using Utility;
 using System.Collections.Generic;
+using SharpDX;
+using SharpDX.Direct3D9;
 
 namespace WorldWind
 {
@@ -398,8 +400,8 @@ namespace WorldWind
                 if (drawArgs.CurrentWorld.IsEarth && Settings.EnableAtmosphericScattering)
                 {
                     // Render atmospheric scattering
-                    bool origFog = drawArgs.device.SetRenderState(RenderState.FogEnable;
-                    drawArgs.device.SetRenderState(RenderState.FogEnable = false;
+                    bool origFog = drawArgs.device.GetRenderState(RenderState.FogEnable);
+                    drawArgs.device.SetRenderState(RenderState.FogEnable, false);
                     float aspectRatio = (float)drawArgs.WorldCamera.Viewport.Width / drawArgs.WorldCamera.Viewport.Height;
                     float zNear = (float)drawArgs.WorldCamera.Altitude * 0.1f;
                     double distToCenterOfPlanet = (drawArgs.WorldCamera.Altitude + this.equatorialRadius);
@@ -407,13 +409,13 @@ namespace WorldWind
                     double amosphereThickness = Math.Sqrt(this.m_outerSphere.m_radius * this.m_outerSphere.m_radius + this.equatorialRadius * this.equatorialRadius);
                     Matrix proj = drawArgs.device.Transform.Projection;
                     drawArgs.device.Transform.Projection = Matrix.PerspectiveFovRH((float)drawArgs.WorldCamera.Fov.Radians, aspectRatio, zNear, (float)(tangentalDistance + amosphereThickness));
-                    drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
-                    drawArgs.device.SetRenderState(RenderState.CullMode = Cull.CounterClockwise;
+                    drawArgs.device.SetRenderState(RenderState.ZEnable,false);
+                    drawArgs.device.SetRenderState(RenderState.CullMode,Cull.Counterclockwise);
                     this.m_outerSphere.Render(drawArgs);
-                    drawArgs.device.SetRenderState(RenderState.CullMode = Cull.Clockwise;
-                    drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+                    drawArgs.device.SetRenderState(RenderState.CullMode,Cull.Clockwise);
+                    drawArgs.device.SetRenderState(RenderState.ZEnable,true);
                     drawArgs.device.Transform.Projection = proj;
-                    drawArgs.device.SetRenderState(RenderState.FogEnable = origFog;
+                    drawArgs.device.SetRenderState(RenderState.FogEnable,origFog);
                 }
 
 				if (Settings.EnableSunShading) this.RenderSun(drawArgs);

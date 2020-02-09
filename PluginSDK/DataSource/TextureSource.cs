@@ -1,7 +1,12 @@
 //#define VERBOSE
 using System;
 using System.Drawing;
+using System.Net;
 using System.IO;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 using Utility;
 using System.Reflection;
 
@@ -11,30 +16,30 @@ namespace WorldWind.DataSource
     {
         #region Members
         private Texture m_texture = null;
-        private DataRequest m_request;
+        private DataRequest m_request = null;
         private DataRequestDescriptor m_drd;
-        private ImageStore m_imageStore;
+        private ImageStore m_imageStore = null;
 
         private static Texture s_inQueueTexture = null;
         private static Texture s_inProgressTexture = null;
         private static Texture s_delayedTexture = null;
         private static Texture s_errorTexture = null;
 
-        protected static WorldWindSettings m_settings;
+        protected static WorldWindSettings m_settings = null;
 
         private static Object m_cacheLock = new Object();
         #endregion
 
         public int BasePriority
         {
-            get { if (this.m_request != null) return this.m_drd.BasePriority; else return 0; }
-            set { if (this.m_request != null) this.m_drd.BasePriority = value; }
+            get { if (m_request != null) return m_drd.BasePriority; else return 0; }
+            set { if (m_request != null) m_drd.BasePriority = value; }
         }
 
         public string Description
         {
-            get { return this.m_drd.Description; }
-            set { this.m_drd.Description = value; }
+            get { return m_drd.Description; }
+            set { m_drd.Description = value; }
         }
 
         private static void InitStaticTextures()
@@ -72,18 +77,18 @@ namespace WorldWind.DataSource
 
             // convert cache location to dds
 //            string ddsCache = Path.GetDirectoryName(cacheLocation)+"\\"+Path.GetFileNameWithoutExtension(cacheLocation) + ".dds";
-this.m_drd = new DataRequestDescriptor(url, cacheLocation, new CacheCallback(CacheCallback));
-this.m_drd.CompletionCallback = new CompletionCallback(this.CompletionCallback);
-this.m_drd.PriorityCallback = priorityCallback;
+            m_drd = new DataRequestDescriptor(url, cacheLocation, new CacheCallback(CacheCallback));
+            m_drd.CompletionCallback = new CompletionCallback(CompletionCallback);
+            m_drd.PriorityCallback = priorityCallback;
 
-this.m_imageStore = imageStore;
+            m_imageStore = imageStore;
 
             if (m_settings == null)
             {
                 // get the World Wind Settings through reflection.
                 Assembly a = Assembly.GetEntryAssembly();
                 Type appType = a.GetType("WorldWind.MainApplication");
-                FieldInfo finfo = appType.GetField("Settings", BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField);
+                System.Reflection.FieldInfo finfo = appType.GetField("Settings", BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField);
                 m_settings = finfo.GetValue(null) as WorldWindSettings;
             }
 
@@ -149,7 +154,7 @@ this.m_imageStore = imageStore;
                     Log.Write(Log.Levels.Error, "TextureSource: conversion to texture failed!");
                 }
             }
-            catch (SharpDX.Direct3D9.InvalidDataException ex)
+            catch (Microsoft.DirectX.Direct3D.InvalidDataException ex)
             {
                 Log.Write(Log.Levels.Error, "TextureSource: conversion to texture failed - data not valid!");
                 Log.Write(Log.Levels.Error, ex.ErrorString);
@@ -229,10 +234,10 @@ this.m_imageStore = imageStore;
                 }
             }
             // source data & buffers no longer needed.
-            this.m_request = null;
+            m_request = null;
 
             // only assign this 
-            this.m_texture = this.PostProcessTexture(texture);
+            m_texture = PostProcessTexture(texture);
         }
 
         static public implicit operator Texture(TextureSource source)
@@ -276,33 +281,33 @@ this.m_imageStore = imageStore;
 
             ColorType(byte r, byte g, byte b, byte a)
             {
-                this.Red = r;
-                this.Green = g;
-                this.Blue = b;
-                this.Alpha = a;
+                Red = r;
+                Green = g;
+                Blue = b;
+                Alpha = a;
             }
 
             ColorType(ColorType c)
             {
-                this.Red = c.Red;
-                this.Green = c.Green;
-                this.Blue = c.Blue;
-                this.Alpha = c.Alpha;
+                Red = c.Red;
+                Green = c.Green;
+                Blue = c.Blue;
+                Alpha = c.Alpha;
             }
         };
 
         private Texture PostProcessTexture(Texture texture)
         {
-            Log.Write(Log.Levels.Debug, "post processing texture for " + this.m_drd.Description);
+            Log.Write(Log.Levels.Debug, "post processing texture for " + m_drd.Description);
             // lock texture and apply transparency
             Surface surface = texture.GetSurfaceLevel(0);
             SurfaceDescription sd = texture.GetLevelDescription(0);
 
             ColorType[] cvs = (ColorType[])surface.LockRectangle(typeof(ColorType), LockFlags.None, sd.Width*sd.Height);
 
-            if (this.m_imageStore.ColorKeyEnabled)
+            if (m_imageStore.ColorKeyEnabled)
             {
-                Color c = Color.FromArgb(this.m_imageStore.ColorKey);
+                System.Drawing.Color c = Color.FromArgb(m_imageStore.ColorKey);
 
                 for (int y = 0; y < sd.Height; y++)
                 {
@@ -318,10 +323,10 @@ this.m_imageStore = imageStore;
                 }
             }
 
-            if (this.m_imageStore.AlphaKeyEnabled)
+            if (m_imageStore.AlphaKeyEnabled)
             {
-                int blendFrom = this.m_imageStore.AlphaKeyMin * 3;
-                int blendTo = this.m_imageStore.AlphaKeyMax * 3;
+                int blendFrom = m_imageStore.AlphaKeyMin * 3;
+                int blendTo = m_imageStore.AlphaKeyMax * 3;
 
                 for (int y = 0; y < sd.Height; y++)
                 {
@@ -342,7 +347,7 @@ this.m_imageStore = imageStore;
 
             surface.UnlockRectangle();
 
-            Log.Write(Log.Levels.Debug, "post processing finished for " + this.m_drd.Description);
+            Log.Write(Log.Levels.Debug, "post processing finished for " + m_drd.Description);
 
             return texture;
         }
@@ -351,8 +356,10 @@ this.m_imageStore = imageStore;
 
         public void Dispose()
         {
-            if (this.m_request != null) this.m_request.Cancel();
-            if(this.m_texture != null) this.m_texture.Dispose();
+            if (m_request != null)
+                m_request.Cancel();
+            if(m_texture != null)
+                m_texture.Dispose();
         }
 
         #endregion

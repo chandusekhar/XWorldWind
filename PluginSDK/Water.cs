@@ -128,22 +128,22 @@ namespace WorldWind
 
 
             
-            drawArgs.device.SetRenderState(RenderState.CullMode = Cull.None;
-            drawArgs.device.SetRenderState(RenderState.Lighting = true;
-            drawArgs.device.SetRenderState(RenderState.AmbientColor = 0x808080;
-            drawArgs.device.SetRenderState(RenderState.NormalizeNormals = true;
+            drawArgs.device.SetRenderState(RenderState.CullMode, Cull.None);
+            drawArgs.device.SetRenderState(RenderState.Lighting, true);
+            drawArgs.device.SetRenderState(RenderState.Ambient, 0x808080);
+            drawArgs.device.SetRenderState(RenderState.NormalizeNormals, true);
 
             drawArgs.device.Lights[0].Diffuse = Color.FromArgb(255, 255, 255);
             drawArgs.device.Lights[0].Type = LightType.Directional;
             drawArgs.device.Lights[0].Direction = new Vector3(1f, 1f, 1f);
             drawArgs.device.Lights[0].Enabled = true;
 
-            drawArgs.device.SetSamplerState(0, SamplerState.AddressU = TextureAddress.Wrap;
-            drawArgs.device.SetSamplerState(0, SamplerState.AddressV = TextureAddress.Wrap;
+            drawArgs.device.SetSamplerState(0, SamplerState.AddressU, TextureAddress.Wrap);
+            drawArgs.device.SetSamplerState(0, SamplerState.AddressV,TextureAddress.Wrap);
 
-            drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable = true;
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor;
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
+            drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable, true);
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.SelectArg1);
 
             // Put the light somewhere up in space
             drawArgs.device.Lights[0].Position = new Vector3(

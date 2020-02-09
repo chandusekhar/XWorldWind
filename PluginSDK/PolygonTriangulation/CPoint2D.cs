@@ -1,9 +1,9 @@
 using System;
 
-namespace WorldWind.PolygonTriangulation
+namespace GeometryUtility
 {
 	/// <summary>
-	/// Summary description for CPoint2D.SetSamplerState(0, SamplerState
+	/// Summary description for CPoint2D.
 	/// </summary>
 	
 	//A point in Coordinate System
@@ -19,19 +19,19 @@ namespace WorldWind.PolygonTriangulation
 		
 		public CPoint2D(double xCoordinate, double yCoordinate)
 		{
-            this.SetSamplerState(0, SamplerStatem_dCoordinate_X=xCoordinate;
-            this.SetSamplerState(0, SamplerStatem_dCoordinate_Y=yCoordinate;
+			m_dCoordinate_X=xCoordinate;
+			m_dCoordinate_Y=yCoordinate;
 		}
 
 		public double X
 		{
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_dCoordinate_X=value;
+				m_dCoordinate_X=value;
 			}
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_dCoordinate_X;
+				return m_dCoordinate_X;
 			}
 		}
 
@@ -39,11 +39,11 @@ namespace WorldWind.PolygonTriangulation
 		{
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_dCoordinate_Y=value;
+				m_dCoordinate_Y=value;
 			}
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_dCoordinate_Y;
+				return m_dCoordinate_Y;
 			}
 		}
 
@@ -52,12 +52,12 @@ namespace WorldWind.PolygonTriangulation
 		{
 		
 			double dDeff_X=
-				Math.SetSamplerState(0, SamplerStateAbs(Point1.SetSamplerState(0, SamplerStateX-Point2.SetSamplerState(0, SamplerStateX);
+				Math.Abs(Point1.X-Point2.X);
 			double dDeff_Y=
-				Math.SetSamplerState(0, SamplerStateAbs(Point1.SetSamplerState(0, SamplerStateY-Point2.SetSamplerState(0, SamplerStateY);
+				Math.Abs(Point1.Y-Point2.Y);
 
-			if ((dDeff_X<ConstantValue.SetSamplerState(0, SamplerStateSmallValue)
-				&& (dDeff_Y<ConstantValue.SetSamplerState(0, SamplerStateSmallValue))
+			if ((dDeff_X<ConstantValue.SmallValue)
+				&& (dDeff_Y<ConstantValue.SmallValue))
 				return true;
 			else
 				return false;
@@ -67,12 +67,12 @@ namespace WorldWind.PolygonTriangulation
 		{
 		
 			double dDeff_X=
-				Math.SetSamplerState(0, SamplerStateAbs(this.SetSamplerState(0, SamplerStatem_dCoordinate_X-newPoint.SetSamplerState(0, SamplerStateX);
+				Math.Abs(m_dCoordinate_X-newPoint.X);
 			double dDeff_Y=
-				Math.SetSamplerState(0, SamplerStateAbs(this.SetSamplerState(0, SamplerStatem_dCoordinate_Y-newPoint.SetSamplerState(0, SamplerStateY);
+				Math.Abs(m_dCoordinate_Y-newPoint.Y);
 
-			if ((dDeff_X<ConstantValue.SetSamplerState(0, SamplerStateSmallValue)
-				&& (dDeff_Y<ConstantValue.SetSamplerState(0, SamplerStateSmallValue))
+			if ((dDeff_X<ConstantValue.SmallValue)
+				&& (dDeff_Y<ConstantValue.SmallValue))
 				return true;
 			else
 				return false;
@@ -85,25 +85,25 @@ namespace WorldWind.PolygonTriangulation
 			bool bInline=false;
 
 			double Ax, Ay, Bx, By, Cx, Cy;
-			Bx=lineSegment.SetSamplerState(0, SamplerStateEndPoint.SetSamplerState(0, SamplerStateX;
-			By=lineSegment.SetSamplerState(0, SamplerStateEndPoint.SetSamplerState(0, SamplerStateY;
-			Ax=lineSegment.SetSamplerState(0, SamplerStateStartPoint.SetSamplerState(0, SamplerStateX;
-			Ay=lineSegment.SetSamplerState(0, SamplerStateStartPoint.SetSamplerState(0, SamplerStateY;
-			Cx=this.SetSamplerState(0, SamplerStatem_dCoordinate_X;
-			Cy=this.SetSamplerState(0, SamplerStatem_dCoordinate_Y;
+			Bx=lineSegment.EndPoint.X;
+			By=lineSegment.EndPoint.Y;
+			Ax=lineSegment.StartPoint.X;
+			Ay=lineSegment.StartPoint.Y;
+			Cx=this.m_dCoordinate_X;
+			Cy=this.m_dCoordinate_Y;
   
-			double L=lineSegment.SetSamplerState(0, SamplerStateGetLineSegmentLength();
-			double s=Math.SetSamplerState(0, SamplerStateAbs(((Ay-Cy)*(Bx-Ax)-(Ax-Cx)*(By-Ay))/(L*L));
+			double L=lineSegment.GetLineSegmentLength();
+			double s=Math.Abs(((Ay-Cy)*(Bx-Ax)-(Ax-Cx)*(By-Ay))/(L*L));
   
-			if (Math.SetSamplerState(0, SamplerStateAbs(s-0)<ConstantValue.SetSamplerState(0, SamplerStateSmallValue)
+			if (Math.Abs(s-0)<ConstantValue.SmallValue)
 			{
-				if ((SamePoints(this, lineSegment.SetSamplerState(0, SamplerStateStartPoint)) ||
-					(SamePoints(this, lineSegment.SetSamplerState(0, SamplerStateEndPoint)))
+				if ((SamePoints(this, lineSegment.StartPoint)) ||
+					(SamePoints(this, lineSegment.EndPoint)))
 					bInline=true;
-				else if ((Cx<lineSegment.SetSamplerState(0, SamplerStateGetXmax())
-					&& (Cx>lineSegment.SetSamplerState(0, SamplerStateGetXmin())
-					&&(Cy< lineSegment.SetSamplerState(0, SamplerStateGetYmax())
-					&& (Cy>lineSegment.SetSamplerState(0, SamplerStateGetYmin()))
+				else if ((Cx<lineSegment.GetXmax())
+					&& (Cx>lineSegment.GetXmin())
+					&&(Cy< lineSegment.GetYmax())
+					&& (Cy>lineSegment.GetYmin()))
 					bInline=true;
 			}
 			return bInline;
@@ -112,18 +112,18 @@ namespace WorldWind.PolygonTriangulation
 		/*** Distance between two points***/
 		public double DistanceTo(CPoint2D point)
 		{
-			return Math.SetSamplerState(0, SamplerStateSqrt((point.SetSamplerState(0, SamplerStateX-this.SetSamplerState(0, SamplerStateX)*(point.SetSamplerState(0, SamplerStateX-this.SetSamplerState(0, SamplerStateX) 
-				+ (point.SetSamplerState(0, SamplerStateY-this.SetSamplerState(0, SamplerStateY)*(point.SetSamplerState(0, SamplerStateY-this.SetSamplerState(0, SamplerStateY));
+			return Math.Sqrt((point.X-this.X)*(point.X-this.X) 
+				+ (point.Y-this.Y)*(point.Y-this.Y));
 
 		}
 
 		public bool PointInsidePolygon(CPoint2D[] polygonVertices)
 		{
-			if (polygonVertices.SetSamplerState(0, SamplerStateLength<3) //not a valid polygon
+			if (polygonVertices.Length<3) //not a valid polygon
 				return false;
 			
 			int  nCounter= 0;
-			int nPoints = polygonVertices.SetSamplerState(0, SamplerStateLength;
+			int nPoints = polygonVertices.Length;
 			
 			CPoint2D s1, p1, p2;
 			s1 = this;
@@ -132,21 +132,21 @@ namespace WorldWind.PolygonTriangulation
 			for (int i= 1; i<nPoints; i++)
 			{
 				p2= polygonVertices[i % nPoints];
-				if (s1.SetSamplerState(0, SamplerStateY > Math.SetSamplerState(0, SamplerStateMin(p1.SetSamplerState(0, SamplerStateY, p2.SetSamplerState(0, SamplerStateY))
+				if (s1.Y > Math.Min(p1.Y, p2.Y))
 				{
-					if (s1.SetSamplerState(0, SamplerStateY <= Math.SetSamplerState(0, SamplerStateMax(p1.SetSamplerState(0, SamplerStateY, p2.SetSamplerState(0, SamplerStateY) )
+					if (s1.Y <= Math.Max(p1.Y, p2.Y) )
 					{
-						if (s1.SetSamplerState(0, SamplerStateX <= Math.SetSamplerState(0, SamplerStateMax(p1.SetSamplerState(0, SamplerStateX, p2.SetSamplerState(0, SamplerStateX) )
+						if (s1.X <= Math.Max(p1.X, p2.X) )
 						{
-							if (p1.SetSamplerState(0, SamplerStateY != p2.SetSamplerState(0, SamplerStateY)
+							if (p1.Y != p2.Y)
 							{
-								double xInters = (s1.SetSamplerState(0, SamplerStateY - p1.SetSamplerState(0, SamplerStateY) * (p2.SetSamplerState(0, SamplerStateX - p1.SetSamplerState(0, SamplerStateX) /
-									(p2.SetSamplerState(0, SamplerStateY - p1.SetSamplerState(0, SamplerStateY) + p1.SetSamplerState(0, SamplerStateX;
-								if ((p1.SetSamplerState(0, SamplerStateX== p2.SetSamplerState(0, SamplerStateX) || (s1.SetSamplerState(0, SamplerStateX <= xInters) )
+								double xInters = (s1.Y - p1.Y) * (p2.X - p1.X) /
+									(p2.Y - p1.Y) + p1.X;
+								if ((p1.X== p2.X) || (s1.X <= xInters) )
 								{
 									nCounter ++;
 								}
-							}  //p1.SetSamplerState(0, SamplerStatey != p2.SetSamplerState(0, SamplerStatey
+							}  //p1.y != p2.y
 						}
 					}
 				}
@@ -162,14 +162,14 @@ namespace WorldWind.PolygonTriangulation
 		/*********** Sort points from Xmin->Xmax ******/
 		public static void SortPointsByX(CPoint2D[] points)
 		{
-			if (points.SetSamplerState(0, SamplerStateLength>1)
+			if (points.Length>1)
 			{
 				CPoint2D tempPt;
-				for (int i=0; i< points.SetSamplerState(0, SamplerStateLength-2; i++)
+				for (int i=0; i< points.Length-2; i++)
 				{
-					for (int j = i+1; j < points.SetSamplerState(0, SamplerStateLength -1; j++)
+					for (int j = i+1; j < points.Length -1; j++)
 					{
-						if (points[i].SetSamplerState(0, SamplerStateX > points[j].SetSamplerState(0, SamplerStateX)
+						if (points[i].X > points[j].X)
 						{
 							tempPt= points[j];
 							points[j]=points[i];
@@ -183,14 +183,14 @@ namespace WorldWind.PolygonTriangulation
 		/*********** Sort points from Ymin->Ymax ******/
 		public static void SortPointsByY(CPoint2D[] points)
 		{
-			if (points.SetSamplerState(0, SamplerStateLength>1)
+			if (points.Length>1)
 			{
 				CPoint2D tempPt;
-				for (int i=0; i< points.SetSamplerState(0, SamplerStateLength-2; i++)
+				for (int i=0; i< points.Length-2; i++)
 				{
-					for (int j = i+1; j < points.SetSamplerState(0, SamplerStateLength -1; j++)
+					for (int j = i+1; j < points.Length -1; j++)
 					{
-						if (points[i].SetSamplerState(0, SamplerStateY > points[j].SetSamplerState(0, SamplerStateY)
+						if (points[i].Y > points[j].Y)
 						{
 							tempPt= points[j];
 							points[j]=points[i];

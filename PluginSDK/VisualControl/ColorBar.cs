@@ -1,6 +1,8 @@
 using System;
 using System.Drawing;
+using System.Collections;
 using System.ComponentModel;
+using System.IO;
 using WorldWind.Net;
 using System.Windows.Forms;
 
@@ -9,7 +11,7 @@ namespace WorldWind.VisualControl
 	/// <summary>
 	/// An auto-sizing form that displays a bitmap
 	/// </summary>
-	public class Colorbar : Form
+	public class Colorbar : System.Windows.Forms.Form
 	{
 		Image image;
 		string oldText; // Original legend text
@@ -28,7 +30,7 @@ namespace WorldWind.VisualControl
 
 			// Required for Windows Form Designer support
 			//
-            this.InitializeComponent();
+			InitializeComponent();
 
 			if(parent!=null)
 			{
@@ -45,20 +47,20 @@ namespace WorldWind.VisualControl
 			if(url != null && !url.ToLower().StartsWith("http://"))
 			{
 				// Local file
-                this.Image = Image.FromFile(url);
+				Image = Image.FromFile(url);
 				return;
 			}
 
             // Offline check
             if (World.Settings.WorkOffline)
-                return;
+                return; 
 
-            this.oldText = this.Text;
-            this.Text = this.Text + ": Loading...";
+			oldText = Text;
+			Text = Text + ": Loading...";
 			using(WebDownload client = new WebDownload(url))
 			{
 				client.DownloadMemory();
-                this.DownloadComplete(client);			
+				DownloadComplete(client);			
 			}
 		}
 
@@ -70,7 +72,7 @@ namespace WorldWind.VisualControl
 			if(url != null && !url.ToLower().StartsWith("http://"))
 			{
 				// Local file
-                this.Image = Image.FromFile(url);
+				Image = Image.FromFile(url);
 				return;
 			}
 
@@ -78,8 +80,8 @@ namespace WorldWind.VisualControl
             if (World.Settings.WorkOffline)
                 return;
 
-            this.oldText = this.Text;
-            this.Text = this.Text + ": Loading...";
+			oldText = Text;
+			Text = Text + ": Loading...";
 			WebDownload client = new WebDownload(url);
 		////	client.CompleteCallback += new DownloadCompleteHandler(DownloadComplete);
 			client.BackgroundDownloadMemory();
@@ -89,14 +91,14 @@ namespace WorldWind.VisualControl
 		{
 			if(this.InvokeRequired)
 			{
-                this.Invoke(new DownloadCompleteHandler(this.DownloadComplete), new object[]{downloadInfo});
+				Invoke(new DownloadCompleteHandler(DownloadComplete), new object[]{downloadInfo});
 				return;
 			}
 
 			try
 			{
 				downloadInfo.Verify();
-                this.Image = Image.FromStream(downloadInfo.ContentStream);
+				Image = System.Drawing.Image.FromStream(downloadInfo.ContentStream);
 			}
 			catch(Exception caught)
 			{
@@ -108,7 +110,7 @@ namespace WorldWind.VisualControl
 			{
 				if(downloadInfo!=null)
 					downloadInfo.Dispose();
-                this.Text = this.oldText;
+				Text = oldText;
 			}
 		}
 
@@ -119,7 +121,7 @@ namespace WorldWind.VisualControl
 		{
 			get
 			{
-				return this.image;
+				return image;
 			}
 			set 
 			{
@@ -137,7 +139,7 @@ namespace WorldWind.VisualControl
 
 				this.image = value;
 				this.ClientSize = value.Size;
-				this.MinimumSize = this.Size;
+				this.MinimumSize = Size;
 				this.Visible = true;
 			}
 		}
@@ -146,9 +148,10 @@ namespace WorldWind.VisualControl
 		{
 			base.OnClosing (e);
 			e.Cancel = true;
-            this.Visible = false;
+			Visible = false;
 
-			if(this.Owner!=null) this.Owner.Focus();
+			if(Owner!=null)
+				Owner.Focus();
 		}
 
 		/// <summary>
@@ -156,45 +159,45 @@ namespace WorldWind.VisualControl
 		/// </summary>
 		protected override void Dispose( bool disposing )
 		{
-			if(this.image!=null)
+			if(image!=null)
 			{
-                this.image.Dispose();
-                this.image = null;
+				image.Dispose();
+				image = null;
 			}
 			base.Dispose( disposing );
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			if(this.image==null)
+			if(image==null)
 			{
 				base.OnPaint(e);
 				return;
 			}
 
 			e.Graphics.FillRectangle(SystemBrushes.Window, e.ClipRectangle);
-			e.Graphics.DrawImage(this.image, Rectangle.FromLTRB(0,0, this.ClientSize.Width-1, this.ClientSize.Height-1));
+			e.Graphics.DrawImage(image, Rectangle.FromLTRB(0,0,ClientSize.Width-1, ClientSize.Height-1));
 		}
 
-		protected override void OnKeyUp(KeyEventArgs e) 
+		protected override void OnKeyUp(System.Windows.Forms.KeyEventArgs e) 
 		{
 			switch(e.KeyCode) 
 			{
 				case Keys.L:
 					if(e.Modifiers==Keys.Alt)
 					{
-                        this.Close();
+						Close();
 						e.Handled = true;
 					}
 					break;
 				case Keys.Escape:
-                    this.Close();
+					Close();
 					e.Handled = true;
 					break;
 				case Keys.F4:
 					if(e.Modifiers==Keys.Control)
 					{
-                        this.Close();
+						Close();
 						e.Handled = true;
 					}
 					break;

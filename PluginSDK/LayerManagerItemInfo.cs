@@ -24,7 +24,7 @@ namespace WorldWind
 			//
 			// Required for Windows Form Designer support
 			//
-            this.InitializeComponent();
+			this.InitializeComponent();
 
 			
 			foreach(string key in itemHash.Keys)
@@ -43,7 +43,7 @@ namespace WorldWind
 			{
 				if(this.components != null)
 				{
-                    this.components.Dispose();
+					this.components.Dispose();
 				}
 			}
 			base.Dispose( disposing );

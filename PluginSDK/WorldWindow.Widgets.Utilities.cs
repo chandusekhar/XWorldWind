@@ -1,9 +1,10 @@
 using System;
 using System.Windows.Forms;
-using SharpDX;
-using SharpDX.Direct3D9;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
+using WorldWind;
 
-namespace WorldWind
+namespace WorldWind.Widgets
 {
 	/// <summary>
 	/// Interface must be implemented in order to recieve user input.  Can be used by IRenderables and IWidgets.
@@ -83,7 +84,7 @@ namespace WorldWind
 
 			public static void DrawLine(Vector2[] linePoints, int color, Device device)
 			{
-				TransformedColored[] lineVerts = new CustomVertex.TransformedColored[linePoints.Length];
+				CustomVertex.TransformedColored[] lineVerts = new CustomVertex.TransformedColored[linePoints.Length];
 
 				for(int i = 0; i < linePoints.Length; i++)
 				{
@@ -94,7 +95,7 @@ namespace WorldWind
 					lineVerts[i].Color = color;
 				}
 
-				device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+				device.TextureState[0].ColorOperation = TextureOperation.Disable;
 				device.VertexFormat = CustomVertex.TransformedColored.Format;
 
 				device.DrawUserPrimitives(PrimitiveType.LineStrip, lineVerts.Length - 1, lineVerts);
@@ -124,7 +125,7 @@ namespace WorldWind
 				verts[3].Color = color;
 
 				device.VertexFormat = CustomVertex.TransformedColored.Format;
-				device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+				device.TextureState[0].ColorOperation = TextureOperation.Disable;
 				device.DrawUserPrimitives(PrimitiveType.TriangleStrip, verts.Length - 2, verts);
 			}
 
@@ -148,7 +149,7 @@ namespace WorldWind
 				}
 
 				device.VertexFormat = CustomVertex.TransformedColored.Format;
-				device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+				device.TextureState[0].ColorOperation = TextureOperation.Disable;
 				device.DrawUserPrimitives(PrimitiveType.TriangleFan, verts.Length - 2, verts);
 			}
 		}

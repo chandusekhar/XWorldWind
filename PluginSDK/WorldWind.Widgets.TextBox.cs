@@ -1,6 +1,8 @@
 using System;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 
-namespace WorldWind
+namespace WorldWind.Widgets
 {
 	/// <summary>
 	/// Summary description for TextLabel.
@@ -12,8 +14,8 @@ namespace WorldWind
 		System.Drawing.Size m_Size = new System.Drawing.Size(0,20);
 		bool m_Visible = true;
 		bool m_Enabled = true;
-		IWidget m_ParentWidget;
-		object m_Tag;
+		IWidget m_ParentWidget = null;
+		object m_Tag = null;
 		System.Drawing.Color m_ForeColor = System.Drawing.Color.White;
 		string m_Name = "";
 		System.Drawing.Point m_LastMouseClickPosition = System.Drawing.Point.Empty;
@@ -28,33 +30,33 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Name;
+				return m_Name;
 			}
 			set
 			{
-                this.m_Name = value;
+				m_Name = value;
 			}
 		}
 		public System.Drawing.Color ForeColor
 		{
 			get
 			{
-				return this.m_ForeColor;
+				return m_ForeColor;
 			}
 			set
 			{
-                this.m_ForeColor = value;
+				m_ForeColor = value;
 			}
 		}
 		public string Text
 		{
 			get
 			{
-				return this.m_Text;
+				return m_Text;
 			}
 			set
 			{
-                this.m_Text = value;
+				m_Text = value;
 			}
 		}
 		#endregion
@@ -65,11 +67,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_ParentWidget;
+				return m_ParentWidget;
 			}
 			set
 			{
-                this.m_ParentWidget = value;
+				m_ParentWidget = value;
 			}
 		}
 
@@ -77,11 +79,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Visible;
+				return m_Visible;
 			}
 			set
 			{
-                this.m_Visible = value;
+				m_Visible = value;
 			}
 		}
 
@@ -89,11 +91,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Tag;
+				return m_Tag;
 			}
 			set
 			{
-                this.m_Tag = value;
+				m_Tag = value;
 			}
 		}
 
@@ -114,11 +116,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Size;
+				return m_Size;
 			}
 			set
 			{
-                this.m_Size = value;
+				m_Size = value;
 			}
 		}
 
@@ -126,11 +128,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Enabled;
+				return m_Enabled;
 			}
 			set
 			{
-                this.m_Enabled = value;
+				m_Enabled = value;
 			}
 		}
 
@@ -138,11 +140,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Location;
+				return m_Location;
 			}
 			set
 			{
-                this.m_Location = value;
+				m_Location = value;
 			}
 		}
 
@@ -150,14 +152,16 @@ namespace WorldWind
 		{
 			get
 			{
-				if(this.m_ParentWidget != null)
+				if(m_ParentWidget != null)
 				{
-					return new System.Drawing.Point(this.m_Location.X + this.m_ParentWidget.AbsoluteLocation.X, this.m_Location.Y + this.m_ParentWidget.AbsoluteLocation.Y);
+					return new System.Drawing.Point(
+						m_Location.X + m_ParentWidget.AbsoluteLocation.X,
+						m_Location.Y + m_ParentWidget.AbsoluteLocation.Y);
 					
 				}
 				else
 				{
-					return this.m_Location;
+					return m_Location;
 				}
 			}
 		}
@@ -166,16 +170,16 @@ namespace WorldWind
 		int m_SelectionEnd = -1;
 		int m_CaretPos = -1;
 
-		bool m_RecalculateCaretPos;
+		bool m_RecalculateCaretPos = false;
 
 		public void Render(DrawArgs drawArgs)
 		{
-			if(this.m_Visible)
+			if(m_Visible)
 			{
-				string displayText = this.m_Text;
+				string displayText = m_Text;
 				string caretText = "|";
 
-				if(this.m_MouseDownPosition != System.Drawing.Point.Empty)
+				if(m_MouseDownPosition != System.Drawing.Point.Empty)
 				{
 					int startX = (this.m_LastMousePosition.X >= this.m_MouseDownPosition.X ? this.m_MouseDownPosition.X : this.m_LastMousePosition.X);
 					int endX = (this.m_LastMousePosition.X < this.m_MouseDownPosition.X ? this.m_MouseDownPosition.X : this.m_LastMousePosition.X);
@@ -188,19 +192,20 @@ namespace WorldWind
 						System.Drawing.Rectangle rect = drawArgs.defaultDrawingFont.MeasureString(
 							null,
 							displayText.Substring(0, i).Replace(" ", "I"),
-							DrawTextFormat.None, this.m_ForeColor);
+							DrawTextFormat.None,
+							m_ForeColor);
 
 						if(!startXFound && startX <= rect.Width)
 						{
 							startX = prevWidth;
-                            this.m_SelectionStart = i - 1;
+							m_SelectionStart = i - 1;
 							startXFound = true;
 						}
 
 						if(!endXFound && endX <= rect.Width)
 						{
 							endX = prevWidth;
-                            this.m_SelectionEnd = i - 1;
+							m_SelectionEnd = i - 1;
 							endXFound = true;
 						}
 
@@ -212,45 +217,51 @@ namespace WorldWind
 
 					if(!endXFound)
 					{
-                        this.m_SelectionEnd = displayText.Length;
+						m_SelectionEnd = displayText.Length;
 						endX = prevWidth;
 					}
 
-					Utilities.DrawBox(this.AbsoluteLocation.X + startX, this.AbsoluteLocation.Y,
+					Utilities.DrawBox(
+						AbsoluteLocation.X + startX,
+						AbsoluteLocation.Y,
 						endX - startX,
 						this.ClientSize.Height, 0.0f, System.Drawing.Color.FromArgb(200,200,200,200).ToArgb(),
 						drawArgs.device);
 				}
 
 				drawArgs.defaultDrawingFont.DrawText(
-					null, this.m_Text,
-					new System.Drawing.Rectangle(this.AbsoluteLocation.X, this.AbsoluteLocation.Y, this.m_Size.Width, this.m_Size.Height),
-					DrawTextFormat.NoClip, this.m_ForeColor);
+					null,
+					m_Text,
+					new System.Drawing.Rectangle(AbsoluteLocation.X, AbsoluteLocation.Y, m_Size.Width, m_Size.Height),
+					DrawTextFormat.NoClip,
+					m_ForeColor);
 
-				if(DateTime.Now.Millisecond < 500)
+				if(System.DateTime.Now.Millisecond < 500)
 				{
 					string space = " W";
 
 					System.Drawing.Rectangle spaceRect = drawArgs.defaultDrawingFont.MeasureString(
 						null,
 						space,
-						DrawTextFormat.None, this.m_ForeColor);
+						DrawTextFormat.None,
+						m_ForeColor);
 
 					space = "W";
 
 					System.Drawing.Rectangle spaceRect1 = drawArgs.defaultDrawingFont.MeasureString(
 						null,
 						space,
-						DrawTextFormat.None, this.m_ForeColor);
+						DrawTextFormat.None,
+						m_ForeColor);
 
 					int spaceWidth = spaceRect.Width - spaceRect1.Width;
 
-					if(this.m_RecalculateCaretPos)
+					if(m_RecalculateCaretPos)
 					{
-						if(this.m_LastMouseClickPosition == System.Drawing.Point.Empty)
-                            this.m_CaretPos = displayText.Length;
+						if(m_LastMouseClickPosition == System.Drawing.Point.Empty)
+							m_CaretPos = displayText.Length;
 						else if(displayText.Length == 0)
-                            this.m_CaretPos = 0;
+							m_CaretPos = 0;
 						else
 						{
 							for(int i = 1; i < displayText.Length; i++)
@@ -258,42 +269,46 @@ namespace WorldWind
 								System.Drawing.Rectangle rect = drawArgs.defaultDrawingFont.MeasureString(
 									null,
 									displayText.Substring(0, i).Replace(" ", "i"),
-									DrawTextFormat.None, this.m_ForeColor);
+									DrawTextFormat.None,
+									m_ForeColor);
 
-								if(this.m_LastMouseClickPosition.X <= rect.Width)
+								if(m_LastMouseClickPosition.X <= rect.Width)
 								{
-                                    this.m_CaretPos = i - 1;
+									m_CaretPos = i - 1;
 									break;
 								}
 							}
 
-                            this.m_RecalculateCaretPos = false;
+							m_RecalculateCaretPos = false;
 						}
 					}
 
 
-					if(this.m_CaretPos >= 0)
+					if(m_CaretPos >= 0)
 					{
 						System.Drawing.Rectangle caretRect = drawArgs.defaultDrawingFont.MeasureString(
 							null,
 							caretText,
-							DrawTextFormat.None, this.m_ForeColor);
+							DrawTextFormat.None,
+							m_ForeColor);
 
 						System.Drawing.Rectangle textRect = drawArgs.defaultDrawingFont.MeasureString(
 							null,
-							displayText.Substring(0, this.m_CaretPos),
-							DrawTextFormat.None, this.m_ForeColor);
+							displayText.Substring(0, m_CaretPos),
+							DrawTextFormat.None,
+							m_ForeColor);
 
 						int caretOffset = 0;
-						if(this.m_CaretPos != 0 && this.m_CaretPos == displayText.Length && displayText[displayText.Length - 1] == ' ')
+						if(m_CaretPos != 0 && m_CaretPos == displayText.Length && displayText[displayText.Length - 1] == ' ')
 							caretOffset = spaceWidth;
-						else if(this.m_CaretPos < displayText.Length && this.m_CaretPos > 0 && displayText[this.m_CaretPos - 1] == ' ')
+						else if(m_CaretPos < displayText.Length && m_CaretPos > 0 && displayText[m_CaretPos - 1] == ' ')
 							caretOffset = spaceWidth;
 
 						drawArgs.defaultDrawingFont.DrawText(
 							null,
 							caretText,
-							new System.Drawing.Rectangle(this.AbsoluteLocation.X + textRect.Width - caretRect.Width / 2 + caretOffset, this.AbsoluteLocation.Y, this.m_Size.Width, this.m_Size.Height),
+							new System.Drawing.Rectangle(
+							AbsoluteLocation.X + textRect.Width - caretRect.Width / 2 + caretOffset, AbsoluteLocation.Y, m_Size.Width, m_Size.Height),
 							DrawTextFormat.NoClip,
 							System.Drawing.Color.Cyan);//m_ForeColor);
 					}
@@ -334,14 +349,14 @@ namespace WorldWind
 						if(this.m_MouseDownPosition != System.Drawing.Point.Empty &&
 							this.m_SelectionStart != this.m_SelectionEnd)
 						{
-							this.Text = this.Text.Remove(this.m_SelectionStart, this.m_SelectionEnd - this.m_SelectionStart);
-                            this.m_CaretPos = this.m_SelectionStart;
-                            this.m_MouseDownPosition = System.Drawing.Point.Empty;
+							this.Text = this.Text.Remove(m_SelectionStart, m_SelectionEnd - m_SelectionStart);
+							m_CaretPos = m_SelectionStart;
+							m_MouseDownPosition = System.Drawing.Point.Empty;
 						}
-						else if(this.m_CaretPos > 0)
+						else if(m_CaretPos > 0)
 						{
-							this.Text = this.Text.Remove(this.m_CaretPos - 1, 1);
-                            this.m_CaretPos--;
+							this.Text = this.Text.Remove(m_CaretPos - 1, 1);
+							m_CaretPos--;
 
 						}
 						
@@ -361,17 +376,17 @@ namespace WorldWind
 
 		public bool OnMouseDown(System.Windows.Forms.MouseEventArgs e)
 		{
-			if(e.Button == System.Windows.Forms.MouseButtons.Left && this.IsInClientArea(e))
+			if(e.Button == System.Windows.Forms.MouseButtons.Left && IsInClientArea(e))
 			{
-                this.m_MouseDownPosition = new System.Drawing.Point(e.X - this.AbsoluteLocation.X, e.Y - this.AbsoluteLocation.Y);
-				this.m_LastMousePosition = this.m_MouseDownPosition;
-                this.m_RecalculateCaretPos = true;
+				m_MouseDownPosition = new System.Drawing.Point(e.X - AbsoluteLocation.X, e.Y - AbsoluteLocation.Y);
+				this.m_LastMousePosition = m_MouseDownPosition;
+				m_RecalculateCaretPos = true;
 				return true;
 			}
 			else
 			{
-                this.m_MouseDownPosition = System.Drawing.Point.Empty;
-                this.m_RecalculateCaretPos = true;
+				m_MouseDownPosition = System.Drawing.Point.Empty;
+				m_RecalculateCaretPos = true;
 				return false;
 			}
 		}
@@ -390,10 +405,10 @@ namespace WorldWind
 
 		public bool OnMouseMove(System.Windows.Forms.MouseEventArgs e)
 		{
-			if(e.Button == System.Windows.Forms.MouseButtons.Left && this.m_MouseDownPosition != System.Drawing.Point.Empty)
+			if(e.Button == System.Windows.Forms.MouseButtons.Left && m_MouseDownPosition != System.Drawing.Point.Empty)
 			{
-                this.m_LastMousePosition = new System.Drawing.Point(e.X - this.AbsoluteLocation.X, e.Y - this.AbsoluteLocation.Y);
-                this.m_RecalculateCaretPos = true;
+				m_LastMousePosition = new System.Drawing.Point(e.X - AbsoluteLocation.X, e.Y - AbsoluteLocation.Y);
+				m_RecalculateCaretPos = true;
 				return true;
 			}
 			else
@@ -404,10 +419,10 @@ namespace WorldWind
 
 		private bool IsInClientArea(System.Drawing.Point p)
 		{
-			if(p.X >= this.AbsoluteLocation.X &&
-				p.X <= this.AbsoluteLocation.X + this.ClientSize.Width &&
-				p.Y >= this.AbsoluteLocation.Y &&
-				p.Y <= this.AbsoluteLocation.Y + this.ClientSize.Height)
+			if(p.X >= AbsoluteLocation.X &&
+				p.X <= AbsoluteLocation.X + ClientSize.Width &&
+				p.Y >= AbsoluteLocation.Y &&
+				p.Y <= AbsoluteLocation.Y + ClientSize.Height)
 			{
 				return true;
 			}
@@ -419,10 +434,10 @@ namespace WorldWind
 
 		private bool IsInClientArea(System.Windows.Forms.MouseEventArgs e)
 		{
-			if(e.X >= this.AbsoluteLocation.X &&
-				e.X <= this.AbsoluteLocation.X + this.ClientSize.Width &&
-				e.Y >= this.AbsoluteLocation.Y &&
-				e.Y <= this.AbsoluteLocation.Y + this.ClientSize.Height)
+			if(e.X >= AbsoluteLocation.X &&
+				e.X <= AbsoluteLocation.X + ClientSize.Width &&
+				e.Y >= AbsoluteLocation.Y &&
+				e.Y <= AbsoluteLocation.Y + ClientSize.Height)
 			{
 				return true;
 			}
@@ -434,12 +449,12 @@ namespace WorldWind
 
 		public bool OnMouseUp(System.Windows.Forms.MouseEventArgs e)
 		{
-			if(this.IsInClientArea(e))
+			if(IsInClientArea(e))
 			{
 				this.m_LastMouseClickPosition = new System.Drawing.Point(
-					e.X - this.AbsoluteLocation.X,
-					e.Y - this.AbsoluteLocation.Y);
-                this.m_RecalculateCaretPos = true;
+					e.X - AbsoluteLocation.X,
+					e.Y - AbsoluteLocation.Y);
+				m_RecalculateCaretPos = true;
 				return true;
 			}
 			else

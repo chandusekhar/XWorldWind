@@ -1,9 +1,9 @@
 using System;
 
-namespace WorldWind.PolygonTriangulation
+namespace GeometryUtility
 {
 	/// <summary>
-	/// Summary description for NoValidReturnException.SetSamplerState(0, SamplerState
+	/// Summary description for NoValidReturnException.
 	/// </summary>
 	public class NonValidReturnException: ApplicationException
 	{

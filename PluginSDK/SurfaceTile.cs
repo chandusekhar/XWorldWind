@@ -1137,19 +1137,19 @@ namespace WorldWind
 					return;
 				
 				drawArgs.device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
-				drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1;
-				drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor;
-				drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
-				drawArgs.device.SetTextureStageState(1, TextureStage.ColorOperation = TextureOperation.Disable;
-				drawArgs.device.SetTextureStageState(1, TextureStage.AlphaOperation,  TextureOperation.Disable;
-				drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+				drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1);
+				drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1, TextureArgument.Texture);
+				drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.SelectArg1);
+				drawArgs.device.SetTextureStageState(1, TextureStage.ColorOperation, TextureOperation.Disable);
+				drawArgs.device.SetTextureStageState(1, TextureStage.AlphaOperation,  TextureOperation.Disable);
+				drawArgs.device.SetRenderState(RenderState.ZEnable, true);
 				
 				drawArgs.device.SetTexture(0, this.m_RenderTexture);
 
-				drawArgs.device.SetSamplerState(0, SamplerState.MinFilter = TextureFilter.Linear;
-				drawArgs.device.SetSamplerState(0, SamplerState.MagFilter = TextureFilter.Linear;
-				drawArgs.device.SetSamplerState(0, SamplerState.AddressU = TextureAddress.Clamp;
-				drawArgs.device.SetSamplerState(0, SamplerState.AddressV = TextureAddress.Clamp;
+				drawArgs.device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
+				drawArgs.device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
+				drawArgs.device.SetSamplerState(0, SamplerState.AddressU, TextureAddress.Clamp);
+				drawArgs.device.SetSamplerState(0, SamplerState.AddressV, TextureAddress.Clamp);
 
 				if(!nwRendered && this.m_DynamicTexture.nwVerts != null)
 				{

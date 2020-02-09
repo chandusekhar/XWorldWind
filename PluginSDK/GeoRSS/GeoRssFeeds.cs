@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
+using Rss;
 using System.ComponentModel;
 using System.Windows.Forms;
 using WorldWind.Renderable;
@@ -13,8 +15,8 @@ namespace WorldWind.GeoRSS
 
         public GeoRssForm ControlForm
         {
-            get { return this.m_form; }
-            set { this.m_form = value; }
+            get { return m_form; }
+            set { m_form = value; }
         }
         GeoRssForm m_form;
 
@@ -23,8 +25,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public List<GeoRssFeed> Feeds
         {
-            get { return this.m_feeds; }
-            set { this.m_feeds = value; }
+            get { return m_feeds; }
+            set { m_feeds = value; }
         }
         List<GeoRssFeed> m_feeds;
 
@@ -35,8 +37,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public RenderableObjectList RootLayer
         {
-            get { return this.m_rootLayer; }
-            set { if (value != null) this.m_rootLayer = value; }
+            get { return m_rootLayer; }
+            set { if (value != null) m_rootLayer = value; }
         }
         RenderableObjectList m_rootLayer;
 
@@ -47,10 +49,10 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public bool Done
         {
-            get { return this.m_done; }
-            set { this.m_done = value; }
+            get { return m_done; }
+            set { m_done = value; }
         }
-        bool m_done;
+        bool m_done = false;
 
 
         /// <summary>
@@ -58,18 +60,18 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public bool Idle
         {
-            get { return this.m_idle; }
-            set { this.m_idle = value; }
+            get { return m_idle; }
+            set { m_idle = value; }
         }
-        bool m_idle;
+        bool m_idle = false;
 
         /// <summary>
         /// The next time the background worker thread wakes up to get feeds
         /// </summary>
         public DateTime NextUpdate
         {
-            get { return this.m_nextUpdate; }
-            set { this.m_nextUpdate = value; }
+            get { return m_nextUpdate; }
+            set { m_nextUpdate = value; }
         }
         DateTime m_nextUpdate;
 
@@ -78,8 +80,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public TimeSpan DefaultInterval
         {
-            get { return this.m_defaultInterval; }
-            set { this.m_defaultInterval = value; }
+            get { return m_defaultInterval; }
+            set { m_defaultInterval = value; }
         }
         TimeSpan m_defaultInterval = new TimeSpan(1, 0, 0);
 
@@ -88,12 +90,12 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public GeoRssFeeds(RenderableObjectList rootLayer)
         {
-            this.m_rootLayer = rootLayer;
-            this.m_feeds = new List<GeoRssFeed>();
+            m_rootLayer = rootLayer;
+            m_feeds = new List<GeoRssFeed>();
 
-            this.InitializeBackgroundWorker();
+            InitializeBackgroundWorker();
 
-            this.m_form = new GeoRssForm(this);
+            m_form = new GeoRssForm(this);
             //m_form.Show();
 
         }
@@ -113,10 +115,11 @@ namespace WorldWind.GeoRSS
         /// <param name="addToRoot">sets whether or not the layer gets added to this root layer</param>
         public void Add(GeoRssFeed feed, bool addToRoot)
         {
-            if (addToRoot) this.m_rootLayer.Add(feed.Layer);
+            if (addToRoot)
+                m_rootLayer.Add(feed.Layer);
 
-            this.m_feeds.Add(feed);
-            this.m_form.UpdateDataGridView();
+            m_feeds.Add(feed);
+            m_form.UpdateDataGridView();
         }
 
         /// <summary>
@@ -126,7 +129,7 @@ namespace WorldWind.GeoRSS
         /// <param name="url">url for feed</param>
         public void Add(string name, string url)
         {
-            this.Add(name, url, new TimeSpan (1, 0, 0));            
+            Add(name, url, new TimeSpan (1, 0, 0));            
         }
 
         /// <summary>
@@ -138,15 +141,15 @@ namespace WorldWind.GeoRSS
         public void Add(string name, string url, TimeSpan update)
         {
             Icons layer = new Icons(name);
-
-            this.Add(name, url, update, layer);
+ 
+            Add(name, url, update, layer);
         }
 
         public void Add(string name, string url, TimeSpan update, string iconFileName)
         {
             Icons layer = new Icons(name);
 
-            this.Add(name, url, update, layer, iconFileName);
+            Add(name, url, update, layer, iconFileName);
         }
 
         /// <summary>
@@ -158,18 +161,18 @@ namespace WorldWind.GeoRSS
         /// <param name="layer">icon layer.  Added to rootlayer</param>
         public void Add(string name, string url, TimeSpan update, Icons layer)
         {
-            this.m_rootLayer.Add(layer);
+            m_rootLayer.Add(layer);
 
-            this.m_feeds.Add(new GeoRssFeed(name, url, update, layer));
-            this.m_form.UpdateDataGridView();
+            m_feeds.Add(new GeoRssFeed(name, url, update, layer));
+            m_form.UpdateDataGridView();
         }
 
         public void Add(string name, string url, TimeSpan update, Icons layer, string iconFileName)
         {
-            this.m_rootLayer.Add(layer);
+            m_rootLayer.Add(layer);
 
-            this.m_feeds.Add(new GeoRssFeed(name, url, update, layer, iconFileName));
-            this.m_form.UpdateDataGridView();
+            m_feeds.Add(new GeoRssFeed(name, url, update, layer, iconFileName));
+            m_form.UpdateDataGridView();
         }
 
 
@@ -179,9 +182,10 @@ namespace WorldWind.GeoRSS
         /// <param name="name">name of feed to remove</param>
         public void RemoveByName(string name)
         {
-            foreach (GeoRssFeed feed in this.m_feeds)
+            foreach (GeoRssFeed feed in m_feeds)
             {
-                if (feed.Name == name) this.m_feeds.Remove(feed);
+                if (feed.Name == name)
+                    m_feeds.Remove(feed);
             }
         }
 
@@ -191,9 +195,10 @@ namespace WorldWind.GeoRSS
         /// <param name="url">url of feed to remove</param>
         public void RemoveByUrl(string url)
         {
-            foreach (GeoRssFeed feed in this.m_feeds)
+            foreach (GeoRssFeed feed in m_feeds)
             {
-                if (feed.Url == url) this.m_feeds.Remove(feed);
+                if (feed.Url == url)
+                    m_feeds.Remove(feed);
             }
         }
 
@@ -201,26 +206,26 @@ namespace WorldWind.GeoRSS
 
         public void Start()
         {
-            this.m_bw.RunWorkerAsync();
+            m_bw.RunWorkerAsync();
         }
 
         private void InitializeBackgroundWorker()
         {
-            this.m_bw = new BackgroundWorker();
+            m_bw = new BackgroundWorker();
 
-            this.m_bw.DoWork += new DoWorkEventHandler(this.bwDoWork);
-            this.m_bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.bwWorkerCompleted);
-            this.m_bw.ProgressChanged += new ProgressChangedEventHandler(this.bwProgressChanged);
+            m_bw.DoWork += new DoWorkEventHandler(bwDoWork);
+            m_bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwWorkerCompleted);
+            m_bw.ProgressChanged += new ProgressChangedEventHandler(bwProgressChanged);
         }
 
         private void bwDoWork(object sender, DoWorkEventArgs e)
         {
             do
             {
-                if (!this.Idle)
+                if (!Idle)
                 {
-                    this.m_nextUpdate = DateTime.MaxValue;
-                    foreach (GeoRssFeed feed in this.m_feeds)
+                    m_nextUpdate = DateTime.MaxValue;
+                    foreach (GeoRssFeed feed in m_feeds)
                     {
                         if (feed.NeedsUpdate ||
                             ((feed.UpdateInterval > TimeSpan.Zero) &&
@@ -233,22 +238,23 @@ namespace WorldWind.GeoRSS
 
                         if (feed.UpdateInterval > TimeSpan.Zero)
                         {
-                            if (feed.LastUpdate + feed.UpdateInterval < this.m_nextUpdate) this.m_nextUpdate = feed.LastUpdate + feed.UpdateInterval;
+                            if (feed.LastUpdate + feed.UpdateInterval < m_nextUpdate)
+                                m_nextUpdate = feed.LastUpdate + feed.UpdateInterval;
                         }
                     }
                 }
                 else
                 {
-                    this.m_nextUpdate = DateTime.Now;
-                    this.m_nextUpdate.AddSeconds(1);
+                    m_nextUpdate = DateTime.Now;
+                    m_nextUpdate.AddSeconds(1);
                 }
 
-                TimeSpan sleepTime = this.m_nextUpdate - DateTime.Now;
+                TimeSpan sleepTime = m_nextUpdate - DateTime.Now;
                 if (sleepTime.Seconds < 1) sleepTime = new TimeSpan(0,0,0,1);
 
                 Thread.Sleep(sleepTime);
             } 
-            while (!this.m_done);
+            while (!m_done);
         }
 
         private void bwWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

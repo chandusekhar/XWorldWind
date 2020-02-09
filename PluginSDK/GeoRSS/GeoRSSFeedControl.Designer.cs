@@ -1,275 +1,275 @@
-namespace WorldWind.SetSamplerState(0, SamplerStateGeoRSS
+namespace WorldWind.GeoRSS
 {
     partial class GeoRSSFeedControl
     {
         /// <summary> 
-        /// Required designer variable.SetSamplerState(0, SamplerState
+        /// Required designer variable.
         /// </summary>
-        private System.SetSamplerState(0, SamplerStateComponentModel.SetSamplerState(0, SamplerStateIContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
-        /// Clean up any resources being used.SetSamplerState(0, SamplerState
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.SetSamplerState(0, SamplerState</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
-                components.SetSamplerState(0, SamplerStateDispose();
+                components.Dispose();
             }
-            base.SetSamplerState(0, SamplerStateDispose(disposing);
+            base.Dispose(disposing);
         }
 
         #region Component Designer generated code
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.SetSamplerState(0, SamplerState
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewCellStyle dataGridViewCellStyle2 = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewCellStyle();
-            this.SetSamplerState(0, SamplerStatelabel1 = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateLabel();
-            this.SetSamplerState(0, SamplerStatenameTextBox = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateTextBox();
-            this.SetSamplerState(0, SamplerStateaddButton = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateButton();
-            this.SetSamplerState(0, SamplerStatefeedDataGridView = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridView();
-            this.SetSamplerState(0, SamplerStateIcon = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewImageColumn();
-            this.SetSamplerState(0, SamplerStatename = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTextBoxColumn();
-            this.SetSamplerState(0, SamplerStateurl = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTextBoxColumn();
-            this.SetSamplerState(0, SamplerStateinterval = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTextBoxColumn();
-            this.SetSamplerState(0, SamplerStatelastUpdate = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTextBoxColumn();
-            this.SetSamplerState(0, SamplerStateupdateNow = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewButtonColumn();
-            this.SetSamplerState(0, SamplerStatelabel2 = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateLabel();
-            this.SetSamplerState(0, SamplerStateaddGroupBox = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateGroupBox();
-            this.SetSamplerState(0, SamplerStatebrowseButton = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateButton();
-            this.SetSamplerState(0, SamplerStateiconTextBox = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateTextBox();
-            this.SetSamplerState(0, SamplerStatelabel4 = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateLabel();
-            this.SetSamplerState(0, SamplerStateurlTextBox = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateTextBox();
-            this.SetSamplerState(0, SamplerStatelabel3 = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateLabel();
-            this.SetSamplerState(0, SamplerStateopenFileDialog = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateOpenFileDialog();
-            ((System.SetSamplerState(0, SamplerStateComponentModel.SetSamplerState(0, SamplerStateISupportInitialize)(this.SetSamplerState(0, SamplerStatefeedDataGridView)).SetSamplerState(0, SamplerStateBeginInit();
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateSuspendLayout();
-            this.SetSamplerState(0, SamplerStateSuspendLayout();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.label1 = new System.Windows.Forms.Label();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.addButton = new System.Windows.Forms.Button();
+            this.feedDataGridView = new System.Windows.Forms.DataGridView();
+            this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.url = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.interval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.updateNow = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.addGroupBox = new System.Windows.Forms.GroupBox();
+            this.browseButton = new System.Windows.Forms.Button();
+            this.iconTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.urlTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            ((System.ComponentModel.ISupportInitialize)(this.feedDataGridView)).BeginInit();
+            this.addGroupBox.SuspendLayout();
+            this.SuspendLayout();
             // 
             // label1
             // 
-            this.SetSamplerState(0, SamplerStatelabel1.SetSamplerState(0, SamplerStateAutoSize = true;
-            this.SetSamplerState(0, SamplerStatelabel1.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(6, 16);
-            this.SetSamplerState(0, SamplerStatelabel1.SetSamplerState(0, SamplerStateName = "label1";
-            this.SetSamplerState(0, SamplerStatelabel1.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(35, 13);
-            this.SetSamplerState(0, SamplerStatelabel1.SetSamplerState(0, SamplerStateTabIndex = 0;
-            this.SetSamplerState(0, SamplerStatelabel1.SetSamplerState(0, SamplerStateText = "Name";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Name";
             // 
             // nameTextBox
             // 
-            this.SetSamplerState(0, SamplerStatenameTextBox.SetSamplerState(0, SamplerStateAnchor = ((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles)(((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateTop | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateLeft)
-                        | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateRight)));
-            this.SetSamplerState(0, SamplerStatenameTextBox.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(47, 13);
-            this.SetSamplerState(0, SamplerStatenameTextBox.SetSamplerState(0, SamplerStateName = "nameTextBox";
-            this.SetSamplerState(0, SamplerStatenameTextBox.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(338, 20);
-            this.SetSamplerState(0, SamplerStatenameTextBox.SetSamplerState(0, SamplerStateTabIndex = 1;
+            this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.nameTextBox.Location = new System.Drawing.Point(47, 13);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(338, 20);
+            this.nameTextBox.TabIndex = 1;
             // 
             // addButton
             // 
-            this.SetSamplerState(0, SamplerStateaddButton.SetSamplerState(0, SamplerStateAnchor = ((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles)((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateTop | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateRight)));
-            this.SetSamplerState(0, SamplerStateaddButton.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(339, 83);
-            this.SetSamplerState(0, SamplerStateaddButton.SetSamplerState(0, SamplerStateName = "addButton";
-            this.SetSamplerState(0, SamplerStateaddButton.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(46, 23);
-            this.SetSamplerState(0, SamplerStateaddButton.SetSamplerState(0, SamplerStateTabIndex = 2;
-            this.SetSamplerState(0, SamplerStateaddButton.SetSamplerState(0, SamplerStateText = "Add";
-            this.SetSamplerState(0, SamplerStateaddButton.SetSamplerState(0, SamplerStateUseVisualStyleBackColor = true;
-            this.SetSamplerState(0, SamplerStateaddButton.SetSamplerState(0, SamplerStateClick += new System.SetSamplerState(0, SamplerStateEventHandler(this.SetSamplerState(0, SamplerStateaddButton_Click);
+            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addButton.Location = new System.Drawing.Point(339, 83);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(46, 23);
+            this.addButton.TabIndex = 2;
+            this.addButton.Text = "Add";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // feedDataGridView
             // 
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateAllowUserToAddRows = false;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateAllowUserToDeleteRows = false;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateAnchor = ((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles)((((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateTop | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateBottom)
-                        | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateLeft)
-                        | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateRight)));
-            dataGridViewCellStyle2.SetSamplerState(0, SamplerStateAlignment = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewContentAlignment.SetSamplerState(0, SamplerStateMiddleLeft;
-            dataGridViewCellStyle2.SetSamplerState(0, SamplerStateBackColor = System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSystemColors.SetSamplerState(0, SamplerStateControl;
-            dataGridViewCellStyle2.SetSamplerState(0, SamplerStateFont = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateFont("Microsoft Sans Serif", 8.SetSamplerState(0, SamplerState25F, System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateFontStyle.SetSamplerState(0, SamplerStateBold, System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateGraphicsUnit.SetSamplerState(0, SamplerStatePoint, ((byte)(0)));
-            dataGridViewCellStyle2.SetSamplerState(0, SamplerStateForeColor = System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSystemColors.SetSamplerState(0, SamplerStateWindowText;
-            dataGridViewCellStyle2.SetSamplerState(0, SamplerStateSelectionBackColor = System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSystemColors.SetSamplerState(0, SamplerStateHighlight;
-            dataGridViewCellStyle2.SetSamplerState(0, SamplerStateSelectionForeColor = System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSystemColors.SetSamplerState(0, SamplerStateHighlightText;
-            dataGridViewCellStyle2.SetSamplerState(0, SamplerStateWrapMode = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTriState.SetSamplerState(0, SamplerStateTrue;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateColumnHeadersHeightSizeMode = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewColumnHeadersHeightSizeMode.SetSamplerState(0, SamplerStateAutoSize;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateColumns.SetSamplerState(0, SamplerStateAddRange(new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewColumn[] {
-            this.SetSamplerState(0, SamplerStateIcon,
-            this.SetSamplerState(0, SamplerStatename,
-            this.SetSamplerState(0, SamplerStateurl,
-            this.SetSamplerState(0, SamplerStateinterval,
-            this.SetSamplerState(0, SamplerStatelastUpdate,
-            this.SetSamplerState(0, SamplerStateupdateNow});
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(7, 138);
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateMultiSelect = false;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateName = "feedDataGridView";
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateReadOnly = true;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateRowHeadersVisible = false;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateSelectionMode = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewSelectionMode.SetSamplerState(0, SamplerStateFullRowSelect;
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(384, 200);
-            this.SetSamplerState(0, SamplerStatefeedDataGridView.SetSamplerState(0, SamplerStateTabIndex = 3;
+            this.feedDataGridView.AllowUserToAddRows = false;
+            this.feedDataGridView.AllowUserToDeleteRows = false;
+            this.feedDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.feedDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.feedDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.feedDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Icon,
+            this.name,
+            this.url,
+            this.interval,
+            this.lastUpdate,
+            this.updateNow});
+            this.feedDataGridView.Location = new System.Drawing.Point(7, 138);
+            this.feedDataGridView.MultiSelect = false;
+            this.feedDataGridView.Name = "feedDataGridView";
+            this.feedDataGridView.ReadOnly = true;
+            this.feedDataGridView.RowHeadersVisible = false;
+            this.feedDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.feedDataGridView.Size = new System.Drawing.Size(384, 200);
+            this.feedDataGridView.TabIndex = 3;
             // 
             // Icon
             // 
-            this.SetSamplerState(0, SamplerStateIcon.SetSamplerState(0, SamplerStateHeaderText = "Icon";
-            this.SetSamplerState(0, SamplerStateIcon.SetSamplerState(0, SamplerStateName = "Icon";
-            this.SetSamplerState(0, SamplerStateIcon.SetSamplerState(0, SamplerStateReadOnly = true;
-            this.SetSamplerState(0, SamplerStateIcon.SetSamplerState(0, SamplerStateWidth = 36;
+            this.Icon.HeaderText = "Icon";
+            this.Icon.Name = "Icon";
+            this.Icon.ReadOnly = true;
+            this.Icon.Width = 36;
             // 
             // name
             // 
-            this.SetSamplerState(0, SamplerStatename.SetSamplerState(0, SamplerStateAutoSizeMode = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewAutoSizeColumnMode.SetSamplerState(0, SamplerStateFill;
-            this.SetSamplerState(0, SamplerStatename.SetSamplerState(0, SamplerStateHeaderText = "Name";
-            this.SetSamplerState(0, SamplerStatename.SetSamplerState(0, SamplerStateName = "name";
-            this.SetSamplerState(0, SamplerStatename.SetSamplerState(0, SamplerStateReadOnly = true;
+            this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.name.HeaderText = "Name";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
             // 
             // url
             // 
-            this.SetSamplerState(0, SamplerStateurl.SetSamplerState(0, SamplerStateAutoSizeMode = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewAutoSizeColumnMode.SetSamplerState(0, SamplerStateFill;
-            this.SetSamplerState(0, SamplerStateurl.SetSamplerState(0, SamplerStateHeaderText = "URL";
-            this.SetSamplerState(0, SamplerStateurl.SetSamplerState(0, SamplerStateName = "url";
-            this.SetSamplerState(0, SamplerStateurl.SetSamplerState(0, SamplerStateReadOnly = true;
+            this.url.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.url.HeaderText = "URL";
+            this.url.Name = "url";
+            this.url.ReadOnly = true;
             // 
             // interval
             // 
-            this.SetSamplerState(0, SamplerStateinterval.SetSamplerState(0, SamplerStateHeaderText = "Refresh Interval";
-            this.SetSamplerState(0, SamplerStateinterval.SetSamplerState(0, SamplerStateName = "interval";
-            this.SetSamplerState(0, SamplerStateinterval.SetSamplerState(0, SamplerStateReadOnly = true;
-            this.SetSamplerState(0, SamplerStateinterval.SetSamplerState(0, SamplerStateWidth = 80;
+            this.interval.HeaderText = "Refresh Interval";
+            this.interval.Name = "interval";
+            this.interval.ReadOnly = true;
+            this.interval.Width = 80;
             // 
             // lastUpdate
             // 
-            this.SetSamplerState(0, SamplerStatelastUpdate.SetSamplerState(0, SamplerStateHeaderText = "Last Update";
-            this.SetSamplerState(0, SamplerStatelastUpdate.SetSamplerState(0, SamplerStateName = "lastUpdate";
-            this.SetSamplerState(0, SamplerStatelastUpdate.SetSamplerState(0, SamplerStateReadOnly = true;
-            this.SetSamplerState(0, SamplerStatelastUpdate.SetSamplerState(0, SamplerStateWidth = 80;
+            this.lastUpdate.HeaderText = "Last Update";
+            this.lastUpdate.Name = "lastUpdate";
+            this.lastUpdate.ReadOnly = true;
+            this.lastUpdate.Width = 80;
             // 
             // updateNow
             // 
-            this.SetSamplerState(0, SamplerStateupdateNow.SetSamplerState(0, SamplerStateHeaderText = "Update";
-            this.SetSamplerState(0, SamplerStateupdateNow.SetSamplerState(0, SamplerStateName = "updateNow";
-            this.SetSamplerState(0, SamplerStateupdateNow.SetSamplerState(0, SamplerStateReadOnly = true;
-            this.SetSamplerState(0, SamplerStateupdateNow.SetSamplerState(0, SamplerStateWidth = 50;
+            this.updateNow.HeaderText = "Update";
+            this.updateNow.Name = "updateNow";
+            this.updateNow.ReadOnly = true;
+            this.updateNow.Width = 50;
             // 
             // label2
             // 
-            this.SetSamplerState(0, SamplerStatelabel2.SetSamplerState(0, SamplerStateAutoSize = true;
-            this.SetSamplerState(0, SamplerStatelabel2.SetSamplerState(0, SamplerStateFont = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateFont("Microsoft Sans Serif", 8.SetSamplerState(0, SamplerState25F, System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateFontStyle.SetSamplerState(0, SamplerStateBold, System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateGraphicsUnit.SetSamplerState(0, SamplerStatePoint, ((byte)(0)));
-            this.SetSamplerState(0, SamplerStatelabel2.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(3, 118);
-            this.SetSamplerState(0, SamplerStatelabel2.SetSamplerState(0, SamplerStateName = "label2";
-            this.SetSamplerState(0, SamplerStatelabel2.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(41, 13);
-            this.SetSamplerState(0, SamplerStatelabel2.SetSamplerState(0, SamplerStateTabIndex = 4;
-            this.SetSamplerState(0, SamplerStatelabel2.SetSamplerState(0, SamplerStateText = "Feeds";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 118);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Feeds";
             // 
             // addGroupBox
             // 
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateAnchor = ((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles)(((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateTop | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateLeft)
-                        | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateRight)));
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatebrowseButton);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStateiconTextBox);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatelabel4);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStateurlTextBox);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatelabel3);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatelabel1);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatenameTextBox);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStateaddButton);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(3, 3);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateName = "addGroupBox";
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(391, 112);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateTabIndex = 5;
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateTabStop = false;
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateText = "Add Feed";
+            this.addGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.addGroupBox.Controls.Add(this.browseButton);
+            this.addGroupBox.Controls.Add(this.iconTextBox);
+            this.addGroupBox.Controls.Add(this.label4);
+            this.addGroupBox.Controls.Add(this.urlTextBox);
+            this.addGroupBox.Controls.Add(this.label3);
+            this.addGroupBox.Controls.Add(this.label1);
+            this.addGroupBox.Controls.Add(this.nameTextBox);
+            this.addGroupBox.Controls.Add(this.addButton);
+            this.addGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.addGroupBox.Name = "addGroupBox";
+            this.addGroupBox.Size = new System.Drawing.Size(391, 112);
+            this.addGroupBox.TabIndex = 5;
+            this.addGroupBox.TabStop = false;
+            this.addGroupBox.Text = "Add Feed";
             // 
             // browseButton
             // 
-            this.SetSamplerState(0, SamplerStatebrowseButton.SetSamplerState(0, SamplerStateAnchor = ((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles)((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateTop | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateRight)));
-            this.SetSamplerState(0, SamplerStatebrowseButton.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(356, 57);
-            this.SetSamplerState(0, SamplerStatebrowseButton.SetSamplerState(0, SamplerStateName = "browseButton";
-            this.SetSamplerState(0, SamplerStatebrowseButton.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(28, 21);
-            this.SetSamplerState(0, SamplerStatebrowseButton.SetSamplerState(0, SamplerStateTabIndex = 7;
-            this.SetSamplerState(0, SamplerStatebrowseButton.SetSamplerState(0, SamplerStateText = ".SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState";
-            this.SetSamplerState(0, SamplerStatebrowseButton.SetSamplerState(0, SamplerStateUseVisualStyleBackColor = true;
-            this.SetSamplerState(0, SamplerStatebrowseButton.SetSamplerState(0, SamplerStateClick += new System.SetSamplerState(0, SamplerStateEventHandler(this.SetSamplerState(0, SamplerStatebrowseButton_Click);
+            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseButton.Location = new System.Drawing.Point(356, 57);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(28, 21);
+            this.browseButton.TabIndex = 7;
+            this.browseButton.Text = "...";
+            this.browseButton.UseVisualStyleBackColor = true;
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
             // iconTextBox
             // 
-            this.SetSamplerState(0, SamplerStateiconTextBox.SetSamplerState(0, SamplerStateAnchor = ((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles)(((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateTop | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateLeft)
-                        | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateRight)));
-            this.SetSamplerState(0, SamplerStateiconTextBox.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(47, 58);
-            this.SetSamplerState(0, SamplerStateiconTextBox.SetSamplerState(0, SamplerStateName = "iconTextBox";
-            this.SetSamplerState(0, SamplerStateiconTextBox.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(304, 20);
-            this.SetSamplerState(0, SamplerStateiconTextBox.SetSamplerState(0, SamplerStateTabIndex = 6;
+            this.iconTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.iconTextBox.Location = new System.Drawing.Point(47, 58);
+            this.iconTextBox.Name = "iconTextBox";
+            this.iconTextBox.Size = new System.Drawing.Size(304, 20);
+            this.iconTextBox.TabIndex = 6;
             // 
             // label4
             // 
-            this.SetSamplerState(0, SamplerStatelabel4.SetSamplerState(0, SamplerStateAutoSize = true;
-            this.SetSamplerState(0, SamplerStatelabel4.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(6, 61);
-            this.SetSamplerState(0, SamplerStatelabel4.SetSamplerState(0, SamplerStateName = "label4";
-            this.SetSamplerState(0, SamplerStatelabel4.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(28, 13);
-            this.SetSamplerState(0, SamplerStatelabel4.SetSamplerState(0, SamplerStateTabIndex = 5;
-            this.SetSamplerState(0, SamplerStatelabel4.SetSamplerState(0, SamplerStateText = "Icon";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 61);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(28, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Icon";
             // 
             // urlTextBox
             // 
-            this.SetSamplerState(0, SamplerStateurlTextBox.SetSamplerState(0, SamplerStateAnchor = ((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles)(((System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateTop | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateLeft)
-                        | System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAnchorStyles.SetSamplerState(0, SamplerStateRight)));
-            this.SetSamplerState(0, SamplerStateurlTextBox.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(47, 36);
-            this.SetSamplerState(0, SamplerStateurlTextBox.SetSamplerState(0, SamplerStateName = "urlTextBox";
-            this.SetSamplerState(0, SamplerStateurlTextBox.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(338, 20);
-            this.SetSamplerState(0, SamplerStateurlTextBox.SetSamplerState(0, SamplerStateTabIndex = 4;
+            this.urlTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.urlTextBox.Location = new System.Drawing.Point(47, 36);
+            this.urlTextBox.Name = "urlTextBox";
+            this.urlTextBox.Size = new System.Drawing.Size(338, 20);
+            this.urlTextBox.TabIndex = 4;
             // 
             // label3
             // 
-            this.SetSamplerState(0, SamplerStatelabel3.SetSamplerState(0, SamplerStateAutoSize = true;
-            this.SetSamplerState(0, SamplerStatelabel3.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(6, 39);
-            this.SetSamplerState(0, SamplerStatelabel3.SetSamplerState(0, SamplerStateName = "label3";
-            this.SetSamplerState(0, SamplerStatelabel3.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(29, 13);
-            this.SetSamplerState(0, SamplerStatelabel3.SetSamplerState(0, SamplerStateTabIndex = 3;
-            this.SetSamplerState(0, SamplerStatelabel3.SetSamplerState(0, SamplerStateText = "URL";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 39);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "URL";
             // 
             // openFileDialog
             // 
-            this.SetSamplerState(0, SamplerStateopenFileDialog.SetSamplerState(0, SamplerStateFileName = "openFileDialog1";
+            this.openFileDialog.FileName = "openFileDialog1";
             // 
             // GeoRSSFeedControl
             // 
-            this.SetSamplerState(0, SamplerStateAutoScaleDimensions = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSizeF(6F, 13F);
-            this.SetSamplerState(0, SamplerStateAutoScaleMode = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAutoScaleMode.SetSamplerState(0, SamplerStateFont;
-            this.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStateaddGroupBox);
-            this.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatelabel2);
-            this.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatefeedDataGridView);
-            this.SetSamplerState(0, SamplerStateName = "GeoRSSFeedControl";
-            this.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(397, 346);
-            ((System.SetSamplerState(0, SamplerStateComponentModel.SetSamplerState(0, SamplerStateISupportInitialize)(this.SetSamplerState(0, SamplerStatefeedDataGridView)).SetSamplerState(0, SamplerStateEndInit();
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStateResumeLayout(false);
-            this.SetSamplerState(0, SamplerStateaddGroupBox.SetSamplerState(0, SamplerStatePerformLayout();
-            this.SetSamplerState(0, SamplerStateResumeLayout(false);
-            this.SetSamplerState(0, SamplerStatePerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.addGroupBox);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.feedDataGridView);
+            this.Name = "GeoRSSFeedControl";
+            this.Size = new System.Drawing.Size(397, 346);
+            ((System.ComponentModel.ISupportInitialize)(this.feedDataGridView)).EndInit();
+            this.addGroupBox.ResumeLayout(false);
+            this.addGroupBox.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateLabel label1;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateTextBox nameTextBox;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateButton addButton;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridView feedDataGridView;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateLabel label2;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateGroupBox addGroupBox;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateButton browseButton;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateTextBox iconTextBox;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateLabel label4;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateTextBox urlTextBox;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateLabel label3;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewImageColumn Icon;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTextBoxColumn name;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTextBoxColumn url;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTextBoxColumn interval;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewTextBoxColumn lastUpdate;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDataGridViewButtonColumn updateNow;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateOpenFileDialog openFileDialog;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.DataGridView feedDataGridView;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox addGroupBox;
+        private System.Windows.Forms.Button browseButton;
+        private System.Windows.Forms.TextBox iconTextBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox urlTextBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridViewImageColumn Icon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn url;
+        private System.Windows.Forms.DataGridViewTextBoxColumn interval;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lastUpdate;
+        private System.Windows.Forms.DataGridViewButtonColumn updateNow;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }

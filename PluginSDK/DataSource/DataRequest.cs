@@ -1,7 +1,10 @@
 //#define VERBOSE
 using System;
 using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Text;
 using System.IO;
+using Utility;
 
 namespace WorldWind.DataSource
 {
@@ -78,7 +81,7 @@ namespace WorldWind.DataSource
 
         public DataRequestDescriptor(string source, string cacheLocation, CacheCallback callback) : this(source, cacheLocation)
         {
-            this.CacheCallback = callback;
+            CacheCallback = callback;
         }
 
         public DataRequestDescriptor(string source, string cacheLocation)
@@ -86,12 +89,12 @@ namespace WorldWind.DataSource
             this.Source = source;
             this.CacheLocation = cacheLocation;
             // cache never expires by default
-            this.MaxCacheAge = null;
-            this.CacheCallback = null;
-            this.CompletionCallback = null;
-            this.PriorityCallback = null;
-            this.BasePriority = 0;
-            this.Description = "";
+            MaxCacheAge = null;
+            CacheCallback = null;
+            CompletionCallback = null;
+            PriorityCallback = null;
+            BasePriority = 0;
+            Description = "";
         }
     }
 
@@ -112,64 +115,64 @@ namespace WorldWind.DataSource
         #endregion
 
         #region Properties
-        public DataRequestDescriptor RequestDescriptor { get { return this.m_request; } }
+        public DataRequestDescriptor RequestDescriptor { get { return m_request; } }
         public NameValueCollection Headers
         {
             get
             {
-                return this.m_headers;
+                return m_headers;
             }
         }
         public String Source
         {
             get
             {
-                return this.m_request.Source;
+                return m_request.Source;
             }
         }
         public DataRequestState State
         {
             get
             {
-                return this.m_state;
+                return m_state;
             }
             set
             {
-                this.m_state = value;
+                m_state = value;
             }
         }
         public Stream Stream
         {
             get
             {
-                return this.m_contentStream;
+                return m_contentStream;
             }
         }
         public string CacheLocation
         {
             get
             {
-                return this.m_request.CacheLocation;
+                return m_request.CacheLocation;
             }
         }
         public bool CacheHit
         {
             get
             {
-                return this.m_cacheHit;
+                return m_cacheHit;
             }
         }
         public float Priority
         {
             get
             {
-                return this.m_priority;
+                return m_priority;
             }
         }
         public DateTime NextTry
         {
-            get { return this.m_nextTry; }
-            set { this.m_nextTry = value; }
+            get { return m_nextTry; }
+            set { m_nextTry = value; }
         }
         abstract public float Progress
         {
@@ -179,8 +182,8 @@ namespace WorldWind.DataSource
         #endregion
 
         #region Static Members
-        static protected int m_cacheHits;
-        static protected int m_totalRequests;
+        static protected int m_cacheHits = 0;
+        static protected int m_totalRequests = 0;
         static protected int m_totalBytes = 0;
         #endregion
 
@@ -193,30 +196,30 @@ namespace WorldWind.DataSource
 
         public DataRequest(DataRequestDescriptor request)
         {
-            this.m_lock = new Object();
-            this.m_request = request;
-            this.m_contentStream = null;
-            this.m_state = DataRequestState.Queued;
-            this.m_cacheHit = false;
-            this.m_headers = new NameValueCollection();
-            this.m_priority = 50;
+            m_lock = new Object();
+            m_request = request;
+            m_contentStream = null;
+            m_state = DataRequestState.Queued;
+            m_cacheHit = false;
+            m_headers = new NameValueCollection();
+            m_priority = 50;
             m_totalRequests++;
-            this.m_nextTry = DateTime.Now;
+            m_nextTry = DateTime.Now;
         }
 
         public void UpdatePriority()
         {
             // postponed?
-            if (this.m_nextTry > DateTime.Now)
+            if (m_nextTry > DateTime.Now)
             {
-                this.m_priority = -1;
+                m_priority = -1;
                 return;
             }
 
-            if (this.m_request.PriorityCallback != null)
-                this.m_priority = this.m_request.PriorityCallback();
+            if (m_request.PriorityCallback != null)
+                m_priority = m_request.PriorityCallback();
             else
-                this.m_priority = 50;
+                m_priority = 50;
         }
 
         [Obsolete]
@@ -241,16 +244,16 @@ namespace WorldWind.DataSource
             Log.Write(Log.Levels.Verbose, "DataRequest: trying to fulfill request for " + this.Source + " from cache");
             Log.Write(Log.Levels.Verbose, "DataRequest: trying " + m_request.CacheLocation);
 #endif
-                if (this.m_request.CacheCallback != null)
+                if (m_request.CacheCallback != null)
                 {
 #if VERBOSE
                    Log.Write(Log.Levels.Verbose, "DataRequest: asking cache callback for file stream");
 #endif
-                    this.m_contentStream = this.m_request.CacheCallback(this.m_request); //new FileStream(m_request.CacheLocation, FileMode.Open);
-                    if (this.m_contentStream != null)
+                    m_contentStream = m_request.CacheCallback(m_request); //new FileStream(m_request.CacheLocation, FileMode.Open);
+                    if (m_contentStream != null)
                     {
-                        this.m_state = DataRequestState.Finished;
-                        this.m_cacheHit = true;
+                        m_state = DataRequestState.Finished;
+                        m_cacheHit = true;
 
                         m_cacheHits++;
                         return true;

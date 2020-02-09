@@ -1,56 +1,62 @@
 using System;
+using System.Globalization;
+using System.Diagnostics;
+using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
+using Utility;
 
 namespace WorldWind.DataSource
 {
 	/// <summary>
 	/// Simple window showing all http downloads and progress.
 	/// </summary>
-	public class QueueMonitor : Form
+	public class QueueMonitor : System.Windows.Forms.Form
 	{
-		private ListView listView;
-		private ColumnHeader columnHeaderStartTime;
-		private ColumnHeader columnHeaderState;
-		private ColumnHeader columnHeaderBasePriority;
-		private ColumnHeader columnHeaderDescription;
-		private ContextMenu contextMenu;
-		private MenuItem menuItemSpacer1;
-		private MenuItem menuItemCopy;
-		private MenuItem menuItemOpenUrl;
-		private MenuItem menuItemViewDir;
-		private MenuItem menuItemClear;
-		private ColumnHeader columnHeaderPriority;
-		private MenuItem menuItemHeaders;
-        private MenuItem menuItemSpacer2;
-		private MainMenu mainMenu1;
-		private MenuItem menuItemEdit;
-		private MenuItem menuItem6;
-		private MenuItem menuItem7;
-		private MenuItem menuItem9;
-        private MenuItem menuItemRun;
+		private System.Windows.Forms.ListView listView;
+		private System.Windows.Forms.ColumnHeader columnHeaderStartTime;
+		private System.Windows.Forms.ColumnHeader columnHeaderState;
+		private System.Windows.Forms.ColumnHeader columnHeaderBasePriority;
+		private System.Windows.Forms.ColumnHeader columnHeaderDescription;
+		private System.Windows.Forms.ContextMenu contextMenu;
+		private System.Windows.Forms.MenuItem menuItemSpacer1;
+		private System.Windows.Forms.MenuItem menuItemCopy;
+		private System.Windows.Forms.MenuItem menuItemOpenUrl;
+		private System.Windows.Forms.MenuItem menuItemViewDir;
+		private System.Windows.Forms.MenuItem menuItemClear;
+		private System.Windows.Forms.ColumnHeader columnHeaderPriority;
+		private System.Windows.Forms.MenuItem menuItemHeaders;
+        private System.Windows.Forms.MenuItem menuItemSpacer2;
+		private System.Windows.Forms.MainMenu mainMenu1;
+		private System.Windows.Forms.MenuItem menuItemEdit;
+		private System.Windows.Forms.MenuItem menuItem6;
+		private System.Windows.Forms.MenuItem menuItem7;
+		private System.Windows.Forms.MenuItem menuItem9;
+        private System.Windows.Forms.MenuItem menuItemRun;
         private IContainer components;
-		private MenuItem menuItemEditCopy;
-		private MenuItem menuItemEditDelete;
-		private MenuItem menuItemEditClear;
+		private System.Windows.Forms.MenuItem menuItemEditCopy;
+		private System.Windows.Forms.MenuItem menuItemEditDelete;
+		private System.Windows.Forms.MenuItem menuItemEditClear;
 		private bool isRunning = true;
-		private MenuItem menuItemSpacer3;
+		private System.Windows.Forms.MenuItem menuItemSpacer3;
 		private const int maxItems = 50;
-		private MenuItem menuItem4;
-		private MenuItem menuItemWriteLog;
+		private System.Windows.Forms.MenuItem menuItem4;
+		private System.Windows.Forms.MenuItem menuItemWriteLog;
 		private bool logToFile;
-		private ColumnHeader columnHeaderProgress;
-		private MenuItem menuItemTools;
-		private MenuItem menuItemFile;
-		private MenuItem menuItemFileClose;
-		private MenuItem menuItemFileRetry;
-		private MenuItem menuItemSeparator3;
-		private MenuItem menuItemToolsDetails;
-		private MenuItem menuItemToolsViewUrl;
-		private MenuItem menuItemToolsViewDirectory;
+		private System.Windows.Forms.ColumnHeader columnHeaderProgress;
+		private System.Windows.Forms.MenuItem menuItemTools;
+		private System.Windows.Forms.MenuItem menuItemFile;
+		private System.Windows.Forms.MenuItem menuItemFileClose;
+		private System.Windows.Forms.MenuItem menuItemFileRetry;
+		private System.Windows.Forms.MenuItem menuItemSeparator3;
+		private System.Windows.Forms.MenuItem menuItemToolsDetails;
+		private System.Windows.Forms.MenuItem menuItemToolsViewUrl;
+		private System.Windows.Forms.MenuItem menuItemToolsViewDirectory;
 		private const string logCategory = "HTTP";
-        private MenuItem menuItemEditSelectAll;
+        private System.Windows.Forms.MenuItem menuItemEditSelectAll;
         private Timer updateTimer;
 		private ArrayList retryDownloads = new ArrayList();
 		// Sorting disabled
@@ -64,15 +70,15 @@ namespace WorldWind.DataSource
 			//
 			// Required for Windows Form Designer support
 			//
-            this.InitializeComponent();
+			InitializeComponent();
 
-            this.InitializeComponentText();
+			InitializeComponentText();
 
-            this.listView.VirtualListSize = 0;
+            listView.VirtualListSize = 0;
 
-            this.updateTimer.Interval = 50;
-            this.updateTimer.Start();
-            this.updateTimer.Tick += new EventHandler(this.updateTimer_Tick);
+            updateTimer.Interval = 50;
+            updateTimer.Start();
+            updateTimer.Tick += new EventHandler(updateTimer_Tick);
 
 			// Sorting disabled
 			//	listView.ListViewItemSorter = comparer;
@@ -83,14 +89,14 @@ namespace WorldWind.DataSource
 
         void updateTimer_Tick(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
-                Delegate tickDelegate = new UpdateTimerTickDelegate(this.updateTimer_Tick);
+                Delegate tickDelegate = new UpdateTimerTickDelegate(updateTimer_Tick);
                 this.Invoke(tickDelegate, new object[] { sender, e });
             }
             else
             {
-                this.listView.VirtualListSize = DataStore.ActiveRequestCount + DataStore.PendingRequestCount;
+                listView.VirtualListSize = DataStore.ActiveRequestCount + DataStore.PendingRequestCount;
                 this.updateTimer.Start();
             }
         }
@@ -144,7 +150,7 @@ namespace WorldWind.DataSource
 		/// Raises the <see cref="E:System.Windows.Forms.Control.KeyUp"/> event.
 		/// </summary>
 		/// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs"/> that contains the event data.</param>
-		protected override void OnKeyUp(KeyEventArgs e) 
+		protected override void OnKeyUp(System.Windows.Forms.KeyEventArgs e) 
 		{
 			if(e==null)
 				return;
@@ -152,17 +158,17 @@ namespace WorldWind.DataSource
 			switch(e.KeyCode) 
 			{
 				case Keys.Space:
-                    this.menuItemHeaders_Click(this,e);
+					menuItemHeaders_Click(this,e);
 					break;
 				case Keys.Escape:
-                    this.Close();
+					Close();
 					e.Handled = true;
 					break;
 				case Keys.H:
 				case Keys.F4:
 					if(e.Modifiers==Keys.Control)
 					{
-                        this.Close();
+						Close();
 						e.Handled = true;
 					}
 					break;
@@ -181,9 +187,9 @@ namespace WorldWind.DataSource
 		{
 			if( disposing )
 			{
-				if(this.components != null)
+				if(components != null)
 				{
-                    this.components.Dispose();
+					components.Dispose();
 				}
 			}
 
@@ -509,7 +515,7 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.Windows.Forms.ColumnClickEventArgs"/> instance containing the event data.</param>
-		private void listView_ColumnClick(object sender, ColumnClickEventArgs e)
+		private void listView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
 		{
 			// Sorting disabled
 			//			comparer.SortColumn( e.Column );
@@ -520,9 +526,9 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemClear_Click(object sender, EventArgs e)
+		private void menuItemClear_Click(object sender, System.EventArgs e)
 		{
-            this.listView.Items.Clear();
+			listView.Items.Clear();
 		}
 
 		/// <summary>
@@ -530,7 +536,7 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemViewDir_Click(object sender, EventArgs e)
+		private void menuItemViewDir_Click(object sender, System.EventArgs e)
 		{
 /*			foreach( DebugItem item in listView.SelectedItems)
 			{
@@ -546,7 +552,7 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemOpenUrl_Click(object sender, EventArgs e)
+		private void menuItemOpenUrl_Click(object sender, System.EventArgs e)
 		{
 /*			foreach( DebugItem item in listView.SelectedItems)
 				Process.Start(item.Url);
@@ -558,7 +564,7 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		internal void menuItemCopy_Click(object sender, EventArgs e)
+		internal void menuItemCopy_Click(object sender, System.EventArgs e)
 		{
             /*
 			StringBuilder res = new StringBuilder();
@@ -576,7 +582,7 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemHeaders_Click(object sender, EventArgs e)
+		private void menuItemHeaders_Click(object sender, System.EventArgs e)
 		{/*
 			if(listView.SelectedItems.Count<=0)
 				return;
@@ -592,7 +598,7 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemSelectAll_Click(object sender, EventArgs e)
+		private void menuItemSelectAll_Click(object sender, System.EventArgs e)
 		{/*
 			foreach( DebugItem item in listView.Items )
 				item.Selected = true;
@@ -604,10 +610,10 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemRun_Click(object sender, EventArgs e)
+		private void menuItemRun_Click(object sender, System.EventArgs e)
 		{
-            this.isRunning = !this.isRunning;
-            this.menuItemRun.Checked = this.isRunning;
+			isRunning = !isRunning;
+			menuItemRun.Checked = isRunning;
 		}
 
 		/// <summary>
@@ -615,9 +621,10 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemEditDelete_Click(object sender, EventArgs e)
+		private void menuItemEditDelete_Click(object sender, System.EventArgs e)
 		{
-			while(this.listView.SelectedItems.Count>0) this.listView.Items.Remove(this.listView.SelectedItems[0]);
+			while(listView.SelectedItems.Count>0)
+				listView.Items.Remove(listView.SelectedItems[0]);
 		}
 
 		/// <summary>
@@ -625,10 +632,10 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemWriteLog_Click(object sender, EventArgs e)
+		private void menuItemWriteLog_Click(object sender, System.EventArgs e)
 		{
-            this.logToFile = !this.logToFile;
-            this.menuItemWriteLog.Checked = this.logToFile;
+			logToFile = !logToFile;
+			menuItemWriteLog.Checked = logToFile;
 		}
 
 		/// <summary>
@@ -636,12 +643,12 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void contextMenu_Popup(object sender, EventArgs e)
+		private void contextMenu_Popup(object sender, System.EventArgs e)
 		{
-			bool hasSelection = this.listView.SelectedItems.Count>0;
-			bool hasItems = this.listView.Items.Count > 0;
+			bool hasSelection = listView.SelectedItems.Count>0;
+			bool hasItems = listView.Items.Count > 0;
 
-			this.menuItemHeaders.Enabled = this.listView.SelectedItems.Count==1;
+			this.menuItemHeaders.Enabled = listView.SelectedItems.Count==1;
 			this.menuItemOpenUrl.Enabled = hasSelection;
 			this.menuItemViewDir.Enabled = hasSelection;
 			this.menuItemCopy.Enabled = hasSelection;
@@ -653,7 +660,7 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemFile_Popup(object sender, EventArgs e)
+		private void menuItemFile_Popup(object sender, System.EventArgs e)
 		{
             /*
 			if(listView.SelectedItems.Count<=0)
@@ -672,10 +679,10 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemEdit_Popup(object sender, EventArgs e)
+		private void menuItemEdit_Popup(object sender, System.EventArgs e)
 		{
-			bool hasSelection = this.listView.SelectedItems.Count>0;
-			bool hasItems = this.listView.Items.Count > 0;
+			bool hasSelection = listView.SelectedItems.Count>0;
+			bool hasItems = listView.Items.Count > 0;
 			this.menuItemEditCopy.Enabled = hasSelection;
 			this.menuItemEditDelete.Enabled = hasSelection;
 			this.menuItemEditClear.Enabled = hasItems;
@@ -687,9 +694,9 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemTools_Popup(object sender, EventArgs e)
+		private void menuItemTools_Popup(object sender, System.EventArgs e)
 		{
-			bool hasSelection = this.listView.SelectedItems.Count>0;
+			bool hasSelection = listView.SelectedItems.Count>0;
 
 			this.menuItemToolsDetails.Enabled = hasSelection;
 			this.menuItemToolsViewDirectory.Enabled = hasSelection;
@@ -701,9 +708,9 @@ namespace WorldWind.DataSource
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void menuItemFileClose_Click(object sender, EventArgs e)
+		private void menuItemFileClose_Click(object sender, System.EventArgs e)
 		{
-            this.Close();
+			Close();
 		}
 
         private void listView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)

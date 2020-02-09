@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Text;
 using System.IO;
 using System.Net;
 using Utility;
@@ -30,10 +33,10 @@ namespace WorldWind.DataSource
         {
             get
             { 
-                if (this.m_buffer == null)
+                if (m_buffer == null)
                     return 0;
                 else
-                    return (float)(100.0f * this.m_bytesRead / (float) this.m_buffer.Length); 
+                    return (float)(100.0f * m_bytesRead / (float)m_buffer.Length); 
             }
         }
         #endregion
@@ -51,12 +54,12 @@ namespace WorldWind.DataSource
 #if VERBOSE
             Log.Write(Log.Levels.Verbose, "DataRequest: starting async request for " + m_request.Source);
 #endif
-            this.m_state = DataRequestState.InProcess;
-            this.m_webRequest = WebRequest.Create(this.m_request.Source);
-            this.m_webRequest.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.BypassCache);
-            this.m_webRequest.Proxy = WebRequest.GetSystemWebProxy();
+            m_state = DataRequestState.InProcess;
+            m_webRequest = WebRequest.Create(m_request.Source);
+            m_webRequest.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.BypassCache);
+            m_webRequest.Proxy = WebRequest.GetSystemWebProxy();
 
-            this.m_requestResult = this.m_webRequest.BeginGetResponse(new AsyncCallback(ResponseCallback), this);
+            m_requestResult = m_webRequest.BeginGetResponse(new AsyncCallback(ResponseCallback), this);
         }
 
         /// <summary>
@@ -88,7 +91,7 @@ namespace WorldWind.DataSource
                 {
                     response.Close();
                     //TODO: hack to get responses with < 0 content length to work, which includes TerraServer layers
-                    using (WebClient client = new WebClient())
+                    using (System.Net.WebClient client = new WebClient())
                     {
                         dataRequest.m_buffer = client.DownloadData(response.ResponseUri.OriginalString);
                         dataRequest.m_bytesRead = dataRequest.m_buffer.Length;
@@ -97,7 +100,7 @@ namespace WorldWind.DataSource
                     }
                 }
             }
-            catch (WebException ex)
+            catch (System.Net.WebException ex)
             {
                 Log.Write(Log.Levels.Warning, "DataRequest: exception caught trying to access " + dataRequest.Source);
                 Log.Write(ex);

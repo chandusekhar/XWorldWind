@@ -1,4 +1,6 @@
-namespace WorldWind.PolygonTriangulation
+using System;
+
+namespace GeometryUtility
 {
 	/// <summary>
 	///To define the common types used in 

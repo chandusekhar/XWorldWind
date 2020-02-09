@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Text;
 using System.Windows.Forms;
 
 namespace WorldWind.GeoRSS
@@ -11,28 +16,28 @@ namespace WorldWind.GeoRSS
 
         public GeoRSSFeedControl()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.openFileDialog.InitialDirectory = Application.StartupPath + @"\Plugins\GeoRSS\";
-            this.openFileDialog.FileName = "geoRSS-small.png";
+            openFileDialog.InitialDirectory = Application.StartupPath + @"\Plugins\GeoRSS\";
+            openFileDialog.FileName = "geoRSS-small.png";
 
-            this.iconTextBox.Text = Application.StartupPath + @"\Plugins\GeoRSS\georss-small.png";
+            iconTextBox.Text = Application.StartupPath + @"\Plugins\GeoRSS\georss-small.png";
         }
 
         public GeoRSSFeedControl(GeoRssFeeds feeds)
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.m_feeds = feeds;
+            m_feeds = feeds;
 
-            this.UpdateDataGridView();
+            UpdateDataGridView();
         }
 
         internal void UpdateDataGridView()
         {
-            this.feedDataGridView.Rows.Clear();
+            feedDataGridView.Rows.Clear();
 
-            foreach (GeoRssFeed feed in this.m_feeds.Feeds)
+            foreach (GeoRssFeed feed in m_feeds.Feeds)
             {
                 DataGridViewRow row = new DataGridViewRow();
 
@@ -59,18 +64,18 @@ namespace WorldWind.GeoRSS
                 buttonCell.UseColumnTextForButtonValue = true;
                 row.Cells.Add(buttonCell);
 
-                this.feedDataGridView.Rows.Add(row);
+                feedDataGridView.Rows.Add(row);
             }
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            this.m_feeds.Add(this.nameTextBox.Text, this.urlTextBox.Text);
+            m_feeds.Add(nameTextBox.Text, urlTextBox.Text);
         }
 
         private void browseButton_Click(object sender, EventArgs e)
         {
-            this.openFileDialog.ShowDialog();
+            openFileDialog.ShowDialog();
 
         }
     }

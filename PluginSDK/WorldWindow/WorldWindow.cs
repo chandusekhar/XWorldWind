@@ -292,10 +292,15 @@ using System.Threading;
 using System.Windows.Forms;
 using WorldWind.Menu;
 using System.Collections;
+using System.Linq;
 using Utility;
 using System.Security.Permissions;
+using SharpDX;
 using SharpDX.Direct3D9;
 using WorldWind.DataSource;
+using Color = System.Drawing.Color;
+using Point = System.Drawing.Point;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace WorldWind
 {
@@ -305,9 +310,9 @@ namespace WorldWind
     public partial class WorldWindow : UserControl, IGlobe
     {
         /// <summary>
-        /// Direct3D rendering m_Device3d
+        /// Direct3D rendering mDevice3d
         /// </summary>
-        private Device m_Device3d;
+        private Device mDevice3d;
         private PresentParameters m_presentParams;
         private DrawArgs drawArgs;
         private Cache m_Cache;
@@ -463,19 +468,19 @@ namespace WorldWind
 
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.Opaque, true);
 
-            // The m_Device3d can't be created unless the control is at least 1 x 1 pixels in size
+            // The mDevice3d can't be created unless the control is at least 1 x 1 pixels in size
             this.Size = new Size(1, 1);
 
             try
             {
-                // Now perform the rendering m_Device3d initialization
+                // Now perform the rendering mDevice3d initialization
                 // Skip DirectX initialization in design mode
                 if (!this.DesignMode)
                 {
                     this.InitializeGraphics();
 
-                    //Post m_Device3d creation initialization
-                    this.drawArgs = new DrawArgs(this.m_Device3d, this);
+                    //Post mDevice3d creation initialization
+                    this.drawArgs = new DrawArgs(this.mDevice3d, this);
                     this.m_RootWidget = new Widgets.RootWidget(this);
                     this.m_NewRootWidget = new Widgets.RootWidget(this);
 
@@ -492,17 +497,11 @@ namespace WorldWind
                 }
 
             }
-            catch (InvalidCallException caught)
+            catch (SharpDXException caught)
             {
-                throw new InvalidCallException(
+                throw new Exception(
                     "Unable to locate a compatible graphics adapter. Make sure you are running the latest version of DirectX.", caught);
             }
-            catch (NotAvailableException caught)
-            {
-                throw new NotAvailableException(
-                    "Unable to locate a compatible graphics adapter. Make sure you are running the latest version of DirectX.", caught);
-            }
-
         }
 
         #region Private methods
@@ -514,8 +513,10 @@ namespace WorldWind
 
             this.m_presentParams.Windowed = true;
             this.m_presentParams.SwapEffect = SwapEffect.Discard;
-            this.m_presentParams.AutoDepthStencilFormat = DepthFormat.D16;
+            this.m_presentParams.AutoDepthStencilFormat = Format.D16;
             this.m_presentParams.EnableAutoDepthStencil = true;
+
+            Direct3D lDirect3DManager = new Direct3D();
 
             if (!World.Settings.VSync)
                 // Disable wait for vertical retrace (higher frame rate at the expense of tearing)
@@ -525,19 +526,19 @@ namespace WorldWind
             try
             {
                 // Store the default adapter
-                adapterOrdinal = Manager.Adapters.Default.Adapter;
+                adapterOrdinal = lDirect3DManager.Adapters.First().Adapter;
             }
             catch
             {
                 // User probably needs to upgrade DirectX or install a 3D capable graphics adapter
-                throw new NotAvailableException();
+                throw new SharpDXException("");
             }
 
             DeviceType dType = DeviceType.Hardware;
 
-            foreach (AdapterInformation ai in Manager.Adapters)
+            foreach (AdapterInformation ai in lDirect3DManager.Adapters)
             {
-                if (ai.Information.Description.IndexOf("NVPerfHUD") >= 0)
+                if (ai.Details.Description.IndexOf("NVPerfHUD") >= 0)
                 {
                     adapterOrdinal = ai.Adapter;
                     dType = DeviceType.Reference;
@@ -545,67 +546,71 @@ namespace WorldWind
             }
             CreateFlags flags = CreateFlags.SoftwareVertexProcessing;
 
-            // Check to see if we can use a pure hardware m_Device3d
-            Caps caps = Manager.GetDeviceCaps(adapterOrdinal, DeviceType.Hardware);
+            // Check to see if we can use a pure hardware mDevice3d
+            Capabilities caps = lDirect3DManager.GetDeviceCaps(adapterOrdinal, DeviceType.Hardware);
 
             // Do we support hardware vertex processing?
-            if (caps.Capabilities.SupportsHardwareTransformAndLight)
+           // if (caps.SupportsHardwareTransformAndLight)
                 //	// Replace the software vertex processing
                 flags = CreateFlags.HardwareVertexProcessing;
 
             // Use multi-threading for now - TODO: See if the code can be changed such that this isn't necessary (Texture Loading for example)
-            flags |= CreateFlags.MultiThreaded | CreateFlags.FpuPreserve;
+            flags |= CreateFlags.Multithreaded | CreateFlags.FpuPreserve;
 
             try
             {
-                // Create our m_Device3d
-                this.m_Device3d = new Device(adapterOrdinal, dType, this, flags, this.m_presentParams);
+               
+
+               
+
+                // Create our mDevice3d
+                this.mDevice3d = new Device(lDirect3DManager, adapterOrdinal, dType, this.Handle, flags, this.m_presentParams);
             }
-            catch (SharpDX.DirectXException)
+            catch (SharpDXException)
             {
-                throw new NotSupportedException("Unable to create the Direct3D m_Device3d.");
+                throw new NotSupportedException("Unable to create the Direct3D mDevice3d.");
             }
 
-            // Hook the m_Device3d reset event
-            this.m_Device3d.DeviceReset += new EventHandler(this.OnDeviceReset);
-            this.m_Device3d.DeviceResizing += new CancelEventHandler(this.m_Device3d_DeviceResizing);
-            this.OnDeviceReset(this.m_Device3d, null);
+            // Hook the mDevice3d reset event
+            this.mDevice3d.DeviceReset += new EventHandler(this.OnDeviceReset);
+            this.mDevice3d.DeviceResizing += new CancelEventHandler(this.m_Device3d_DeviceResizing);
+            this.OnDeviceReset(this.mDevice3d, null);
         }
 
         private void OnDeviceReset(object sender, EventArgs e)
         {
             // Can we use anisotropic texture minify filter?
-            if (this.m_Device3d.Capabilities.TextureFilterCaps.SupportsMinifyAnisotropic)
+            if ((this.mDevice3d.Capabilities.TextureFilterCaps & FilterCaps.MinAnisotropic) != 0)
             {
-                this.m_Device3d.SetSamplerState(0, SamplerState.MinFilter = TextureFilter.Anisotropic;
+                this.mDevice3d.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Anisotropic);
             }
-            else if (this.m_Device3d.Capabilities.TextureFilterCaps.SupportsMinifyLinear)
+            else if ((this.mDevice3d.Capabilities.TextureFilterCaps & FilterCaps.MinLinear) != 0)
             {
-                this.m_Device3d.SetSamplerState(0, SamplerState.MinFilter = TextureFilter.Linear;
+                this.mDevice3d.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
             }
 
             // What about magnify filter?
-            if (this.m_Device3d.Capabilities.TextureFilterCaps.SupportsMagnifyAnisotropic)
+            if ((this.mDevice3d.Capabilities.TextureFilterCaps & FilterCaps.MagAnisotropic) != 0)
             {
-                this.m_Device3d.SetSamplerState(0, SamplerState.MagFilter = TextureFilter.Anisotropic;
+                this.mDevice3d.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Anisotropic);
             }
-            else if (this.m_Device3d.Capabilities.TextureFilterCaps.SupportsMagnifyLinear)
+            else if ((this.mDevice3d.Capabilities.TextureFilterCaps & FilterCaps.MagAnisotropic) != 0)
             {
-                this.m_Device3d.SetSamplerState(0, SamplerState.MagFilter = TextureFilter.Linear;
+                this.mDevice3d.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
             }
 
-            this.m_Device3d.SetSamplerState(0, SamplerState.AddressU = TextureAddress.Clamp;
-            this.m_Device3d.SetSamplerState(0, SamplerState.AddressV = TextureAddress.Clamp;
+            this.mDevice3d.SetSamplerState(0, SamplerState.AddressU, TextureAddress.Clamp);
+            this.mDevice3d.SetSamplerState(0, SamplerState.AddressV, TextureAddress.Clamp);
 
-            this.m_Device3d.SetRenderState(RenderState.Clipping = true;
-            this.m_Device3d.SetRenderState(RenderState.CullMode = Cull.Clockwise;
-            this.m_Device3d.SetRenderState(RenderState.Lighting = false;
-            this.m_Device3d.SetRenderState(RenderState.Ambient = World.Settings.StandardAmbientColor;
+            this.mDevice3d.SetRenderState(RenderState.Clipping, true);
+            this.mDevice3d.SetRenderState(RenderState.CullMode, Cull.Clockwise);
+            this.mDevice3d.SetRenderState(RenderState.Lighting, false);
+            this.mDevice3d.SetRenderState(RenderState.Ambient, World.Settings.StandardAmbientColor);
 
-            this.m_Device3d.SetRenderState(RenderState.ZBufferEnable = true;
-            this.m_Device3d.SetRenderState(RenderState.AlphaBlendEnable = true;
-            this.m_Device3d.SetRenderState(RenderState.SourceBlend = Blend.SourceAlpha;
-            this.m_Device3d.SetRenderState(RenderState.DestinationBlend = Blend.InvSourceAlpha;
+            this.mDevice3d.SetRenderState(RenderState.ZEnable, true);
+            this.mDevice3d.SetRenderState(RenderState.AlphaBlendEnable, true);
+            this.mDevice3d.SetRenderState(RenderState.SourceBlend, Blend.SourceAlpha);
+            this.mDevice3d.SetRenderState(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
         }
 
         private void m_Device3d_DeviceResizing(object sender, CancelEventArgs e)
@@ -677,11 +682,11 @@ namespace WorldWind
         {
             try
             {
-                using (Surface backbuffer = this.m_Device3d.GetBackBuffer(0, 0, BackBufferType.Mono))
+                using (Surface backbuffer = this.mDevice3d.GetBackBuffer(0, 0))
                     SurfaceLoader.Save(this.saveScreenShotFilePath, this.saveScreenShotImageFileFormat, backbuffer);
                 this.saveScreenShotFilePath = null;
             }
-            catch (InvalidCallException caught)
+            catch (SharpDXException caught)
             {
                 MessageBox.Show(caught.Message, "Screenshot save failed.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -765,7 +770,7 @@ namespace WorldWind
         /// Extension is used to determine the image format.</param>
         public void SaveScreenshot(string filePath)
         {
-            if (this.m_Device3d == null)
+            if (this.mDevice3d == null)
                 return;
 
             FileInfo saveFileInfo = new FileInfo(filePath);
@@ -833,7 +838,7 @@ namespace WorldWind
                     this.drawArgs.Present();
                 }
             }
-            catch (DeviceLostException)
+            catch (SharpDXException)
             {
                 this.AttemptRecovery();
             }
@@ -887,7 +892,7 @@ namespace WorldWind
             // Paint the last active scene if rendering is disabled to keep the ui responsive
             try
             {
-                if (this.m_Device3d == null)
+                if (this.mDevice3d == null)
                 {
                     e.Graphics.Clear(SystemColors.Control);
                     return;
@@ -895,9 +900,9 @@ namespace WorldWind
 
                 // to prevent screen garbage when resizing
                 this.Render();
-                this.m_Device3d.Present();
+                this.mDevice3d.Present();
             }
-            catch (DeviceLostException)
+            catch (SharpDXException)
             {
                 try
                 {
@@ -906,11 +911,7 @@ namespace WorldWind
                     // Our surface was lost, force re-render
                     this.Render();
 
-                    this.m_Device3d.Present();
-                }
-                catch (DirectXException)
-                {
-                    // Ignore a 2nd failure
+                    this.mDevice3d.Present();
                 }
             }
         }
@@ -949,13 +950,13 @@ namespace WorldWind
                             (int)(World.Settings.SkyColor.B*percent));
                     }*/
 
-                    this.m_Device3d.Clear(ClearFlags.Target | ClearFlags.ZBuffer, backgroundColor, 1.0f, 0);
+                    this.mDevice3d.Clear(ClearFlags.Target | ClearFlags.ZBuffer, backgroundColor, 1.0f, 0);
 
                     if (this.m_World == null)
                     {
-                        this.m_Device3d.BeginScene();
-                        this.m_Device3d.EndScene();
-                        this.m_Device3d.Present();
+                        this.mDevice3d.BeginScene();
+                        this.mDevice3d.EndScene();
+                        this.mDevice3d.Present();
                         Thread.Sleep(25);
                         return;
                     }
@@ -981,15 +982,15 @@ namespace WorldWind
 
                     // Update camera view
                     this.drawArgs.WorldCamera.UpdateTerrainElevation(this.m_World.TerrainAccessor);
-                    this.drawArgs.WorldCamera.Update(this.m_Device3d);
+                    this.drawArgs.WorldCamera.Update(this.mDevice3d);
 
-                    this.m_Device3d.BeginScene();
+                    this.mDevice3d.BeginScene();
 
                     // Set fill mode
                     if (this.renderWireFrame)
-                        this.m_Device3d.SetRenderState(RenderState.FillMode = FillMode.Wireframe;
+                        this.mDevice3d.SetRenderState(RenderState.FillMode, FillMode.Wireframe);
                     else
-                        this.m_Device3d.SetRenderState(RenderState.FillMode = FillMode.Solid;
+                        this.mDevice3d.SetRenderState(RenderState.FillMode, FillMode.Solid);
 
                     this.drawArgs.RenderWireFrame = this.renderWireFrame;
 
@@ -1012,15 +1013,15 @@ namespace WorldWind
 
                     if (this.saveScreenShotFilePath != null) this.SaveScreenShot();
 
-                    this.drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
+                    this.drawArgs.device.SetRenderState(RenderState.ZEnable, false);
 
                     // 3D rendering complete, switch to 2D for UI rendering
 
                     // Restore normal fill mode
-                    if (this.renderWireFrame) this.m_Device3d.SetRenderState(RenderState.FillMode = FillMode.Solid;
+                    if (this.renderWireFrame) this.mDevice3d.SetRenderState(RenderState.FillMode, FillMode.Solid);
 
                     // Disable fog for UI
-                    this.m_Device3d.SetRenderState(RenderState.FogEnable = false;
+                    this.mDevice3d.SetRenderState(RenderState.FogEnable, false);
 
                     /*
                                     if(World.Settings.ShowDownloadIndicator)
@@ -1047,7 +1048,7 @@ namespace WorldWind
                                     new Rectangle(xPos, yPos, this.Width, this.Height);
                                 this.drawArgs.defaultDrawingFont.DrawText(null,
                                     dm.Message, posRect,
-                                    DrawTextFormat.NoClip | DrawTextFormat.WordBreak,
+                                    FontDrawFlags.NoClip | FontDrawFlags.WordBreak,
                                     Color.White);
                             }
                         }
@@ -1057,7 +1058,7 @@ namespace WorldWind
                         }
                     }
 
-                    this.m_Device3d.EndScene();
+                    this.mDevice3d.EndScene();
                 }
                 catch (Exception ex)
                 {
@@ -1187,7 +1188,7 @@ namespace WorldWind
                     bytesTransferred = bytes.ToString();
 
                 captionText +=
-                    "\nAvailable Texture Memory: " + (this.m_Device3d.AvailableTextureMemory / 1024).ToString("N0") + " kB" +
+                    "\nAvailable Texture Memory: " + (this.mDevice3d.AvailableTextureMemory / 1024).ToString("N0") + " kB" +
                     "\nBoundary Points: " + this.drawArgs.numBoundaryPointsRendered.ToString() + " / " + this.drawArgs.numBoundaryPointsTotal.ToString() + " : " + this.drawArgs.numBoundariesDrawn.ToString() +
                     "\nTiles Drawn: " + (this.drawArgs.numberTilesDrawn * 0.25f).ToString() +
                     "\n" + this.drawArgs.WorldCamera +
@@ -1203,7 +1204,7 @@ namespace WorldWind
 
 
             captionText = captionText.Trim();
-            DrawTextFormat dtf = DrawTextFormat.NoClip | DrawTextFormat.WordBreak | DrawTextFormat.Right;
+            FontDrawFlags dtf = FontDrawFlags.NoClip | FontDrawFlags.WordBreak | FontDrawFlags.Right;
             int x = 7;
             int y = this._menuBar != null && World.Settings.ShowToolbar && this._menuBar.Anchor == MenuAnchor.Top ? 65 : 7;
             Rectangle textRect = Rectangle.FromLTRB(x, y, this.Width - 8, this.Height - 8);
@@ -1237,7 +1238,7 @@ namespace WorldWind
 
             if (this.crossHairs == null)
             {
-                this.crossHairs = new Line(this.m_Device3d);
+                this.crossHairs = new Line(this.mDevice3d);
             }
 
             Vector2[] vertical = new Vector2[2];
@@ -1260,24 +1261,21 @@ namespace WorldWind
         }
 
         /// <summary>
-        /// Attempt to restore the 3D m_Device3d
+        /// Attempt to restore the 3D mDevice3d
         /// </summary>
         protected void AttemptRecovery()
         {
             try
             {
-                this.m_Device3d.TestCooperativeLevel();
+                this.mDevice3d.TestCooperativeLevel();
             }
-            catch (DeviceLostException)
-            {
-            }
-            catch (DeviceNotResetException)
+            catch (SharpDXException)
             {
                 try
                 {
-                    this.m_Device3d.Reset(this.m_presentParams);
+                    this.mDevice3d.Reset(this.m_presentParams);
                 }
-                catch (DeviceLostException)
+                catch
                 {
                     // If it's still lost or lost again, just do
                     // nothing

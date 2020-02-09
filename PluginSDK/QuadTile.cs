@@ -1307,29 +1307,29 @@ namespace WorldWind
                         material.Ambient = Color.White;
 
                         device.Material = material;
-                        device.SetRenderState(RenderState.AmbientColor = World.Settings.ShadingAmbientColor.ToArgb();
-                        device.SetRenderState(RenderState.NormalizeNormals = true;
-                        device.SetRenderState(RenderState.AlphaBlendEnable = true;
+                        device.SetRenderState(RenderState.AmbientColor,  World.Settings.ShadingAmbientColor.ToArgb());
+                        device.SetRenderState(RenderState.NormalizeNormals, true);
+                        device.SetRenderState(RenderState.AlphaBlendEnable, true);
 
                         device.Lights[0].Enabled = true;
                         device.Lights[0].Type = LightType.Directional;
                         device.Lights[0].Diffuse = World.Settings.LightColor;
                         device.Lights[0].Direction = sunVector;
 
-                        device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Modulate;
-                        device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse;
-                        device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.TextureColor;
+                        device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Modulate);
+                        device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
+                        device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.Texture);
                     }
                     else
                     {
-                        device.SetRenderState(RenderState.Lighting = false;
-                        device.SetRenderState(RenderState.Ambient = World.Settings.StandardAmbientColor;
+                        device.SetRenderState(RenderState.Lighting, false);
+                        device.SetRenderState(RenderState.Ambient, World.Settings.StandardAmbientColor);
                     }
 
-                    device.SetRenderState(RenderState.TextureFactor = Color.FromArgb(this.m_CurrentOpacity, 255, 255, 255).ToArgb();
-                    device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate;
-                    device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor;
-                    device.SetTextureStageState(0, TextureStage.AlphaArg2,TextureArgument.TFactor;
+                    device.SetRenderState(RenderState.TextureFactor,Color.FromArgb(this.m_CurrentOpacity, 255, 255, 255).ToArgb());
+                    device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate);
+                    device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Texture);
+                    device.SetTextureStageState(0, TextureStage.AlphaArg2,TextureArgument.TFactor);
 
                     device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, verts.Length, this.vertexIndexes.Length/3, this.vertexIndexes, true, verts);
                 }

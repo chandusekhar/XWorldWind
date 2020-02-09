@@ -1,43 +1,46 @@
 using System;
-using System.Drawing;
 using System.IO;
+using System.Collections;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 using System.Runtime.InteropServices;
+using WorldWind;
 
-namespace WorldWind
+namespace WorldWind.Widgets
 {
     public delegate void VisibleChangedHandler(object o, bool state);
 
 	public class Form : IWidget, IInteractive
 	{
-		Point m_Location = new Point(0, 0);
-		Size m_Size = new Size(300, 200);
-		IWidget m_ParentWidget;
+		System.Drawing.Point m_Location = new System.Drawing.Point(0, 0);
+		System.Drawing.Size m_Size = new System.Drawing.Size(300, 200);
+		IWidget m_ParentWidget = null;
 		IWidgetCollection m_ChildWidgets = new WidgetCollection();
 		string m_Name = "";
         Alignment m_alignment = Alignment.None;
 
-		Color m_BackgroundColor = Color.FromArgb(
+		System.Drawing.Color m_BackgroundColor = System.Drawing.Color.FromArgb(
 			100, 0, 0, 0);
 
-		bool m_HideBorder;
-		Color m_BorderColor = Color.GhostWhite;
-		Color m_HeaderColor =  Color.FromArgb(
+		bool m_HideBorder = false;
+		System.Drawing.Color m_BorderColor = System.Drawing.Color.GhostWhite;
+		System.Drawing.Color m_HeaderColor =  System.Drawing.Color.FromArgb(
 			120,
-			Color.Coral.R,
-			Color.Coral.G,
-			Color.Coral.B);
+			System.Drawing.Color.Coral.R,
+			System.Drawing.Color.Coral.G,
+			System.Drawing.Color.Coral.B);
 		
 		int m_HeaderHeight = 20;
 
-		Color m_TextColor = Color.GhostWhite;
-		SharpDX.Direct3D9.Font m_WorldWindDingsFont;
-		SharpDX.Direct3D9.Font m_TextFont;
+		System.Drawing.Color m_TextColor = System.Drawing.Color.GhostWhite;
+		Microsoft.DirectX.Direct3D.Font m_WorldWindDingsFont = null;
+		Microsoft.DirectX.Direct3D.Font m_TextFont = null;
 
-        bool m_HideHeader;
-		bool m_AutoHideHeader;
+        bool m_HideHeader = false;
+		bool m_AutoHideHeader = false;
 		bool m_Visible = true;
 		bool m_Enabled = true;
-		object m_Tag;
+		object m_Tag = null;
 		string m_Text = "";
 		
 		public Form()
@@ -47,95 +50,95 @@ namespace WorldWind
 		#region Properties
         public Alignment Alignment
         {
-            get { return this.m_alignment; }
-            set { this.m_alignment = value; }
+            get { return m_alignment; }
+            set { m_alignment = value; }
         }
 		public bool HideBorder
 		{
-			get{ return this.m_HideBorder; }
-			set{ this.m_HideBorder = value; }
+			get{ return m_HideBorder; }
+			set{ m_HideBorder = value; }
 		}
         public bool HideHeader
         {
-            get { return this.m_HideHeader; }
-            set { this.m_HideHeader = value; }
+            get { return m_HideHeader; }
+            set { m_HideHeader = value; }
         }
 
-		public SharpDX.Direct3D9.Font TextFont
+		public Microsoft.DirectX.Direct3D.Font TextFont
 		{
 			get
 			{
-				return this.m_TextFont;
+				return m_TextFont;
 			}
 			set
 			{
-                this.m_TextFont = value;
+				m_TextFont = value;
 			}
 		}
 		public string Name
 		{
 			get
 			{
-				return this.m_Name;
+				return m_Name;
 			}
 			set
 			{
-                this.m_Name = value;
+				m_Name = value;
 			}
 		}
 		public bool AutoHideHeader
 		{
 			get
 			{
-				return this.m_AutoHideHeader;
+				return m_AutoHideHeader;
 			}
 			set
 			{
-                this.m_AutoHideHeader = value;
+				m_AutoHideHeader = value;
 			}
 		}
-		public Color HeaderColor
+		public System.Drawing.Color HeaderColor
 		{
 			get
 			{
-				return this.m_HeaderColor;
+				return m_HeaderColor;
 			}
 			set
 			{
-                this.m_HeaderColor = value;
+				m_HeaderColor = value;
 			}
 		}
 		public int HeaderHeight
 		{
 			get
 			{
-				return this.m_HeaderHeight;
+				return m_HeaderHeight;
 			}
 			set
 			{
-                this.m_HeaderHeight = value;
+				m_HeaderHeight = value;
 			}
 		}
-		public Color BorderColor
+		public System.Drawing.Color BorderColor
 		{
 			get
 			{
-				return this.m_BorderColor;
+				return m_BorderColor;
 			}
 			set
 			{
-                this.m_BorderColor = value;
+				m_BorderColor = value;
 			}
 		}
-		public Color BackgroundColor
+		public System.Drawing.Color BackgroundColor
 		{
 			get
 			{
-				return this.m_BackgroundColor;
+				return m_BackgroundColor;
 			}
 			set
 			{
-                this.m_BackgroundColor = value;
+				m_BackgroundColor = value;
 			}
 		}
 
@@ -143,11 +146,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Text;
+				return m_Text;
 			}
 			set
 			{
-                this.m_Text = value;
+				m_Text = value;
 			}
 		}
 		#endregion
@@ -158,11 +161,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_ParentWidget;
+				return m_ParentWidget;
 			}
 			set
 			{
-                this.m_ParentWidget = value;
+				m_ParentWidget = value;
 			}
 		}
 
@@ -170,14 +173,15 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Visible;
+				return m_Visible;
 			}
 			set
 			{
-				if(this.m_Visible != value)
+				if(m_Visible != value)
 				{
-                    this.m_Visible = value;
-					if(this.OnVisibleChanged != null) this.OnVisibleChanged(this, value);
+					m_Visible = value;
+					if(OnVisibleChanged != null)
+						OnVisibleChanged(this, value);
 				}
 			}
 		}
@@ -186,11 +190,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Tag;
+				return m_Tag;
 			}
 			set
 			{
-                this.m_Tag = value;
+				m_Tag = value;
 			}
 		}
 
@@ -198,23 +202,23 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_ChildWidgets;
+				return m_ChildWidgets;
 			}
 			set
 			{
-                this.m_ChildWidgets = value;
+				m_ChildWidgets = value;
 			}
 		}
 
-		public Size ClientSize
+		public System.Drawing.Size ClientSize
 		{
 			get
 			{
-				return this.m_Size;
+				return m_Size;
 			}
 			set
 			{
-                this.m_Size = value;
+				m_Size = value;
 			}
 		}
 
@@ -222,50 +226,52 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Enabled;
+				return m_Enabled;
 			}
 			set
 			{
-                this.m_Enabled = value;
+				m_Enabled = value;
 			}
 		}
 
-		public Point ClientLocation
+		public System.Drawing.Point ClientLocation
 		{
 			get
 			{
-                Point location = this.m_Location;
+                System.Drawing.Point location = m_Location;
 
-                if (this.m_ParentWidget != null)
+                if (m_ParentWidget != null)
                 {
-                    if (this.m_alignment == Alignment.Right || this.m_alignment == (Alignment.Top | Alignment.Right) || this.m_alignment == (Alignment.Bottom | Alignment.Right))
+                    if (m_alignment == Alignment.Right || m_alignment == (Alignment.Top | Alignment.Right) || m_alignment == (Alignment.Bottom | Alignment.Right))
                     {
-                        location.X = this.m_ParentWidget.ClientSize.Width - this.ClientSize.Width - location.X;
+                        location.X = m_ParentWidget.ClientSize.Width - ClientSize.Width - location.X;
                     }
-                    if (this.m_alignment == Alignment.Bottom || this.m_alignment == (Alignment.Left | Alignment.Bottom) || this.m_alignment == (Alignment.Right | Alignment.Bottom))
+                    if (m_alignment == Alignment.Bottom || m_alignment == (Alignment.Left | Alignment.Bottom) || m_alignment == (Alignment.Right | Alignment.Bottom))
                     {
-                        location.Y = this.m_ParentWidget.ClientSize.Height - this.ClientSize.Height - location.Y;
+                        location.Y = m_ParentWidget.ClientSize.Height - ClientSize.Height - location.Y;
                     }
                 }
                 return location;
 			}
 			set
 			{
-                this.m_Location = value;
+				m_Location = value;
 			}
 		}
 
-		public Point AbsoluteLocation
+		public System.Drawing.Point AbsoluteLocation
 		{
 			get
 			{
-				if(this.m_ParentWidget != null)
+				if(m_ParentWidget != null)
 				{
-					return new Point(this.ClientLocation.X + this.m_ParentWidget.AbsoluteLocation.X, this.ClientLocation.Y + this.m_ParentWidget.AbsoluteLocation.Y);
+					return new System.Drawing.Point(
+						ClientLocation.X + m_ParentWidget.AbsoluteLocation.X,
+                        ClientLocation.Y + m_ParentWidget.AbsoluteLocation.Y);
 				}
 				else
 				{
-					return this.ClientLocation;		
+					return ClientLocation;		
 				}
 			}
 		}
@@ -277,138 +283,150 @@ namespace WorldWind
 
 		public virtual void Render(DrawArgs drawArgs)
 		{
-			if(!this.Visible)
+			if(!Visible)
 				return;
 
-			if(this.m_TextFont == null)
+			if(m_TextFont == null)
 			{
-				Font localHeaderFont = new Font("Arial", 12.0f, FontStyle.Italic | FontStyle.Bold);
-                this.m_TextFont = new SharpDX.Direct3D9.Font(drawArgs.device, localHeaderFont);
+				System.Drawing.Font localHeaderFont = new System.Drawing.Font("Arial", 12.0f, System.Drawing.FontStyle.Italic | System.Drawing.FontStyle.Bold);
+				m_TextFont = new Microsoft.DirectX.Direct3D.Font(drawArgs.device, localHeaderFont);
 			}
 
-			if(this.m_WorldWindDingsFont == null)
+			if(m_WorldWindDingsFont == null)
 			{
 				AddFontResource(Path.Combine(System.Windows.Forms.Application.StartupPath, "World Wind Dings 1.04.ttf"));
 				System.Drawing.Text.PrivateFontCollection fpc = new System.Drawing.Text.PrivateFontCollection();
 				fpc.AddFontFile(Path.Combine(System.Windows.Forms.Application.StartupPath, "World Wind Dings 1.04.ttf"));
-				Font worldwinddings = new Font(fpc.Families[0], 12.0f);
-
-                this.m_WorldWindDingsFont = new SharpDX.Direct3D9.Font(drawArgs.device, worldwinddings);
+				System.Drawing.Font worldwinddings = new System.Drawing.Font(fpc.Families[0], 12.0f);
+			
+				m_WorldWindDingsFont = new Microsoft.DirectX.Direct3D.Font(drawArgs.device, worldwinddings);
 			}
 
-			if(DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.resizeBuffer &&
-				DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.resizeBuffer)
+			if(DrawArgs.LastMousePosition.X > AbsoluteLocation.X - resizeBuffer &&
+				DrawArgs.LastMousePosition.X < AbsoluteLocation.X + resizeBuffer &&
+				DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y - resizeBuffer &&
+				DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + resizeBuffer)
 			{
 				DrawArgs.MouseCursor = CursorType.SizeNWSE;
 			}
-			else if(DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X - this.resizeBuffer + this.ClientSize.Width &&
-				DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.resizeBuffer)
+			else if(DrawArgs.LastMousePosition.X > AbsoluteLocation.X - resizeBuffer + ClientSize.Width &&
+				DrawArgs.LastMousePosition.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y - resizeBuffer &&
+				DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + resizeBuffer)
 			{
 				DrawArgs.MouseCursor = CursorType.SizeNESW;
 			}
-			else if(DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.resizeBuffer &&
-				DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y - this.resizeBuffer + this.ClientSize.Height &&
-				DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height)
+			else if(DrawArgs.LastMousePosition.X > AbsoluteLocation.X - resizeBuffer &&
+				DrawArgs.LastMousePosition.X < AbsoluteLocation.X + resizeBuffer &&
+				DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y - resizeBuffer + ClientSize.Height &&
+				DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height)
 			{
 				DrawArgs.MouseCursor = CursorType.SizeNESW;
 			}
-			else if(DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X - this.resizeBuffer + this.ClientSize.Width &&
-				DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y - this.resizeBuffer + this.ClientSize.Height &&
-				DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height)
+			else if(DrawArgs.LastMousePosition.X > AbsoluteLocation.X - resizeBuffer + ClientSize.Width &&
+				DrawArgs.LastMousePosition.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y - resizeBuffer + ClientSize.Height &&
+				DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height)
 			{
 				DrawArgs.MouseCursor = CursorType.SizeNWSE;
 			}
 			else if(
-				(DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.resizeBuffer &&
-				DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height) ||
-				(DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X - this.resizeBuffer + this.ClientSize.Width &&
-				DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height))
+				(DrawArgs.LastMousePosition.X > AbsoluteLocation.X - resizeBuffer &&
+				DrawArgs.LastMousePosition.X < AbsoluteLocation.X + resizeBuffer &&
+				DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y - resizeBuffer &&
+				DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height) ||
+				(DrawArgs.LastMousePosition.X > AbsoluteLocation.X - resizeBuffer + ClientSize.Width &&
+				DrawArgs.LastMousePosition.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y - resizeBuffer &&
+				DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height))
 			{
 				DrawArgs.MouseCursor = CursorType.SizeWE;
 			}
 			else if(
-				(DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.resizeBuffer) ||
-				(DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y - this.resizeBuffer + this.ClientSize.Height &&
-				DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height))
+				(DrawArgs.LastMousePosition.X > AbsoluteLocation.X - resizeBuffer &&
+				DrawArgs.LastMousePosition.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y - resizeBuffer &&
+				DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + resizeBuffer) ||
+				(DrawArgs.LastMousePosition.X > AbsoluteLocation.X - resizeBuffer &&
+				DrawArgs.LastMousePosition.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y - resizeBuffer + ClientSize.Height &&
+				DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height))
 			{
 				DrawArgs.MouseCursor = CursorType.SizeNS;
 			}
 
-			if(this.ClientSize.Height > drawArgs.parentControl.Height)
+			if(ClientSize.Height > drawArgs.parentControl.Height)
 			{
-                this.ClientSize = new Size(this.ClientSize.Width, drawArgs.parentControl.Height);
+				ClientSize = new System.Drawing.Size(ClientSize.Width, drawArgs.parentControl.Height);
 			}
 
-			if(this.ClientSize.Width > drawArgs.parentControl.Width)
+			if(ClientSize.Width > drawArgs.parentControl.Width)
 			{
-                this.ClientSize = new Size(drawArgs.parentControl.Width, this.ClientSize.Height);
+				ClientSize = new System.Drawing.Size(drawArgs.parentControl.Width, ClientSize.Height);
 			}
 
-            if (!this.m_HideHeader && 
-                (!this.m_AutoHideHeader || (DrawArgs.LastMousePosition.X >= this.ClientLocation.X &&
-                                            DrawArgs.LastMousePosition.X <= this.ClientLocation.X + this.m_Size.Width &&
-                                            DrawArgs.LastMousePosition.Y >= this.ClientLocation.Y &&
-                                            DrawArgs.LastMousePosition.Y <= this.ClientLocation.Y + this.m_Size.Height)))
+            if (!m_HideHeader && 
+                (!m_AutoHideHeader || (DrawArgs.LastMousePosition.X >= ClientLocation.X &&
+                DrawArgs.LastMousePosition.X <= ClientLocation.X + m_Size.Width &&
+                DrawArgs.LastMousePosition.Y >= ClientLocation.Y &&
+                DrawArgs.LastMousePosition.Y <= ClientLocation.Y + m_Size.Height)))
 			{
 				
-				Utilities.DrawBox(this.ClientLocation.X, this.ClientLocation.Y, this.m_Size.Width, this.m_HeaderHeight,
-					0.0f, this.m_HeaderColor.ToArgb(),
+				Widgets.Utilities.DrawBox(
+                    ClientLocation.X,
+                    ClientLocation.Y,
+					m_Size.Width,
+					m_HeaderHeight,
+					0.0f,
+					m_HeaderColor.ToArgb(),
 					drawArgs.device);
 
-                this.m_TextFont.DrawText(
-					null, this.m_Text,
-                    new Rectangle(this.ClientLocation.X + 2, this.ClientLocation.Y, this.m_Size.Width, this.m_HeaderHeight),
-					DrawTextFormat.None, this.m_TextColor.ToArgb());
+				m_TextFont.DrawText(
+					null,
+					m_Text,
+                    new System.Drawing.Rectangle(ClientLocation.X + 2, ClientLocation.Y, m_Size.Width, m_HeaderHeight),
+					DrawTextFormat.None,
+					m_TextColor.ToArgb());
 
-                this.m_WorldWindDingsFont.DrawText(
+				m_WorldWindDingsFont.DrawText(
 					null,
 					"E",
-                    new Rectangle(this.ClientLocation.X + this.m_Size.Width - 15, this.ClientLocation.Y + 2, this.m_Size.Width, this.m_Size.Height),
+                    new System.Drawing.Rectangle(ClientLocation.X + m_Size.Width - 15, ClientLocation.Y + 2, m_Size.Width, m_Size.Height),
 					DrawTextFormat.NoClip,
-					Color.White.ToArgb());
+					System.Drawing.Color.White.ToArgb());
 
-                this.m_OutlineVertsHeader[0].X = this.AbsoluteLocation.X;
-                this.m_OutlineVertsHeader[0].Y = this.AbsoluteLocation.Y;
+				m_OutlineVertsHeader[0].X = AbsoluteLocation.X;
+				m_OutlineVertsHeader[0].Y = AbsoluteLocation.Y;
 
-                this.m_OutlineVertsHeader[1].X = this.AbsoluteLocation.X + this.ClientSize.Width;
-                this.m_OutlineVertsHeader[1].Y = this.AbsoluteLocation.Y;
+				m_OutlineVertsHeader[1].X = AbsoluteLocation.X + ClientSize.Width;
+				m_OutlineVertsHeader[1].Y = AbsoluteLocation.Y;
 
-                this.m_OutlineVertsHeader[2].X = this.AbsoluteLocation.X + this.ClientSize.Width;
-                this.m_OutlineVertsHeader[2].Y = this.AbsoluteLocation.Y + this.m_HeaderHeight;
+				m_OutlineVertsHeader[2].X = AbsoluteLocation.X + ClientSize.Width;
+				m_OutlineVertsHeader[2].Y = AbsoluteLocation.Y + m_HeaderHeight;
+		
+				m_OutlineVertsHeader[3].X = AbsoluteLocation.X;
+				m_OutlineVertsHeader[3].Y = AbsoluteLocation.Y + m_HeaderHeight;
 
-                this.m_OutlineVertsHeader[3].X = this.AbsoluteLocation.X;
-                this.m_OutlineVertsHeader[3].Y = this.AbsoluteLocation.Y + this.m_HeaderHeight;
+				m_OutlineVertsHeader[4].X = AbsoluteLocation.X;
+				m_OutlineVertsHeader[4].Y = AbsoluteLocation.Y;
 
-                this.m_OutlineVertsHeader[4].X = this.AbsoluteLocation.X;
-                this.m_OutlineVertsHeader[4].Y = this.AbsoluteLocation.Y;
-
-				if(!this.m_HideBorder)
-					Utilities.DrawLine(this.m_OutlineVertsHeader, this.m_BorderColor.ToArgb(), drawArgs.device);
+				if(!m_HideBorder)
+					Widgets.Utilities.DrawLine(m_OutlineVertsHeader, m_BorderColor.ToArgb(), drawArgs.device);
 
 			}
 
-			Utilities.DrawBox(this.ClientLocation.X, this.ClientLocation.Y + this.m_HeaderHeight, this.m_Size.Width, this.m_Size.Height - this.m_HeaderHeight,
-				0.0f, this.m_BackgroundColor.ToArgb(),
+			Widgets.Utilities.DrawBox(
+                ClientLocation.X,
+                ClientLocation.Y + m_HeaderHeight,
+				m_Size.Width,
+				m_Size.Height - m_HeaderHeight,
+				0.0f,
+				m_BackgroundColor.ToArgb(),
 				drawArgs.device);
 			
-			for(int index = this.m_ChildWidgets.Count - 1; index >= 0; index--)
+			for(int index = m_ChildWidgets.Count - 1; index >= 0; index--)
 			{
-				IWidget currentChildWidget = this.m_ChildWidgets[index] as IWidget;
+				IWidget currentChildWidget = m_ChildWidgets[index] as IWidget;
 				if(currentChildWidget != null)
 				{
 					if(currentChildWidget.ParentWidget == null || currentChildWidget.ParentWidget != this)
@@ -419,23 +437,23 @@ namespace WorldWind
 				}
 			}
 
-            this.m_OutlineVerts[0].X = this.AbsoluteLocation.X;
-            this.m_OutlineVerts[0].Y = this.AbsoluteLocation.Y + this.m_HeaderHeight;
+			m_OutlineVerts[0].X = AbsoluteLocation.X;
+			m_OutlineVerts[0].Y = AbsoluteLocation.Y + m_HeaderHeight;
 
-            this.m_OutlineVerts[1].X = this.AbsoluteLocation.X + this.ClientSize.Width;
-            this.m_OutlineVerts[1].Y = this.AbsoluteLocation.Y + this.m_HeaderHeight;
+			m_OutlineVerts[1].X = AbsoluteLocation.X + ClientSize.Width;
+			m_OutlineVerts[1].Y = AbsoluteLocation.Y + m_HeaderHeight;
 
-            this.m_OutlineVerts[2].X = this.AbsoluteLocation.X + this.ClientSize.Width;
-            this.m_OutlineVerts[2].Y = this.AbsoluteLocation.Y + this.ClientSize.Height;
+			m_OutlineVerts[2].X = AbsoluteLocation.X + ClientSize.Width;
+			m_OutlineVerts[2].Y = AbsoluteLocation.Y + ClientSize.Height;
+		
+			m_OutlineVerts[3].X = AbsoluteLocation.X;
+			m_OutlineVerts[3].Y = AbsoluteLocation.Y + ClientSize.Height;
 
-            this.m_OutlineVerts[3].X = this.AbsoluteLocation.X;
-            this.m_OutlineVerts[3].Y = this.AbsoluteLocation.Y + this.ClientSize.Height;
+			m_OutlineVerts[4].X = AbsoluteLocation.X;
+			m_OutlineVerts[4].Y = AbsoluteLocation.Y + m_HeaderHeight;
 
-            this.m_OutlineVerts[4].X = this.AbsoluteLocation.X;
-            this.m_OutlineVerts[4].Y = this.AbsoluteLocation.Y + this.m_HeaderHeight;
-
-			if(!this.m_HideBorder)
-				Utilities.DrawLine(this.m_OutlineVerts, this.m_BorderColor.ToArgb(), drawArgs.device);			
+			if(!m_HideBorder)
+				Widgets.Utilities.DrawLine(m_OutlineVerts, m_BorderColor.ToArgb(), drawArgs.device);			
 		}
 
 		private Vector2[] m_OutlineVerts = new Vector2[5];
@@ -443,115 +461,114 @@ namespace WorldWind
 
 		#endregion
 
-		bool m_IsDragging;
-		Point m_LastMousePosition = new Point(0,0);
+		bool m_IsDragging = false;
+		System.Drawing.Point m_LastMousePosition = new System.Drawing.Point(0,0);
 
-		bool isResizingLeft;
-		bool isResizingRight;
-		bool isResizingBottom;
-		bool isResizingTop;
-		bool isResizingUL;
-		bool isResizingUR;
-		bool isResizingLL;
-		bool isResizingLR;
+		bool isResizingLeft = false;
+		bool isResizingRight = false;
+		bool isResizingBottom = false;
+		bool isResizingTop = false;
+		bool isResizingUL = false;
+		bool isResizingUR = false;
+		bool isResizingLL = false;
+		bool isResizingLR = false;
 
 		#region IInteractive Members
 
 		public bool OnMouseDown(System.Windows.Forms.MouseEventArgs e)
 		{
-            if (!this.Visible)
+            if (!Visible)
                 return false;
 
 			bool handled = false;
 
 			bool inClientArea = false;
 
-            if (e.X >= this.ClientLocation.X &&
-                e.X <= this.ClientLocation.X + this.m_Size.Width &&
-                e.Y >= this.ClientLocation.Y &&
-                e.Y <= this.ClientLocation.Y + this.m_Size.Height)
+            if (e.X >= ClientLocation.X &&
+                e.X <= ClientLocation.X + m_Size.Width &&
+                e.Y >= ClientLocation.Y &&
+                e.Y <= ClientLocation.Y + m_Size.Height)
 			{
-                this.m_ParentWidget.ChildWidgets.BringToFront(this);
+				m_ParentWidget.ChildWidgets.BringToFront(this);
 				inClientArea = true;
 			}
 
-			if(e.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				e.X < this.AbsoluteLocation.X + this.resizeBuffer &&
-				e.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				e.Y < this.AbsoluteLocation.Y + this.resizeBuffer)
+			if(e.X > AbsoluteLocation.X - resizeBuffer &&
+				e.X < AbsoluteLocation.X + resizeBuffer &&
+				e.Y > AbsoluteLocation.Y - resizeBuffer &&
+				e.Y < AbsoluteLocation.Y + resizeBuffer)
 			{
-                this.isResizingUL = true;
+				isResizingUL = true;
 			}
-			else if(e.X > this.AbsoluteLocation.X - this.resizeBuffer + this.ClientSize.Width &&
-				e.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				e.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				e.Y < this.AbsoluteLocation.Y + this.resizeBuffer)
+			else if(e.X > AbsoluteLocation.X - resizeBuffer + ClientSize.Width &&
+				e.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				e.Y > AbsoluteLocation.Y - resizeBuffer &&
+				e.Y < AbsoluteLocation.Y + resizeBuffer)
 			{
-                this.isResizingUR = true;
+				isResizingUR = true;
 			}
-			else if(e.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				e.X < this.AbsoluteLocation.X + this.resizeBuffer &&
-				e.Y > this.AbsoluteLocation.Y - this.resizeBuffer + this.ClientSize.Height &&
-				e.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height)
+			else if(e.X > AbsoluteLocation.X - resizeBuffer &&
+				e.X < AbsoluteLocation.X + resizeBuffer &&
+				e.Y > AbsoluteLocation.Y - resizeBuffer + ClientSize.Height &&
+				e.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height)
 			{
-                this.isResizingLL = true;
+				isResizingLL = true;
 			}
-			else if(e.X > this.AbsoluteLocation.X - this.resizeBuffer + this.ClientSize.Width &&
-				e.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				e.Y > this.AbsoluteLocation.Y - this.resizeBuffer + this.ClientSize.Height &&
-				e.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height)
+			else if(e.X > AbsoluteLocation.X - resizeBuffer + ClientSize.Width &&
+				e.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				e.Y > AbsoluteLocation.Y - resizeBuffer + ClientSize.Height &&
+				e.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height)
 			{
-                this.isResizingLR = true;
+				isResizingLR = true;
 			}
-			else if(e.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				e.X < this.AbsoluteLocation.X + this.resizeBuffer &&
-				e.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				e.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height )
+			else if(e.X > AbsoluteLocation.X - resizeBuffer &&
+				e.X < AbsoluteLocation.X + resizeBuffer &&
+				e.Y > AbsoluteLocation.Y - resizeBuffer &&
+				e.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height )
 			{
-                this.isResizingLeft = true;
+				isResizingLeft = true;
 			}
-			else if(e.X > this.AbsoluteLocation.X - this.resizeBuffer + this.ClientSize.Width &&
-				e.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				e.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				e.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height)
+			else if(e.X > AbsoluteLocation.X - resizeBuffer + ClientSize.Width &&
+				e.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				e.Y > AbsoluteLocation.Y - resizeBuffer &&
+				e.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height)
 			{
-                this.isResizingRight = true;
+				isResizingRight = true;
 			}
-			else if(e.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				e.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				e.Y > this.AbsoluteLocation.Y - this.resizeBuffer &&
-				e.Y < this.AbsoluteLocation.Y + this.resizeBuffer
+			else if(e.X > AbsoluteLocation.X - resizeBuffer &&
+				e.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				e.Y > AbsoluteLocation.Y - resizeBuffer &&
+				e.Y < AbsoluteLocation.Y + resizeBuffer
 				)
 			{
-                this.isResizingTop = true;
+				isResizingTop = true;
 			}
-			else if(e.X > this.AbsoluteLocation.X - this.resizeBuffer &&
-				e.X < this.AbsoluteLocation.X + this.resizeBuffer + this.ClientSize.Width &&
-				e.Y > this.AbsoluteLocation.Y - this.resizeBuffer + this.ClientSize.Height &&
-				e.Y < this.AbsoluteLocation.Y + this.resizeBuffer + this.ClientSize.Height)
+			else if(e.X > AbsoluteLocation.X - resizeBuffer &&
+				e.X < AbsoluteLocation.X + resizeBuffer + ClientSize.Width &&
+				e.Y > AbsoluteLocation.Y - resizeBuffer + ClientSize.Height &&
+				e.Y < AbsoluteLocation.Y + resizeBuffer + ClientSize.Height)
 			{
-                this.isResizingBottom = true;
+				isResizingBottom = true;
 			}
-            else if (e.X >= this.ClientLocation.X &&
-				e.X <= this.AbsoluteLocation.X + this.ClientSize.Width &&
-				e.Y >= this.AbsoluteLocation.Y &&
-				e.Y <= this.AbsoluteLocation.Y + this.m_HeaderHeight)
+            else if (e.X >= ClientLocation.X &&
+				e.X <= AbsoluteLocation.X + ClientSize.Width &&
+				e.Y >= AbsoluteLocation.Y &&
+				e.Y <= AbsoluteLocation.Y + m_HeaderHeight)
 			{
-                this.m_IsDragging = true;
+				m_IsDragging = true;
 				handled = true;
 			}
-
-            this.m_LastMousePosition = new Point(e.X, e.Y);
+			m_LastMousePosition = new System.Drawing.Point(e.X, e.Y);
 
 			if(!handled)
 			{
-				for(int i = 0; i < this.m_ChildWidgets.Count; i++)
+				for(int i = 0; i < m_ChildWidgets.Count; i++)
 				{
 					if(!handled)
 					{
-						if(this.m_ChildWidgets[i] is IInteractive)
+						if(m_ChildWidgets[i] is IInteractive)
 						{
-							IInteractive currentInteractive = this.m_ChildWidgets[i] as IInteractive;
+							IInteractive currentInteractive = m_ChildWidgets[i] as IInteractive;
 							handled = currentInteractive.OnMouseDown(e);
 						}
 					}
@@ -569,42 +586,42 @@ namespace WorldWind
 
 		public bool OnMouseUp(System.Windows.Forms.MouseEventArgs e)
 		{
-            if (!this.Visible)
+            if (!Visible)
                 return false;
 
 			bool handled = false;
 			if(e.Button == System.Windows.Forms.MouseButtons.Left)
 			{
-				if(this.m_IsDragging)
+				if(m_IsDragging)
 				{
-                    this.m_IsDragging = false;
+					m_IsDragging = false;
 				}
 			}
 
 			bool inClientArea = false;
 
-            if (e.X >= this.ClientLocation.X &&
-                e.X <= this.ClientLocation.X + this.m_Size.Width &&
-                e.Y >= this.ClientLocation.Y &&
-                e.Y <= this.ClientLocation.Y + this.m_Size.Height)
+            if (e.X >= ClientLocation.X &&
+                e.X <= ClientLocation.X + m_Size.Width &&
+                e.Y >= ClientLocation.Y &&
+                e.Y <= ClientLocation.Y + m_Size.Height)
 			{
 				inClientArea = true;
 			}
 
 			if(inClientArea)
 			{
-				if(!this.m_HideHeader && this.isPointInCloseBox(new Point(e.X, e.Y)))
+				if(!m_HideHeader && isPointInCloseBox(new System.Drawing.Point(e.X, e.Y)))
 				{
-                    this.Visible = false;
+					Visible = false;
 					handled = true;
 				}
 			}
 
-			for(int i = 0; i < this.m_ChildWidgets.Count; i++)
+			for(int i = 0; i < m_ChildWidgets.Count; i++)
 			{
-				if(this.m_ChildWidgets[i] is IInteractive)
+				if(m_ChildWidgets[i] is IInteractive)
 				{
-					IInteractive currentInteractive = this.m_ChildWidgets[i] as IInteractive;
+					IInteractive currentInteractive = m_ChildWidgets[i] as IInteractive;
 					handled = currentInteractive.OnMouseUp(e);
 				}
 			}
@@ -614,37 +631,37 @@ namespace WorldWind
 				handled = true;
 			}
 
-			if(this.isResizingTop)
+			if(isResizingTop)
 			{
-                this.isResizingTop = false;
+				isResizingTop = false;
 			}
-			if(this.isResizingBottom)
+			if(isResizingBottom)
 			{
-                this.isResizingBottom = false;
+				isResizingBottom = false;
 			}
-			if(this.isResizingLeft)
+			if(isResizingLeft)
 			{
-                this.isResizingLeft = false;
+				isResizingLeft = false;
 			}
-			if(this.isResizingRight)
+			if(isResizingRight)
 			{
-                this.isResizingRight = false;
+				isResizingRight = false;
 			}
-			if(this.isResizingUL)
+			if(isResizingUL)
 			{
-                this.isResizingUL = false;
+				isResizingUL = false;
 			}
-			if(this.isResizingUR)
+			if(isResizingUR)
 			{
-                this.isResizingUR = false;
+				isResizingUR = false;
 			}
-			if(this.isResizingLL)
+			if(isResizingLL)
 			{
-                this.isResizingLL = false;
+				isResizingLL = false;
 			}
-			if(this.isResizingLR)
+			if(isResizingLR)
 			{
-                this.isResizingLR = false;
+				isResizingLR = false;
 			}
 
 			return handled;
@@ -672,73 +689,77 @@ namespace WorldWind
 
 		public event VisibleChangedHandler OnVisibleChanged;
 
-		Size minSize = new Size(20, 20);
+		System.Drawing.Size minSize = new System.Drawing.Size(20, 20);
 
 		public bool OnMouseMove(System.Windows.Forms.MouseEventArgs e)
 		{
-            if (!this.Visible)
+            if (!Visible)
                 return false;
 
 			bool handled = false;
-			int deltaX = e.X - this.m_LastMousePosition.X;
-			int deltaY = e.Y - this.m_LastMousePosition.Y;
+			int deltaX = e.X - m_LastMousePosition.X;
+			int deltaY = e.Y - m_LastMousePosition.Y;
 
-			if(this.isResizingTop || this.isResizingUL || this.isResizingUR)
+			if(isResizingTop || isResizingUL || isResizingUR)
 			{
-                this.ClientLocation = new Point(this.ClientLocation.X, this.ClientLocation.Y + deltaY);
-                this.m_Size.Height -= deltaY;
+                ClientLocation = new System.Drawing.Point(ClientLocation.X, ClientLocation.Y + deltaY);
+				m_Size.Height -= deltaY;
 			}
-			else if(this.isResizingBottom || this.isResizingLL || this.isResizingLR)
+			else if(isResizingBottom || isResizingLL || isResizingLR)
 			{
-                this.m_Size.Height += deltaY;
+				m_Size.Height += deltaY;
 			}
-			else if(this.isResizingRight || this.isResizingUR || this.isResizingLR)
+			else if(isResizingRight || isResizingUR || isResizingLR)
 			{
-                this.m_Size.Width += deltaX;
+				m_Size.Width += deltaX;
 			}
-			else if(this.isResizingLeft || this.isResizingUL || this.isResizingLL)
+			else if(isResizingLeft || isResizingUL || isResizingLL)
 			{
-                this.ClientLocation = new Point(this.ClientLocation.X + deltaX, this.ClientLocation.Y);
-                this.m_Size.Width -= deltaX;
+                ClientLocation = new System.Drawing.Point(ClientLocation.X + deltaX, ClientLocation.Y);
+				m_Size.Width -= deltaX;
 			}
-			else if(this.m_IsDragging)
+			else if(m_IsDragging)
 			{
-                this.ClientLocation = new Point(this.ClientLocation.X + deltaX, this.ClientLocation.Y + deltaY);
+                ClientLocation = new System.Drawing.Point(ClientLocation.X + deltaX, ClientLocation.Y + deltaY);
 
-                if (this.ClientLocation.X < 0) this.ClientLocation = new Point(0, this.ClientLocation.Y);
-                if (this.ClientLocation.Y < 0) this.ClientLocation = new Point(this.ClientLocation.X, 0);
-                if (this.ClientLocation.Y + this.m_Size.Height > DrawArgs.ParentControl.Height) this.ClientLocation = new Point(this.ClientLocation.X , DrawArgs.ParentControl.Height - this.m_Size.Height);
-                if (this.ClientLocation.X + this.m_Size.Width > DrawArgs.ParentControl.Width) this.ClientLocation = new Point(DrawArgs.ParentControl.Width - this.m_Size.Width, this.ClientLocation.Y);
+                if (ClientLocation.X < 0)
+                    ClientLocation = new System.Drawing.Point(0, ClientLocation.Y);
+                if (ClientLocation.Y < 0)
+                    ClientLocation = new System.Drawing.Point(ClientLocation.X, 0);
+                if (ClientLocation.Y + m_Size.Height > DrawArgs.ParentControl.Height)
+                    ClientLocation = new System.Drawing.Point(ClientLocation.X , DrawArgs.ParentControl.Height - m_Size.Height);
+                if (ClientLocation.X + m_Size.Width > DrawArgs.ParentControl.Width)
+                    ClientLocation = new System.Drawing.Point(DrawArgs.ParentControl.Width - m_Size.Width, ClientLocation.Y);
 
 				handled = true;
 			}
 
-			if(this.m_Size.Width < this.minSize.Width)
+			if(m_Size.Width < minSize.Width)
 			{
-                this.m_Size.Width = this.minSize.Width;
+				m_Size.Width = minSize.Width;
 			}
 
-			if(this.m_Size.Height < this.minSize.Height)
+			if(m_Size.Height < minSize.Height)
 			{
-                this.m_Size.Height = this.minSize.Height;
+				m_Size.Height = minSize.Height;
 			}
 
-            this.m_LastMousePosition = new Point(e.X, e.Y);
+			m_LastMousePosition = new System.Drawing.Point(e.X, e.Y);
 
-			for(int i = 0; i < this.m_ChildWidgets.Count; i++)
+			for(int i = 0; i < m_ChildWidgets.Count; i++)
 			{
-				if(this.m_ChildWidgets[i] is IInteractive)
+				if(m_ChildWidgets[i] is IInteractive)
 				{
-					IInteractive currentInteractive = this.m_ChildWidgets[i] as IInteractive;
+					IInteractive currentInteractive = m_ChildWidgets[i] as IInteractive;
 					handled = currentInteractive.OnMouseMove(e);
 				}
 			}
 
 			bool inClientArea = false;
-            if (e.X >= this.ClientLocation.X &&
-                e.X <= this.ClientLocation.X + this.m_Size.Width &&
-                e.Y >= this.ClientLocation.Y &&
-                e.Y <= this.ClientLocation.Y + this.m_Size.Height)
+            if (e.X >= ClientLocation.X &&
+                e.X <= ClientLocation.X + m_Size.Width &&
+                e.Y >= ClientLocation.Y &&
+                e.Y <= ClientLocation.Y + m_Size.Height)
 			 {
 				inClientArea = true;
 			 }
@@ -751,16 +772,16 @@ namespace WorldWind
 			return handled;
 		}
 
-		private bool isPointInCloseBox(Point absolutePoint)
+		private bool isPointInCloseBox(System.Drawing.Point absolutePoint)
 		{
 			int closeBoxSize = 10;
 			int closeBoxYOffset = 2;
-			int closeBoxXOffset = this.m_Size.Width - 15;
+			int closeBoxXOffset = m_Size.Width - 15;
 
-			if(absolutePoint.X >= this.ClientLocation.X + closeBoxXOffset &&
-                absolutePoint.X <= this.ClientLocation.X + closeBoxXOffset + closeBoxSize &&
-                absolutePoint.Y >= this.ClientLocation.Y + closeBoxYOffset &&
-                absolutePoint.Y <= this.ClientLocation.Y + closeBoxYOffset + closeBoxSize)
+			if(absolutePoint.X >= ClientLocation.X + closeBoxXOffset &&
+                absolutePoint.X <= ClientLocation.X + closeBoxXOffset + closeBoxSize &&
+                absolutePoint.Y >= ClientLocation.Y + closeBoxYOffset &&
+                absolutePoint.Y <= ClientLocation.Y + closeBoxYOffset + closeBoxSize)
 			{
 				return true;
 			}

@@ -3,74 +3,74 @@ namespace WorldWind
     partial class TimeSetterDialog
     {
         /// <summary>
-        /// Required designer variable.SetSamplerState(0, SamplerState
+        /// Required designer variable.
         /// </summary>
-        private System.SetSamplerState(0, SamplerStateComponentModel.SetSamplerState(0, SamplerStateIContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.SetSamplerState(0, SamplerState
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.SetSamplerState(0, SamplerState</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
-                components.SetSamplerState(0, SamplerStateDispose();
+                components.Dispose();
             }
-            base.SetSamplerState(0, SamplerStateDispose(disposing);
+            base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.SetSamplerState(0, SamplerState
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.SetSamplerState(0, SamplerStatedateTimePicker1 = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDateTimePicker();
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC = new System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateCheckBox();
-            this.SetSamplerState(0, SamplerStateSuspendLayout();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.checkBoxUTC = new System.Windows.Forms.CheckBox();
+            this.SuspendLayout();
             // 
             // dateTimePicker1
             // 
-            this.SetSamplerState(0, SamplerStatedateTimePicker1.SetSamplerState(0, SamplerStateCustomFormat = "yyyy-MM-dd HH:mm:ss";
-            this.SetSamplerState(0, SamplerStatedateTimePicker1.SetSamplerState(0, SamplerStateFormat = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDateTimePickerFormat.SetSamplerState(0, SamplerStateCustom;
-            this.SetSamplerState(0, SamplerStatedateTimePicker1.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(46, 12);
-            this.SetSamplerState(0, SamplerStatedateTimePicker1.SetSamplerState(0, SamplerStateName = "dateTimePicker1";
-            this.SetSamplerState(0, SamplerStatedateTimePicker1.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(200, 20);
-            this.SetSamplerState(0, SamplerStatedateTimePicker1.SetSamplerState(0, SamplerStateTabIndex = 1;
-            this.SetSamplerState(0, SamplerStatedateTimePicker1.SetSamplerState(0, SamplerStateValueChanged += new System.SetSamplerState(0, SamplerStateEventHandler(this.SetSamplerState(0, SamplerStatedateTimePicker1_ValueChanged);
+            this.dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.Location = new System.Drawing.Point(46, 12);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 1;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // checkBoxUTC
             // 
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC.SetSamplerState(0, SamplerStateAutoSize = true;
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC.SetSamplerState(0, SamplerStateLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(46, 39);
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC.SetSamplerState(0, SamplerStateName = "checkBoxUTC";
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC.SetSamplerState(0, SamplerStateSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(96, 17);
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC.SetSamplerState(0, SamplerStateTabIndex = 2;
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC.SetSamplerState(0, SamplerStateText = "Universal Time";
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC.SetSamplerState(0, SamplerStateUseVisualStyleBackColor = true;
-            this.SetSamplerState(0, SamplerStatecheckBoxUTC.SetSamplerState(0, SamplerStateCheckedChanged += new System.SetSamplerState(0, SamplerStateEventHandler(this.SetSamplerState(0, SamplerStatecheckBoxUTC_CheckedChanged);
+            this.checkBoxUTC.AutoSize = true;
+            this.checkBoxUTC.Location = new System.Drawing.Point(46, 39);
+            this.checkBoxUTC.Name = "checkBoxUTC";
+            this.checkBoxUTC.Size = new System.Drawing.Size(96, 17);
+            this.checkBoxUTC.TabIndex = 2;
+            this.checkBoxUTC.Text = "Universal Time";
+            this.checkBoxUTC.UseVisualStyleBackColor = true;
+            this.checkBoxUTC.CheckedChanged += new System.EventHandler(this.checkBoxUTC_CheckedChanged);
             // 
             // TimeSetterDialog
             // 
-            this.SetSamplerState(0, SamplerStateAutoScaleDimensions = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSizeF(6F, 13F);
-            this.SetSamplerState(0, SamplerStateAutoScaleMode = System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateAutoScaleMode.SetSamplerState(0, SamplerStateFont;
-            this.SetSamplerState(0, SamplerStateClientSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(287, 68);
-            this.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatecheckBoxUTC);
-            this.SetSamplerState(0, SamplerStateControls.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatedateTimePicker1);
-            this.SetSamplerState(0, SamplerStateName = "TimeSetterDialog";
-            this.SetSamplerState(0, SamplerStateText = "Time Setter Dialog";
-            this.SetSamplerState(0, SamplerStateResumeLayout(false);
-            this.SetSamplerState(0, SamplerStatePerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(287, 68);
+            this.Controls.Add(this.checkBoxUTC);
+            this.Controls.Add(this.dateTimePicker1);
+            this.Name = "TimeSetterDialog";
+            this.Text = "Time Setter Dialog";
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateDateTimePicker dateTimePicker1;
-        private System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateCheckBox checkBoxUTC;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.CheckBox checkBoxUTC;
 
     }
 }

@@ -1,4 +1,7 @@
-namespace WorldWind.PolygonTriangulation
+using System;
+using GeometryUtility;
+
+namespace PolygonCuttingEar
 {
 	/// <summary>
 	/// Summary description for Class1.
@@ -16,14 +19,14 @@ namespace WorldWind.PolygonTriangulation
 		{
 			get
 			{
-				return this.m_aPolygons.Length;
+				return m_aPolygons.Length;
 			}
 		}
 
 		public CPoint2D[] Polygons(int index)
 		{
-			if (index< this.m_aPolygons.Length)
-				return this.m_aPolygons[index];
+			if (index< m_aPolygons.Length)
+				return m_aPolygons[index];
 			else
 				return null;
 		}
@@ -39,13 +42,14 @@ namespace WorldWind.PolygonTriangulation
 			}
 
 			//initalize the 2D points
-            this.m_aInputVertices=new CPoint2D[nVertices];
+			m_aInputVertices=new CPoint2D[nVertices];
      
-			for (int i=0; i<nVertices; i++) this.m_aInputVertices[i] =vertices[i];
+			for (int i=0; i<nVertices; i++)
+				m_aInputVertices[i] =vertices[i];
           
 			//make a working copy,  m_aUpdatedPolygonVertices are
 			//in count clock direction from user view
-            this.SetUpdatedPolygonVertices();
+			SetUpdatedPolygonVertices();
 		}
 
 		/****************************************************
@@ -57,15 +61,16 @@ namespace WorldWind.PolygonTriangulation
 	   ******************************************************/
 		private void SetUpdatedPolygonVertices()
 		{
-			int nVertices= this.m_aInputVertices.Length;
-            this.m_aUpdatedPolygonVertices=new CPoint2D[nVertices];
+			int nVertices=m_aInputVertices.Length;
+			m_aUpdatedPolygonVertices=new CPoint2D[nVertices];
 
-			for (int i=0; i< nVertices; i++) this.m_aUpdatedPolygonVertices[i] = this.m_aInputVertices[i];
+			for (int i=0; i< nVertices; i++)
+				m_aUpdatedPolygonVertices[i] =m_aInputVertices[i];
 			
 			//m_aUpdatedPolygonVertices should be in count clock wise
-			if (CPolygon.PointsDirection(this.m_aUpdatedPolygonVertices)
+			if (CPolygon.PointsDirection(m_aUpdatedPolygonVertices)
 				==PolygonDirection.Clockwise)
-				CPolygon.ReversePointsDirection(this.m_aUpdatedPolygonVertices);
+				CPolygon.ReversePointsDirection(m_aUpdatedPolygonVertices);
 		}
 
 		/**********************************************************
@@ -131,7 +136,7 @@ namespace WorldWind.PolygonTriangulation
 		*****************************************************************/
 		private bool IsEarOfUpdatedPolygon(CPoint2D vertex )		
 		{
-			CPolygon polygon=new CPolygon(this.m_aUpdatedPolygonVertices);
+			CPolygon polygon=new CPolygon(m_aUpdatedPolygonVertices);
 
 			if (polygon.PolygonVertex(vertex))
 			{
@@ -142,13 +147,13 @@ namespace WorldWind.PolygonTriangulation
 					CPoint2D pj=polygon.PreviousPoint(vertex); //previous vertex
 					CPoint2D pk=polygon.NextPoint(vertex);//next vertex
 
-					for (int i= this.m_aUpdatedPolygonVertices.GetLowerBound(0);
-						i< this.m_aUpdatedPolygonVertices.GetUpperBound(0); i++)
+					for (int i=m_aUpdatedPolygonVertices.GetLowerBound(0);
+						i<m_aUpdatedPolygonVertices.GetUpperBound(0); i++)
 					{
-						CPoint2D pt = this.m_aUpdatedPolygonVertices[i];
+						CPoint2D pt = m_aUpdatedPolygonVertices[i];
 						if ( !(pt.EqualsPoint(pi)|| pt.EqualsPoint(pj)||pt.EqualsPoint(pk)))
 						{
-							if (this.TriangleContainsPoint(new CPoint2D[] {pj, pi, pk}, pt))
+							if (TriangleContainsPoint(new CPoint2D[] {pj, pi, pk}, pt))
 								bEar=false;
 						}
 					}
@@ -171,26 +176,26 @@ namespace WorldWind.PolygonTriangulation
 		****************************************************/
 		private void SetPolygons()
 		{
-			int nPolygon= this.m_alEars.Count + 1; //ears plus updated polygon
-            this.m_aPolygons=new CPoint2D[nPolygon][];
+			int nPolygon=m_alEars.Count + 1; //ears plus updated polygon
+			m_aPolygons=new CPoint2D[nPolygon][];
 
 			for (int i=0; i<nPolygon-1; i++) //add ears
 			{
-				CPoint2D[] points=(CPoint2D[]) this.m_alEars[i];
+				CPoint2D[] points=(CPoint2D[])m_alEars[i];
 
-                this.m_aPolygons[i]=new CPoint2D[3]; //3 vertices each ear
-                this.m_aPolygons[i][0]=points[0];
-                this.m_aPolygons[i][1]=points[1];
-                this.m_aPolygons[i][2]=points[2];
+				m_aPolygons[i]=new CPoint2D[3]; //3 vertices each ear
+				m_aPolygons[i][0]=points[0];
+				m_aPolygons[i][1]=points[1];
+				m_aPolygons[i][2]=points[2];
 			}
 				
 			//add UpdatedPolygon:
-            this.m_aPolygons[nPolygon-1]=new 
-				CPoint2D[this.m_aUpdatedPolygonVertices.Length];
+			m_aPolygons[nPolygon-1]=new 
+				CPoint2D[m_aUpdatedPolygonVertices.Length];
 
-			for (int i=0; i< this.m_aUpdatedPolygonVertices.Length;i++)
+			for (int i=0; i<m_aUpdatedPolygonVertices.Length;i++)
 			{
-                this.m_aPolygons[nPolygon-1][i] = this.m_aUpdatedPolygonVertices[i];
+				m_aPolygons[nPolygon-1][i] = m_aUpdatedPolygonVertices[i];
 			}
 		}
 
@@ -203,11 +208,12 @@ namespace WorldWind.PolygonTriangulation
 		{
 			System.Collections.ArrayList alTempPts=new System.Collections.ArrayList(); 
 
-			for (int i=0; i< this.m_aUpdatedPolygonVertices.Length; i++)
+			for (int i=0; i< m_aUpdatedPolygonVertices.Length; i++)
 			{				
-				if (vertex.EqualsPoint(this.m_aUpdatedPolygonVertices[i])) //add 3 pts to FEars
+				if (vertex.EqualsPoint(
+					m_aUpdatedPolygonVertices[i])) //add 3 pts to FEars
 				{ 
-					CPolygon polygon=new CPolygon(this.m_aUpdatedPolygonVertices);
+					CPolygon polygon=new CPolygon(m_aUpdatedPolygonVertices);
 					CPoint2D pti = vertex;
 					CPoint2D ptj = polygon.PreviousPoint(vertex); //previous point
 					CPoint2D ptk = polygon.NextPoint(vertex); //next point
@@ -217,21 +223,22 @@ namespace WorldWind.PolygonTriangulation
 					aEar[1]=pti;
 					aEar[2]=ptk;
 
-                    this.m_alEars.Add(aEar);
+					m_alEars.Add(aEar);
 				}
 				else	
 				{
-					alTempPts.Add(this.m_aUpdatedPolygonVertices[i]);
+					alTempPts.Add(m_aUpdatedPolygonVertices[i]);
 				} //not equal points
 			}
 			
-			if  (this.m_aUpdatedPolygonVertices.Length 
-                 - alTempPts.Count==1)
+			if  (m_aUpdatedPolygonVertices.Length 
+				- alTempPts.Count==1)
 			{
-				int nLength= this.m_aUpdatedPolygonVertices.Length;
-                this.m_aUpdatedPolygonVertices=new CPoint2D[nLength-1];
+				int nLength=m_aUpdatedPolygonVertices.Length;
+				m_aUpdatedPolygonVertices=new CPoint2D[nLength-1];
         
-				for (int  i=0; i<alTempPts.Count; i++) this.m_aUpdatedPolygonVertices[i]=(CPoint2D)alTempPts[i];
+				for (int  i=0; i<alTempPts.Count; i++)
+					m_aUpdatedPolygonVertices[i]=(CPoint2D)alTempPts[i];
 			}
 		}
         
@@ -241,13 +248,13 @@ namespace WorldWind.PolygonTriangulation
 		*******************************************************/
 		public void CutEar()
 		{
-			CPolygon polygon=new CPolygon(this.m_aUpdatedPolygonVertices);
+			CPolygon polygon=new CPolygon(m_aUpdatedPolygonVertices);
 			bool bFinish=false;
 
 			//if (polygon.GetPolygonType()==PolygonType.Convex) //don't have to cut ear
 			//	bFinish=true;
 
-			if (this.m_aUpdatedPolygonVertices.Length==3) //triangle, don't have to cut ear
+			if (m_aUpdatedPolygonVertices.Length==3) //triangle, don't have to cut ear
 				bFinish=true;
 			
 			CPoint2D pt=new CPoint2D();
@@ -256,25 +263,25 @@ namespace WorldWind.PolygonTriangulation
 				int i=0;
 				bool bNotFound=true;
 				while (bNotFound 
-					&& (i< this.m_aUpdatedPolygonVertices.Length)) //loop till find an ear
+					&& (i<m_aUpdatedPolygonVertices.Length)) //loop till find an ear
 				{
-					pt= this.m_aUpdatedPolygonVertices[i];
-					if (this.IsEarOfUpdatedPolygon(pt))
+					pt=m_aUpdatedPolygonVertices[i];
+					if (IsEarOfUpdatedPolygon(pt))
 						bNotFound=false; //got one, pt is an ear
 					else
 						i++;
 				} //bNotFount
 				//An ear found:}
-				if (pt !=null) this.UpdatePolygonVertices(pt);
+				if (pt !=null)
+					UpdatePolygonVertices(pt);
        
-				polygon=new CPolygon(this.m_aUpdatedPolygonVertices);
+				polygon=new CPolygon(m_aUpdatedPolygonVertices);
 				//if ((polygon.GetPolygonType()==PolygonType.Convex)
 				//	&& (m_aUpdatedPolygonVertices.Length==3))
-				if (this.m_aUpdatedPolygonVertices.Length==3)
+				if (m_aUpdatedPolygonVertices.Length==3)
 					bFinish=true;
 			} //bFinish=false
-
-            this.SetPolygons();
+			SetPolygons();
 		}		
 	}
 }

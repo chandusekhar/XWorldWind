@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 namespace WorldWind.GeoRSS
@@ -6,15 +12,15 @@ namespace WorldWind.GeoRSS
     {
         public GeoRssForm(GeoRssFeeds feed)
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.geoRSSFeedControl1.m_feeds = feed;
-            this.geoRSSFeedControl1.UpdateDataGridView();
+            geoRSSFeedControl1.m_feeds = feed;
+            geoRSSFeedControl1.UpdateDataGridView();
         }
 
         internal void UpdateDataGridView()
         {
-            this.geoRSSFeedControl1.UpdateDataGridView();
+            geoRSSFeedControl1.UpdateDataGridView();
         }
 
         private void GeoRssForm_FormClosing(object sender, FormClosingEventArgs e)

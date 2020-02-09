@@ -1,3 +1,9 @@
+using System;
+using System.Drawing;
+using System.Collections;
+using System.ComponentModel;
+using System.Windows.Forms;
+
 namespace WorldWind.VisualControl
 {
 	/// <summary>
@@ -20,10 +26,10 @@ namespace WorldWind.VisualControl
 			//
 			// Required for Windows Form Designer support
 			//
-            this.InitializeComponent();
+			InitializeComponent();
 
-            this.Text = selected.ToString() + " Properties";
-            this.propertyGrid.SelectedObject = selected;
+			Text = selected.ToString() + " Properties";
+			propertyGrid.SelectedObject = selected;
 		}
 
 		/// <summary>
@@ -33,9 +39,9 @@ namespace WorldWind.VisualControl
 		{
 			if( disposing )
 			{
-				if(this.components != null)
+				if(components != null)
 				{
-                    this.components.Dispose();
+					components.Dispose();
 				}
 			}
 			base.Dispose( disposing );

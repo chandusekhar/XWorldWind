@@ -1,7 +1,9 @@
+using WorldWind.Net;
 using System;
+using System.IO;
 using Utility;
 
-namespace WorldWind.Renderable(0, SamplerStateRenderable
+namespace WorldWind.Renderable
 {
 	public class GeoSpatialDownloadRequest : IDisposable
 	{
@@ -13,15 +15,15 @@ namespace WorldWind.Renderable(0, SamplerStateRenderable
         ImageStore m_imageStore;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref= "T:WorldWind.SetSamplerState(0, SamplerStateRenderable.SetSamplerState(0, SamplerStateGeoSpatialDownloadRequest"/> class.SetSamplerState(0, SamplerState
+		/// Initializes a new instance of the <see cref= "T:WorldWind.Renderable.GeoSpatialDownloadRequest"/> class.
 		/// </summary>
 		/// <param name="quadTile"></param>
 		public GeoSpatialDownloadRequest(QuadTile quadTile, ImageStore imageStore, string localFilePath, string downloadUrl)
 		{
-            this.SetSamplerState(0, SamplerStatem_quadTile = quadTile;
-            this.SetSamplerState(0, SamplerStatem_url = downloadUrl;
-            this.SetSamplerState(0, SamplerStatem_localFilePath = localFilePath;
-            this.SetSamplerState(0, SamplerStatem_imageStore = imageStore;
+			m_quadTile = quadTile;
+			m_url = downloadUrl;
+			m_localFilePath = localFilePath;
+            m_imageStore = imageStore;
             
 		}
 
@@ -32,7 +34,7 @@ namespace WorldWind.Renderable(0, SamplerStateRenderable
 		{
 			get
 			{
-				return (this.SetSamplerState(0, SamplerStatedownload != null);
+				return (download != null);
 			}
 		}
 
@@ -40,22 +42,22 @@ namespace WorldWind.Renderable(0, SamplerStateRenderable
 		{
 			get
 			{
-				if(this.SetSamplerState(0, SamplerStatedownload==null)
+				if(download==null)
 					return true;
-				return this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateIsComplete;
+				return download.IsComplete;
 			}
 		}
 
         public string LocalFilePath
         {
-            get { return this.SetSamplerState(0, SamplerStatem_localFilePath; }
+            get { return m_localFilePath; }
         }
 
 		public QuadTile QuadTile
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_quadTile;
+				return m_quadTile;
 			}
 		}
 
@@ -63,36 +65,36 @@ namespace WorldWind.Renderable(0, SamplerStateRenderable
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_quadTile.SetSamplerState(0, SamplerStateEast - this.SetSamplerState(0, SamplerStatem_quadTile.SetSamplerState(0, SamplerStateWest;
+				return m_quadTile.East - m_quadTile.West;
 			}
 		}
 
 		private void DownloadComplete(WebDownload downloadInfo)
 		{
-//            Log.SetSamplerState(0, SamplerStateWrite(Log.SetSamplerState(0, SamplerStateLevels.SetSamplerState(0, SamplerStateDebug+1, "GSDR", "Download completed for " + downloadInfo.SetSamplerState(0, SamplerStateUrl);
+//            Log.Write(Log.Levels.Debug+1, "GSDR", "Download completed for " + downloadInfo.Url);
             try
 			{
-				downloadInfo.SetSamplerState(0, SamplerStateVerify();
+				downloadInfo.Verify();
 
-				//m_quadTile.SetSamplerState(0, SamplerStateQuadTileSet.SetSamplerState(0, SamplerStateNumberRetries = 0;
+				//m_quadTile.QuadTileSet.NumberRetries = 0;
 
 				// Rename temp file to real name
-				File.SetSamplerState(0, SamplerStateDelete(this.SetSamplerState(0, SamplerStatem_localFilePath);
-				File.SetSamplerState(0, SamplerStateMove(downloadInfo.SetSamplerState(0, SamplerStateSavedFilePath, this.SetSamplerState(0, SamplerStatem_localFilePath);
+				File.Delete(m_localFilePath);
+				File.Move(downloadInfo.SavedFilePath, m_localFilePath);
 
 				// Make the quad tile reload the new image
-                this.SetSamplerState(0, SamplerStatem_quadTile.SetSamplerState(0, SamplerStateDownloadRequests.SetSamplerState(0, SamplerStateRemove(this);
-// ### ??!??				m_quadTile.SetSamplerState(0, SamplerStateInitialize();
+				m_quadTile.DownloadRequests.Remove(this);
+// ### ??!??				m_quadTile.Initialize();
 			}
-			catch(System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateWebException caught)
+			catch(System.Net.WebException caught)
 			{
-				System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpWebResponse response = caught.SetSamplerState(0, SamplerStateResponse as System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpWebResponse;
+				System.Net.HttpWebResponse response = caught.Response as System.Net.HttpWebResponse;
                 /*
                  * null response
                  */
                 if (response == null)
                 {
-                    this.SetSamplerState(0, SamplerStatem_quadTile.SetSamplerState(0, SamplerStateQuadTileSet.SetSamplerState(0, SamplerStateRecordFailedRequest(this);
+                    m_quadTile.QuadTileSet.RecordFailedRequest(this);
                 }
                 /* 4xx - Client error
                  * 400 Bad Request
@@ -102,15 +104,15 @@ namespace WorldWind.Renderable(0, SamplerStateRenderable
                  * 206 Partial Content
                  * 200 OK && Content length == 0
                  */
-                else if(response.SetSamplerState(0, SamplerStateStatusCode==System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateNotFound || 
-                    response.SetSamplerState(0, SamplerStateStatusCode==System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateUnauthorized ||
-                    response.SetSamplerState(0, SamplerStateStatusCode==System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateForbidden ||
-                    response.SetSamplerState(0, SamplerStateStatusCode==System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateBadRequest ||
-                    response.SetSamplerState(0, SamplerStateStatusCode == System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStatePartialContent ||
-                    (response.SetSamplerState(0, SamplerStateStatusCode == System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateOK && 
-                        response.SetSamplerState(0, SamplerStateContentLength == 0))
+                else if(response.StatusCode==System.Net.HttpStatusCode.NotFound || 
+                    response.StatusCode==System.Net.HttpStatusCode.Unauthorized ||
+                    response.StatusCode==System.Net.HttpStatusCode.Forbidden ||
+                    response.StatusCode==System.Net.HttpStatusCode.BadRequest ||
+                    response.StatusCode == System.Net.HttpStatusCode.PartialContent ||
+                    (response.StatusCode == System.Net.HttpStatusCode.OK && 
+                        response.ContentLength == 0))
 				{
-                    this.SetSamplerState(0, SamplerStatem_quadTile.SetSamplerState(0, SamplerStateQuadTileSet.SetSamplerState(0, SamplerStateRecordFailedRequest(this);
+                    m_quadTile.QuadTileSet.RecordFailedRequest(this);
                     
 				}
                 /* 
@@ -120,62 +122,63 @@ namespace WorldWind.Renderable(0, SamplerStateRenderable
                  * 502 Bad Gateway
                  * 503 Service Unavailable
                  */
-                else if (response.SetSamplerState(0, SamplerStateStatusCode == System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateInternalServerError ||
-                        response.SetSamplerState(0, SamplerStateStatusCode == System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateNotImplemented ||
-                        response.SetSamplerState(0, SamplerStateStatusCode == System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateBadGateway ||
-                        response.SetSamplerState(0, SamplerStateStatusCode == System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateHttpStatusCode.SetSamplerState(0, SamplerStateServiceUnavailable
+                else if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError ||
+                        response.StatusCode == System.Net.HttpStatusCode.NotImplemented ||
+                        response.StatusCode == System.Net.HttpStatusCode.BadGateway ||
+                        response.StatusCode == System.Net.HttpStatusCode.ServiceUnavailable
                         )
                 {
                     //server problem, directly start timeout for the layer, rather than counter per tile
 
 
-                    TimeSpan waitTime = TimeSpan.SetSamplerState(0, SamplerStateFromSeconds(120);
+                    TimeSpan waitTime = TimeSpan.FromSeconds(120);
                     //if retry-after is specified then wait for that length of time before retrying
-                    String retryAfter = response.SetSamplerState(0, SamplerStateGetResponseHeader("Retry-After");
-                    if (retryAfter != null && !retryAfter.SetSamplerState(0, SamplerStateEquals(String.SetSamplerState(0, SamplerStateEmpty))
+                    String retryAfter = response.GetResponseHeader("Retry-After");
+                    if (retryAfter != null && !retryAfter.Equals(String.Empty))
                     {
-                        Log.SetSamplerState(0, SamplerStateWrite(Log.SetSamplerState(0, SamplerStateLevels.SetSamplerState(0, SamplerStateVerbose, "GSDR", "Retry-After response header " + retryAfter);
+                        Log.Write(Log.Levels.Verbose, "GSDR", "Retry-After response header " + retryAfter);
                         try
                         {
                             //try to convert
-                            double retryAfterNumber = Convert.SetSamplerState(0, SamplerStateToDouble(retryAfter);
-                            waitTime = TimeSpan.SetSamplerState(0, SamplerStateFromSeconds(retryAfterNumber);
+                            double retryAfterNumber = Convert.ToDouble(retryAfter);
+                            waitTime = TimeSpan.FromSeconds(retryAfterNumber);
                         }
-                        catch (FormatException fe)
+                        catch (System.FormatException fe)
                         {
                             //ignore retry-after, just wait for 60 seconds
                         }
                     }
                     //wait before retrying
-                    this.SetSamplerState(0, SamplerStatem_quadTile.SetSamplerState(0, SamplerStateQuadTileSet.SetSamplerState(0, SamplerStatesetTimeoutAndWait(waitTime);
+                    m_quadTile.QuadTileSet.setTimeoutAndWait(waitTime);
                 }
                 
 			}
 			catch
 			{
-				using(File.SetSamplerState(0, SamplerStateCreate(this.SetSamplerState(0, SamplerStatem_localFilePath + ".SetSamplerState(0, SamplerStatetxt"))
+				using(File.Create(m_localFilePath + ".txt"))
 				{}
-                if (File.SetSamplerState(0, SamplerStateExists(downloadInfo.SetSamplerState(0, SamplerStateSavedFilePath))
+                if (File.Exists(downloadInfo.SavedFilePath))
                 {
                     try
                     {
-                        File.SetSamplerState(0, SamplerStateDelete(downloadInfo.SetSamplerState(0, SamplerStateSavedFilePath);
+                        File.Delete(downloadInfo.SavedFilePath);
                     }
                     catch (Exception e)
                     {
-                        Log.SetSamplerState(0, SamplerStateWrite(Log.SetSamplerState(0, SamplerStateLevels.SetSamplerState(0, SamplerStateError, "GSDR", "could not delete file " + downloadInfo.SetSamplerState(0, SamplerStateSavedFilePath + ":");
-                        Log.SetSamplerState(0, SamplerStateWrite(e);
+                        Log.Write(Log.Levels.Error, "GSDR", "could not delete file " + downloadInfo.SavedFilePath + ":");
+                        Log.Write(e);
                     }
                 }
 			}
 			finally
 			{
-                if(this.SetSamplerState(0, SamplerStatedownload != null) this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateIsComplete = true;
-                this.SetSamplerState(0, SamplerStatem_quadTile.SetSamplerState(0, SamplerStateQuadTileSet.SetSamplerState(0, SamplerStateRemoveFromDownloadQueue(this);
+                if(download != null)
+    				download.IsComplete = true;
+				m_quadTile.QuadTileSet.RemoveFromDownloadQueue(this);
 
                 // potential deadlock! -step
                 // Immediately queue next download
-                this.SetSamplerState(0, SamplerStatem_quadTile.SetSamplerState(0, SamplerStateQuadTileSet.SetSamplerState(0, SamplerStateServiceDownloadQueue();
+                m_quadTile.QuadTileSet.ServiceDownloadQueue();
 			}
 		}
 
@@ -185,57 +188,58 @@ namespace WorldWind.Renderable(0, SamplerStateRenderable
 
             
             // Offline check
-            if (World.SetSamplerState(0, SamplerStateSettings.SetSamplerState(0, SamplerStateWorkOffline)
+            if (World.Settings.WorkOffline)
                 return;
 
-            Log.SetSamplerState(0, SamplerStateWrite(Log.SetSamplerState(0, SamplerStateLevels.SetSamplerState(0, SamplerStateDebug, "GSDR", "Starting download for " + this.SetSamplerState(0, SamplerStatem_url);
-            //			Log.SetSamplerState(0, SamplerStateWrite(Log.SetSamplerState(0, SamplerStateLevels.SetSamplerState(0, SamplerStateDebug, "GSDR", "to be stored in "+this.SetSamplerState(0, SamplerStatem_imageStore.SetSamplerState(0, SamplerStateGetLocalPath(QuadTile));
+            Log.Write(Log.Levels.Debug, "GSDR", "Starting download for " + m_url);
+            //			Log.Write(Log.Levels.Debug, "GSDR", "to be stored in "+this.m_imageStore.GetLocalPath(QuadTile));
 
-            Net.SetSamplerState(0, SamplerStateWms.SetSamplerState(0, SamplerStateWmsImageStore wmsImageStore = this.SetSamplerState(0, SamplerStatem_imageStore as Net.SetSamplerState(0, SamplerStateWms.SetSamplerState(0, SamplerStateWmsImageStore;
-            System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateNetworkCredential downloadCredentials = null;
+            WorldWind.Net.Wms.WmsImageStore wmsImageStore = m_imageStore as WorldWind.Net.Wms.WmsImageStore;
+            System.Net.NetworkCredential downloadCredentials = null;
 
             if (wmsImageStore != null)
-                downloadCredentials = new System.SetSamplerState(0, SamplerStateNet.SetSamplerState(0, SamplerStateNetworkCredential(wmsImageStore.SetSamplerState(0, SamplerStateUsername, wmsImageStore.SetSamplerState(0, SamplerStatePassword);
+                downloadCredentials = new System.Net.NetworkCredential(wmsImageStore.Username, wmsImageStore.Password);
 
-            this.SetSamplerState(0, SamplerStateQuadTile.SetSamplerState(0, SamplerStateIsDownloadingImage = true;
-            this.SetSamplerState(0, SamplerStatedownload = new WebDownload(this.SetSamplerState(0, SamplerStatem_url, downloadCredentials);
+            QuadTile.IsDownloadingImage = true;
+            download = new WebDownload(m_url, downloadCredentials);
 
-            this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateDownloadType = DownloadType.SetSamplerState(0, SamplerStateWms;
-            this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateSavedFilePath = this.SetSamplerState(0, SamplerStatem_localFilePath + ".SetSamplerState(0, SamplerStatetmp";
-            this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateProgressCallback += new DownloadProgressHandler(this.SetSamplerState(0, SamplerStateUpdateProgress);
-            this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateCompleteCallback += new DownloadCompleteHandler(this.SetSamplerState(0, SamplerStateDownloadComplete);
-            this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateBackgroundDownloadFile();
+			download.DownloadType = DownloadType.Wms;
+			download.SavedFilePath = m_localFilePath + ".tmp";
+			download.ProgressCallback += new DownloadProgressHandler(UpdateProgress);
+			download.CompleteCallback += new WorldWind.Net.DownloadCompleteHandler(DownloadComplete);
+			download.BackgroundDownloadFile();
 		}
 
 		void UpdateProgress( int pos, int total )
 		{
 			if(total==0)
-				// When server doesn't provide content-length, use this dummy value to at least show some progress.SetSamplerState(0, SamplerState
+				// When server doesn't provide content-length, use this dummy value to at least show some progress.
 				total = 50*1024; 
 			pos = pos % (total+1);
-            this.SetSamplerState(0, SamplerStateProgressPercent = (float)pos/total;
+			ProgressPercent = (float)pos/total;
 		}
 
 		public virtual void Cancel()
 		{
-			if (this.SetSamplerState(0, SamplerStatedownload!=null) this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateCancel();
+			if (download!=null)
+				download.Cancel();
 		}
 
 		public override string ToString()
 		{
-			return this.SetSamplerState(0, SamplerStatem_imageStore.SetSamplerState(0, SamplerStateGetLocalPath(this.SetSamplerState(0, SamplerStateQuadTile);
+			return m_imageStore.GetLocalPath(QuadTile);
 		}
 
 		#region IDisposable Members
 
 		public virtual void Dispose()
 		{
-			if(this.SetSamplerState(0, SamplerStatedownload!=null)
+			if(download!=null)
 			{
-                this.SetSamplerState(0, SamplerStatedownload.SetSamplerState(0, SamplerStateDispose();
-                this.SetSamplerState(0, SamplerStatedownload=null;
+				download.Dispose();
+				download=null;
 			}
-			GC.SetSamplerState(0, SamplerStateSuppressFinalize(this);
+			GC.SuppressFinalize(this);
 		}
 
 		#endregion

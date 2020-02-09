@@ -1,9 +1,11 @@
 using System;
 using System.Diagnostics;
-using System.Windows.Forms;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 using Utility;
+using System.Windows.Forms;
 
-namespace WorldWind
+namespace WorldWind.Widgets
 {
 	/// <summary>
 	/// Summary description for PictureBox.
@@ -16,47 +18,48 @@ namespace WorldWind
 		System.Drawing.Size m_Size = new System.Drawing.Size(0,0);
 		bool m_Visible = true;
 		bool m_Enabled = true;
-		IWidget m_ParentWidget;
-		object m_Tag;
+		IWidget m_ParentWidget = null;
+		object m_Tag = null;
 		string m_Name = "";
-		string m_SaveFilePath;
+		string m_SaveFilePath = null;
 		System.Drawing.Color m_ForeColor = System.Drawing.Color.White;
 
-		double m_RefreshTime;
+		double m_RefreshTime = 0;
 		System.Timers.Timer m_RefreshTimer = new System.Timers.Timer(100000);
 
-		string m_ImageUri;
-		string clickableUrl;
+		string m_ImageUri = null;
+		string clickableUrl = null;
 
         public bool LoadAsUncompressed = false;
 
 		public string ClickableUrl
 		{
-			get{ return this.clickableUrl; }
-			set{ this.clickableUrl = value; }
+			get{ return clickableUrl; }
+			set{ clickableUrl = value; }
 		}
 
 		public double RefreshTime
 		{
 			get
 			{
-				return this.m_RefreshTime;
+				return m_RefreshTime;
 			}
 			set
 			{
-                this.m_RefreshTime = value;
-				if(this.m_RefreshTime > 0) this.m_RefreshTimer.Interval = value;
+				m_RefreshTime = value;
+				if(m_RefreshTime > 0)
+					m_RefreshTimer.Interval = value;
 			}
 		}
 		public byte Opacity
 		{
 			get
 			{
-				return this.m_Opacity;
+				return m_Opacity;
 			}
 			set
 			{
-                this.m_Opacity = value;
+				m_Opacity = value;
 			}
 		}
 
@@ -71,11 +74,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_SaveFilePath;
+				return m_SaveFilePath;
 			}
 			set
 			{
-                this.m_SaveFilePath = value;
+				m_SaveFilePath = value;
 			}
 		}
 
@@ -83,11 +86,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_ImageUri;
+				return m_ImageUri;
 			}
 			set
 			{
-                this.m_ImageUri = value;
+				m_ImageUri = value;
 			}
 		}
 
@@ -95,33 +98,33 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Name;
+				return m_Name;
 			}
 			set
 			{
-                this.m_Name = value;
+				m_Name = value;
 			}
 		}
 		public System.Drawing.Color ForeColor
 		{
 			get
 			{
-				return this.m_ForeColor;
+				return m_ForeColor;
 			}
 			set
 			{
-                this.m_ForeColor = value;
+				m_ForeColor = value;
 			}
 		}
 		public string Text
 		{
 			get
 			{
-				return this.m_Text;
+				return m_Text;
 			}
 			set
 			{
-                this.m_Text = value;
+				m_Text = value;
 			}
 		}
 		#endregion
@@ -132,11 +135,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_ParentWidget;
+				return m_ParentWidget;
 			}
 			set
 			{
-                this.m_ParentWidget = value;
+				m_ParentWidget = value;
 			}
 		}
 
@@ -144,11 +147,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Visible;
+				return m_Visible;
 			}
 			set
 			{
-                this.m_Visible = value;
+				m_Visible = value;
 			}
 		}
 
@@ -156,11 +159,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Tag;
+				return m_Tag;
 			}
 			set
 			{
-                this.m_Tag = value;
+				m_Tag = value;
 			}
 		}
 
@@ -181,11 +184,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Size;
+				return m_Size;
 			}
 			set
 			{
-                this.m_Size = value;
+				m_Size = value;
 			}
 		}
 
@@ -193,11 +196,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Enabled;
+				return m_Enabled;
 			}
 			set
 			{
-                this.m_Enabled = value;
+				m_Enabled = value;
 			}
 		}
 
@@ -205,11 +208,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Location;
+				return m_Location;
 			}
 			set
 			{
-                this.m_Location = value;
+				m_Location = value;
 			}
 		}
 
@@ -217,226 +220,231 @@ namespace WorldWind
 		{
 			get
 			{
-				if(this.m_ParentWidget != null)
+				if(m_ParentWidget != null)
 				{
-					return new System.Drawing.Point(this.m_Location.X + this.m_ParentWidget.AbsoluteLocation.X, this.m_Location.Y + this.m_ParentWidget.AbsoluteLocation.Y);
+					return new System.Drawing.Point(
+						m_Location.X + m_ParentWidget.AbsoluteLocation.X,
+						m_Location.Y + m_ParentWidget.AbsoluteLocation.Y);
 					
 				}
 				else
 				{
-					return this.m_Location;
+					return m_Location;
 				}
 			}
 		}
 
 		Texture m_ImageTexture = null;
-		string displayText;
+		string displayText = null;
 
 		bool isLoading = false;
 		Sprite m_sprite = null;
 		SurfaceDescription m_surfaceDescription;
-		public bool IsLoaded;
-        string m_currentImageUri;
-        bool m_isMouseInside;
+		public bool IsLoaded = false;
+        string m_currentImageUri = null;
+        bool m_isMouseInside = false;
 
-        public event EventHandler OnMouseEnterEvent;
-        public event EventHandler OnMouseLeaveEvent;
-        public event MouseEventHandler OnMouseUpEvent;
+        public event System.EventHandler OnMouseEnterEvent;
+        public event System.EventHandler OnMouseLeaveEvent;
+        public event System.Windows.Forms.MouseEventHandler OnMouseUpEvent;
 
 		public void Render(DrawArgs drawArgs)
 		{
-			if(this.m_Visible)
+			if(m_Visible)
 			{
-				if(this.m_ImageTexture == null)
+				if(m_ImageTexture == null)
 				{
-					if(!this.m_RefreshTimer.Enabled)
+					if(!m_RefreshTimer.Enabled)
 					{
-                        this.displayText = "Loading Image...";
-                        if (this.m_RefreshTime > 0)
+						displayText = "Loading Image...";
+                        if (m_RefreshTime > 0)
                         {
-                            this.m_RefreshTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.m_RefreshTimer_Elapsed);
-                            this.m_RefreshTimer.Start();
+                            m_RefreshTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_RefreshTimer_Elapsed);
+                            m_RefreshTimer.Start();
                         }
                         else
                         {
-                            this.m_RefreshTimer_Elapsed(null, null);
+                            m_RefreshTimer_Elapsed(null, null);
                         }
 					}
 				}
 
-                if (DrawArgs.LastMousePosition.X > this.AbsoluteLocation.X + this.clickBuffer &&
-                    DrawArgs.LastMousePosition.X < this.AbsoluteLocation.X + this.ClientSize.Width - this.clickBuffer &&
-                        DrawArgs.LastMousePosition.Y > this.AbsoluteLocation.Y + this.clickBuffer &&
-                        DrawArgs.LastMousePosition.Y < this.AbsoluteLocation.Y + this.ClientSize.Height - this.clickBuffer)
+                if (DrawArgs.LastMousePosition.X > AbsoluteLocation.X + clickBuffer &&
+                    DrawArgs.LastMousePosition.X < AbsoluteLocation.X + ClientSize.Width - clickBuffer &&
+                        DrawArgs.LastMousePosition.Y > AbsoluteLocation.Y + clickBuffer &&
+                        DrawArgs.LastMousePosition.Y < AbsoluteLocation.Y + ClientSize.Height - clickBuffer)
                 {
-                    if (!this.m_isMouseInside)
+                    if (!m_isMouseInside)
                     {
-                        this.m_isMouseInside = true;
-                        if (this.OnMouseEnterEvent != null)
+                        m_isMouseInside = true;
+                        if (OnMouseEnterEvent != null)
                         {
-                            this.OnMouseEnterEvent(this, null);
+                            OnMouseEnterEvent(this, null);
                         }
                     }
                 }
                 else
                 {
-                    if (this.m_isMouseInside)
+                    if (m_isMouseInside)
                     {
-                        this.m_isMouseInside = false;
-                        if (this.OnMouseLeaveEvent != null)
+                        m_isMouseInside = false;
+                        if (OnMouseLeaveEvent != null)
                         {
-                            this.OnMouseLeaveEvent(this, null);
+                            OnMouseLeaveEvent(this, null);
                         }
                     }
                 }
 
-                if (this.m_ImageTexture != null && this.m_currentImageUri != this.m_ImageUri)
+                if (m_ImageTexture != null && m_currentImageUri != m_ImageUri)
                 {
-                    this.m_RefreshTimer_Elapsed(null, null);
+                    m_RefreshTimer_Elapsed(null, null);
                 }
 
-				if(this.displayText != null)
+				if(displayText != null)
 				{
 					drawArgs.defaultDrawingFont.DrawText(
-						null, this.displayText,
-						new System.Drawing.Rectangle(this.AbsoluteLocation.X, this.AbsoluteLocation.Y, this.m_Size.Width, this.m_Size.Height),
-						DrawTextFormat.None, this.m_ForeColor);
+						null,
+						displayText,
+						new System.Drawing.Rectangle(AbsoluteLocation.X, AbsoluteLocation.Y, m_Size.Width, m_Size.Height),
+						DrawTextFormat.None,
+						m_ForeColor);
 				}
 
-				if(this.m_ImageTexture != null && !this.isLoading)
+				if(m_ImageTexture != null && !isLoading)
 				{
-					drawArgs.device.SetTexture(0, this.m_ImageTexture);
+					drawArgs.device.SetTexture(0, m_ImageTexture);
 							
-					drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
+					drawArgs.device.RenderState.ZBufferEnable = false;
 
-					System.Drawing.Point ul = new System.Drawing.Point(this.AbsoluteLocation.X, this.AbsoluteLocation.Y);
-					System.Drawing.Point ur = new System.Drawing.Point(this.AbsoluteLocation.X + this.m_Size.Width, this.AbsoluteLocation.Y);
-					System.Drawing.Point ll = new System.Drawing.Point(this.AbsoluteLocation.X, this.AbsoluteLocation.Y + this.m_Size.Height);
-					System.Drawing.Point lr = new System.Drawing.Point(this.AbsoluteLocation.X + this.m_Size.Width, this.AbsoluteLocation.Y + this.m_Size.Height);
+					System.Drawing.Point ul = new System.Drawing.Point(AbsoluteLocation.X, AbsoluteLocation.Y);
+					System.Drawing.Point ur = new System.Drawing.Point(AbsoluteLocation.X + m_Size.Width, AbsoluteLocation.Y);
+					System.Drawing.Point ll = new System.Drawing.Point(AbsoluteLocation.X, AbsoluteLocation.Y + m_Size.Height);
+					System.Drawing.Point lr = new System.Drawing.Point(AbsoluteLocation.X + m_Size.Width, AbsoluteLocation.Y + m_Size.Height);
 									
-					if(this.m_sprite == null) this.m_sprite = new Sprite(drawArgs.device);
+					if(m_sprite == null)
+						m_sprite = new Sprite(drawArgs.device);
 
-                    this.m_sprite.Begin(SpriteFlags.AlphaBlend);
+					m_sprite.Begin(SpriteFlags.AlphaBlend);
 
-					float xscale = (float)(ur.X - ul.X) / (float) this.m_surfaceDescription.Width;
-					float yscale = (float)(lr.Y - ur.Y) / (float) this.m_surfaceDescription.Height;
-                    this.m_sprite.Transform = Matrix.Scaling(xscale,yscale,0);
-                    this.m_sprite.Transform *= Matrix.Translation(0.5f * (ul.X + ur.X), 0.5f * (ur.Y + lr.Y), 0);
-                    this.m_sprite.Draw(this.m_ImageTexture,
-						new Vector3(this.m_surfaceDescription.Width / 2, this.m_surfaceDescription.Height / 2,0),
-						Vector3.Zero,
-						System.Drawing.Color.FromArgb(this.m_Opacity, 255, 255, 255).ToArgb()
+					float xscale = (float)(ur.X - ul.X) / (float)m_surfaceDescription.Width;
+					float yscale = (float)(lr.Y - ur.Y) / (float)m_surfaceDescription.Height;
+					m_sprite.Transform = Matrix.Scaling(xscale,yscale,0);
+					m_sprite.Transform *= Matrix.Translation(0.5f * (ul.X + ur.X), 0.5f * (ur.Y + lr.Y), 0);
+					m_sprite.Draw( m_ImageTexture,
+						new Vector3(m_surfaceDescription.Width / 2, m_surfaceDescription.Height / 2,0),
+						Vector3.Empty,
+						System.Drawing.Color.FromArgb(m_Opacity, 255, 255, 255).ToArgb()
 						);
 				
 					// Reset transform to prepare for text rendering later
-                    this.m_sprite.Transform = Matrix.Identity;
-                    this.m_sprite.End();
+					m_sprite.Transform = Matrix.Identity;
+					m_sprite.End();
 				}
 			}	
 		}
 		#endregion
 
         
-		bool isUpdating;
+		bool isUpdating = false;
 		private void m_RefreshTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
             try
             {
-                if (this.isUpdating)
+                if (isUpdating)
                     return;
 
-                this.isUpdating = true;
+                isUpdating = true;
 
-                if (this.m_ImageUri == null)
+                if (m_ImageUri == null)
                     return;
 
-                if (this.m_ImageUri.ToLower().StartsWith("http://"))
+                if (m_ImageUri.ToLower().StartsWith("http://"))
                 {
                     bool forceDownload = false;
-                    if (this.m_SaveFilePath == null)
+                    if (m_SaveFilePath == null)
                     {
                         // TODO: hack, need to get the correct cache directory
-                        this.m_SaveFilePath = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Cache\\PictureBoxImages\\temp";
+                        m_SaveFilePath = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Cache\\PictureBoxImages\\temp";
                         forceDownload = true;
                     }
-                    System.IO.FileInfo saveFile = new System.IO.FileInfo(this.m_SaveFilePath);
+                    System.IO.FileInfo saveFile = new System.IO.FileInfo(m_SaveFilePath);
                     
                     // Offline check added
                     if (!World.Settings.WorkOffline && (forceDownload || !saveFile.Exists || 
-                        (this.m_RefreshTime > 0 && saveFile.LastWriteTime.Subtract(DateTime.Now) > TimeSpan.FromSeconds(this.m_RefreshTime))))
+                        (m_RefreshTime > 0 && saveFile.LastWriteTime.Subtract(System.DateTime.Now) > TimeSpan.FromSeconds(m_RefreshTime))))
                     {
                         //download it
                         try
                         {
-                            Net.WebDownload webDownload = new Net.WebDownload(this.m_ImageUri);
-                            webDownload.DownloadType = Net.DownloadType.Unspecified;
+                            WorldWind.Net.WebDownload webDownload = new WorldWind.Net.WebDownload(m_ImageUri);
+                            webDownload.DownloadType = WorldWind.Net.DownloadType.Unspecified;
 
                             if (!saveFile.Directory.Exists)
                                 saveFile.Directory.Create();
 
-                            webDownload.DownloadFile(this.m_SaveFilePath);
+                            webDownload.DownloadFile(m_SaveFilePath);
                         }
                         catch { }
                     }
                 }
                 else
                 {
-                    this.m_SaveFilePath = this.m_ImageUri;
+                    m_SaveFilePath = m_ImageUri;
                 }
 
-                if (this.m_ImageTexture != null && !this.m_ImageTexture.Disposed)
+                if (m_ImageTexture != null && !m_ImageTexture.Disposed)
                 {
-                    this.m_ImageTexture.Dispose();
-                    this.m_ImageTexture = null;
+                    m_ImageTexture.Dispose();
+                    m_ImageTexture = null;
                 }
 
-                if (!System.IO.File.Exists(this.m_SaveFilePath))
+                if (!System.IO.File.Exists(m_SaveFilePath))
                 {
-                    this.displayText = "Image Not Found";
+                    displayText = "Image Not Found";
                     return;
                 }
 
-                if (this.LoadAsUncompressed)
+                if (LoadAsUncompressed)
                 {
-                    this.m_ImageTexture = TextureLoader.FromFile(DrawArgs.Device, this.m_SaveFilePath, 0, 0, 1, 0, Format.Unknown, Pool.Managed, Filter.None, Filter.None, 0);
+                    m_ImageTexture = TextureLoader.FromFile(DrawArgs.Device, m_SaveFilePath, 0, 0, 1, 0, Format.Unknown, Pool.Managed, Filter.None, Filter.None, 0);
                 }
                 else
                 {
-                    this.m_ImageTexture = ImageHelper.LoadTexture(this.m_SaveFilePath);
+                    m_ImageTexture = ImageHelper.LoadTexture(m_SaveFilePath);
+                }
+                m_surfaceDescription = m_ImageTexture.GetLevelDescription(0);
+
+                int width = ClientSize.Width;
+                int height = ClientSize.Height;
+
+                if (ClientSize.Width <= 0)
+                {
+                    width = m_surfaceDescription.Width;
+                }
+                if (ClientSize.Height <= 0)
+                {
+                    height = m_surfaceDescription.Height;
                 }
 
-                this.m_surfaceDescription = this.m_ImageTexture.GetLevelDescription(0);
-
-                int width = this.ClientSize.Width;
-                int height = this.ClientSize.Height;
-
-                if (this.ClientSize.Width <= 0)
+                if (ParentWidget is Widgets.Form && SizeParentToImage)
                 {
-                    width = this.m_surfaceDescription.Width;
-                }
-                if (this.ClientSize.Height <= 0)
-                {
-                    height = this.m_surfaceDescription.Height;
-                }
-
-                if (this.ParentWidget is Form && this.SizeParentToImage)
-                {
-                    Form parentForm = (Form) this.ParentWidget;
+                    Widgets.Form parentForm = (Widgets.Form)ParentWidget;
                     parentForm.ClientSize = new System.Drawing.Size(width, height + parentForm.HeaderHeight);
                 }
-                else if(this.SizeParentToImage)
+                else if(SizeParentToImage)
                 {
-                    this.ParentWidget.ClientSize = new System.Drawing.Size(width, height);
+                    ParentWidget.ClientSize = new System.Drawing.Size(width, height);
                 }
+                
 
+                ClientSize = new System.Drawing.Size(width, height);
+                m_currentImageUri = m_ImageUri;
 
-                this.ClientSize = new System.Drawing.Size(width, height);
-                this.m_currentImageUri = this.m_ImageUri;
-
-                this.IsLoaded = true;
-                this.isUpdating = false;
-                this.displayText = null;
-                if (this.m_RefreshTime == 0 && this.m_RefreshTimer.Enabled) this.m_RefreshTimer.Stop();
+                IsLoaded = true;
+                isUpdating = false;
+                displayText = null;
+                if (m_RefreshTime == 0 && m_RefreshTimer.Enabled)
+                    m_RefreshTimer.Stop();
 
             }
             catch (Exception ex)
@@ -448,25 +456,25 @@ namespace WorldWind
         public bool SizeParentToImage = false;
 		#region IInteractive Members
 
-		public bool OnKeyDown(KeyEventArgs e)
+		public bool OnKeyDown(System.Windows.Forms.KeyEventArgs e)
 		{
 			// TODO:  Add PictureBox.OnKeyDown implementation
 			return false;
 		}
 
-		public bool OnKeyUp(KeyEventArgs e)
+		public bool OnKeyUp(System.Windows.Forms.KeyEventArgs e)
 		{
 			// TODO:  Add PictureBox.OnKeyUp implementation
 			return false;
 		}
 
-		public bool OnKeyPress(KeyPressEventArgs e)
+		public bool OnKeyPress(System.Windows.Forms.KeyPressEventArgs e)
 		{
 			// TODO:  Add PictureBox.OnKeyPress implementation
 			return false;
 		}
 
-		public bool OnMouseDown(MouseEventArgs e)
+		public bool OnMouseDown(System.Windows.Forms.MouseEventArgs e)
 		{
 			// TODO:  Add PictureBox.OnMouseDown implementation
 			return false;
@@ -484,7 +492,7 @@ namespace WorldWind
 			return false;
 		}
 
-		public bool OnMouseMove(MouseEventArgs e)
+		public bool OnMouseMove(System.Windows.Forms.MouseEventArgs e)
 		{
 			// TODO:  Add PictureBox.OnMouseMove implementation
 			return false;
@@ -492,33 +500,33 @@ namespace WorldWind
 
 		private int clickBuffer = 5;
 
-		public bool OnMouseUp(MouseEventArgs e)
+		public bool OnMouseUp(System.Windows.Forms.MouseEventArgs e)
 		{
-            if (!this.Visible)
+            if (!Visible)
                 return false;
 
-            if (e.X > this.AbsoluteLocation.X + this.clickBuffer && e.X < this.AbsoluteLocation.X + this.ClientSize.Width - this.clickBuffer &&
-                        e.Y > this.AbsoluteLocation.Y + this.clickBuffer && e.Y < this.AbsoluteLocation.Y + this.ClientSize.Height - this.clickBuffer)
+            if (e.X > AbsoluteLocation.X + clickBuffer && e.X < AbsoluteLocation.X + ClientSize.Width - clickBuffer &&
+                        e.Y > AbsoluteLocation.Y + clickBuffer && e.Y < AbsoluteLocation.Y + ClientSize.Height - clickBuffer)
             {
-                if (this.OnMouseUpEvent != null)
+                if (OnMouseUpEvent != null)
                 {
-                    this.OnMouseUpEvent(this, e);
+                    OnMouseUpEvent(this, e);
                 }
             }
 
-			if(this.ClickableUrl != null && e.X > this.AbsoluteLocation.X + this.clickBuffer && e.X < this.AbsoluteLocation.X + this.ClientSize.Width - this.clickBuffer &&
-               e.Y > this.AbsoluteLocation.Y + this.clickBuffer && e.Y < this.AbsoluteLocation.Y + this.ClientSize.Height - this.clickBuffer)
+			if(ClickableUrl != null && e.X > AbsoluteLocation.X + clickBuffer && e.X < AbsoluteLocation.X + ClientSize.Width - clickBuffer &&
+				e.Y > AbsoluteLocation.Y + clickBuffer && e.Y < AbsoluteLocation.Y + ClientSize.Height - clickBuffer)
 			{
-				if (World.Settings.UseInternalBrowser || this.clickableUrl.StartsWith(@"worldwind://"))
+				if (World.Settings.UseInternalBrowser || clickableUrl.StartsWith(@"worldwind://"))
 				{
 					SplitContainer sc = (SplitContainer)DrawArgs.ParentControl.Parent.Parent;
 					InternalWebBrowserPanel browser = (InternalWebBrowserPanel)sc.Panel1.Controls[0];
-					browser.NavigateTo(this.clickableUrl);
+					browser.NavigateTo(clickableUrl);
 				}
 				else
 				{
 					ProcessStartInfo psi = new ProcessStartInfo();
-					psi.FileName = this.clickableUrl;
+					psi.FileName = clickableUrl;
 					psi.Verb = "open";
 					psi.UseShellExecute = true;
 
@@ -531,7 +539,7 @@ namespace WorldWind
 			return false;
 		}
 
-		public bool OnMouseWheel(MouseEventArgs e)
+		public bool OnMouseWheel(System.Windows.Forms.MouseEventArgs e)
 		{
 			// TODO:  Add PictureBox.OnMouseWheel implementation
 			return false;

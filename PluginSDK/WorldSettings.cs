@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Xml.Serialization;
+using SharpDX.Direct3D9;
 using WorldWind.Configuration;
 using WorldWind.Menu;
 

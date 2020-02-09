@@ -1,44 +1,44 @@
 using System;
 
-namespace WorldWind(0, SamplerStateWidgets
+namespace WorldWind.Widgets
 {
 	/// <summary>
-	/// Summary description for Widget.SetSamplerState(0, SamplerState
+	/// Summary description for Widget.
 	/// </summary>
 	public class RootWidget : IWidget, IInteractive
 	{
-		IWidget m_ParentWidget;
+		IWidget m_ParentWidget = null;
 		IWidgetCollection m_ChildWidgets = new WidgetCollection();
-		System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateControl m_ParentControl;
+		System.Windows.Forms.Control m_ParentControl;
 
-		public RootWidget(System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateControl parentControl) 
+		public RootWidget(System.Windows.Forms.Control parentControl) 
 		{
-            this.SetSamplerState(0, SamplerStatem_ParentControl = parentControl;
+			m_ParentControl = parentControl;
 		}
 
 		#region Methods
 		public void Render(DrawArgs drawArgs)
 		{
-			for(int index = this.SetSamplerState(0, SamplerStatem_ChildWidgets.SetSamplerState(0, SamplerStateCount - 1; index >= 0; index--)
+			for(int index = m_ChildWidgets.Count - 1; index >= 0; index--)
 			{
-				IWidget currentWidget = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IWidget;
+				IWidget currentWidget = m_ChildWidgets[index] as IWidget;
 				if(currentWidget != null)
 				{
-					if(currentWidget.SetSamplerState(0, SamplerStateParentWidget == null || currentWidget.SetSamplerState(0, SamplerStateParentWidget != this)
-						currentWidget.SetSamplerState(0, SamplerStateParentWidget = this;
+					if(currentWidget.ParentWidget == null || currentWidget.ParentWidget != this)
+						currentWidget.ParentWidget = this;
 
-					currentWidget.SetSamplerState(0, SamplerStateRender(drawArgs);
+					currentWidget.Render(drawArgs);
 				}
 			}
 		}
 		#endregion
 
 		#region Properties
-		public System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint AbsoluteLocation
+		public System.Drawing.Point AbsoluteLocation
 		{
 			get
 			{
-				return new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(0,0);
+				return new System.Drawing.Point(0,0);
 			}
 		}
 		public string Name
@@ -56,11 +56,11 @@ namespace WorldWind(0, SamplerStateWidgets
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_ChildWidgets;
+				return m_ChildWidgets;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_ChildWidgets = value;	
+				m_ChildWidgets = value;	
 			}
 		}
 		
@@ -68,90 +68,90 @@ namespace WorldWind(0, SamplerStateWidgets
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_ParentWidget;
+				return m_ParentWidget;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_ParentWidget = value;
+				m_ParentWidget = value;
 			}
 		}
 		
-		System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint m_Location = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(0,0);
-		bool m_Enabled;
-		bool m_Visible;
-		object m_Tag;
+		System.Drawing.Point m_Location = new System.Drawing.Point(0,0);
+		bool m_Enabled = false;
+		bool m_Visible = false;
+		object m_Tag = null;
 
-		public System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint ClientLocation
+		public System.Drawing.Point ClientLocation
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_Location;
+				return m_Location;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_Location = value;
+				m_Location = value;
 			}
 		}
 
-		public System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize ClientSize
+		public System.Drawing.Size ClientSize
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_ParentControl.SetSamplerState(0, SamplerStateSize;
+				return m_ParentControl.Size;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_ParentControl.SetSamplerState(0, SamplerStateSize = value;
+				m_ParentControl.Size = value;
 			}
 		}
 		public bool Enabled
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_Enabled;	
+				return m_Enabled;	
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_Enabled = value;
+				m_Enabled = value;
 			}
 		}
 		public bool Visible
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_Visible;	
+				return m_Visible;	
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_Visible = value;
+				m_Visible = value;
 			}
 		}
 		public object Tag
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_Tag;	
+				return m_Tag;	
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_Tag = value;
+				m_Tag = value;
 			}
 		}
 		#endregion
 
 		#region IInteractive Members
 
-		public bool OnMouseDown(System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateMouseEventArgs e)
+		public bool OnMouseDown(System.Windows.Forms.MouseEventArgs e)
 		{
-			for(int index = 0; index < this.SetSamplerState(0, SamplerStatem_ChildWidgets.SetSamplerState(0, SamplerStateCount; index++)
+			for(int index = 0; index < m_ChildWidgets.Count; index++)
 			{
-				IWidget currentWidget = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IWidget;
+				IWidget currentWidget = m_ChildWidgets[index] as IWidget;
 
 				if(currentWidget != null && currentWidget is IInteractive)
 				{
-					IInteractive currentInteractive = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IInteractive;
+					IInteractive currentInteractive = m_ChildWidgets[index] as IInteractive;
 
-					bool handled = currentInteractive.SetSamplerState(0, SamplerStateOnMouseDown(e);
+					bool handled = currentInteractive.OnMouseDown(e);
 					if(handled)
 						return handled;
 				}
@@ -160,17 +160,17 @@ namespace WorldWind(0, SamplerStateWidgets
 			return false;
 		}
 
-		public bool OnMouseUp(System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateMouseEventArgs e)
+		public bool OnMouseUp(System.Windows.Forms.MouseEventArgs e)
 		{
-			for(int index = 0; index < this.SetSamplerState(0, SamplerStatem_ChildWidgets.SetSamplerState(0, SamplerStateCount; index++)
+			for(int index = 0; index < m_ChildWidgets.Count; index++)
 			{
-				IWidget currentWidget = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IWidget;
+				IWidget currentWidget = m_ChildWidgets[index] as IWidget;
 
 				if(currentWidget != null && currentWidget is IInteractive)
 				{
-					IInteractive currentInteractive = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IInteractive;
+					IInteractive currentInteractive = m_ChildWidgets[index] as IInteractive;
 
-					bool handled = currentInteractive.SetSamplerState(0, SamplerStateOnMouseUp(e);
+					bool handled = currentInteractive.OnMouseUp(e);
 					if(handled)
 						return handled;
 				}
@@ -179,17 +179,17 @@ namespace WorldWind(0, SamplerStateWidgets
 			return false;
 		}
 
-		public bool OnKeyPress(System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateKeyPressEventArgs e)
+		public bool OnKeyPress(System.Windows.Forms.KeyPressEventArgs e)
 		{
-			for(int index = 0; index < this.SetSamplerState(0, SamplerStatem_ChildWidgets.SetSamplerState(0, SamplerStateCount; index++)
+			for(int index = 0; index < m_ChildWidgets.Count; index++)
 			{
-				IWidget currentWidget = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IWidget;
+				IWidget currentWidget = m_ChildWidgets[index] as IWidget;
 
 				if(currentWidget != null && currentWidget is IInteractive)
 				{
-					IInteractive currentInteractive = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IInteractive;
+					IInteractive currentInteractive = m_ChildWidgets[index] as IInteractive;
 
-					bool handled = currentInteractive.SetSamplerState(0, SamplerStateOnKeyPress(e);
+					bool handled = currentInteractive.OnKeyPress(e);
 					if(handled)
 						return handled;
 				}
@@ -197,17 +197,17 @@ namespace WorldWind(0, SamplerStateWidgets
 			return false;
 		}
 
-		public bool OnKeyDown(System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateKeyEventArgs e)
+		public bool OnKeyDown(System.Windows.Forms.KeyEventArgs e)
 		{
-			for(int index = 0; index < this.SetSamplerState(0, SamplerStatem_ChildWidgets.SetSamplerState(0, SamplerStateCount; index++)
+			for(int index = 0; index < m_ChildWidgets.Count; index++)
 			{
-				IWidget currentWidget = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IWidget;
+				IWidget currentWidget = m_ChildWidgets[index] as IWidget;
 
 				if(currentWidget != null && currentWidget is IInteractive)
 				{
-					IInteractive currentInteractive = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IInteractive;
+					IInteractive currentInteractive = m_ChildWidgets[index] as IInteractive;
 
-					bool handled = currentInteractive.SetSamplerState(0, SamplerStateOnKeyDown(e);
+					bool handled = currentInteractive.OnKeyDown(e);
 					if(handled)
 						return handled;
 				}
@@ -215,17 +215,17 @@ namespace WorldWind(0, SamplerStateWidgets
 			return false;
 		}
 
-		public bool OnKeyUp(System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateKeyEventArgs e)
+		public bool OnKeyUp(System.Windows.Forms.KeyEventArgs e)
 		{
-			for(int index = 0; index < this.SetSamplerState(0, SamplerStatem_ChildWidgets.SetSamplerState(0, SamplerStateCount; index++)
+			for(int index = 0; index < m_ChildWidgets.Count; index++)
 			{
-				IWidget currentWidget = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IWidget;
+				IWidget currentWidget = m_ChildWidgets[index] as IWidget;
 
 				if(currentWidget != null && currentWidget is IInteractive)
 				{
-					IInteractive currentInteractive = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IInteractive;
+					IInteractive currentInteractive = m_ChildWidgets[index] as IInteractive;
 
-					bool handled = currentInteractive.SetSamplerState(0, SamplerStateOnKeyUp(e);
+					bool handled = currentInteractive.OnKeyUp(e);
 					if(handled)
 						return handled;
 				}
@@ -235,21 +235,21 @@ namespace WorldWind(0, SamplerStateWidgets
 
 		public bool OnMouseEnter(EventArgs e)
 		{
-			// TODO:  Add RootWidget.SetSamplerState(0, SamplerStateOnMouseEnter implementation
+			// TODO:  Add RootWidget.OnMouseEnter implementation
 			return false;
 		}
 
-		public bool OnMouseMove(System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateMouseEventArgs e)
+		public bool OnMouseMove(System.Windows.Forms.MouseEventArgs e)
 		{
-			for(int index = 0; index < this.SetSamplerState(0, SamplerStatem_ChildWidgets.SetSamplerState(0, SamplerStateCount; index++)
+			for(int index = 0; index < m_ChildWidgets.Count; index++)
 			{
-				IWidget currentWidget = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IWidget;
+				IWidget currentWidget = m_ChildWidgets[index] as IWidget;
 
 				if(currentWidget != null && currentWidget is IInteractive)
 				{
-					IInteractive currentInteractive = this.SetSamplerState(0, SamplerStatem_ChildWidgets[index] as IInteractive;
+					IInteractive currentInteractive = m_ChildWidgets[index] as IInteractive;
 
-					bool handled = currentInteractive.SetSamplerState(0, SamplerStateOnMouseMove(e);
+					bool handled = currentInteractive.OnMouseMove(e);
 					if(handled)
 						return handled;
 				}
@@ -260,13 +260,13 @@ namespace WorldWind(0, SamplerStateWidgets
 
 		public bool OnMouseLeave(EventArgs e)
 		{
-			// TODO:  Add RootWidget.SetSamplerState(0, SamplerStateOnMouseLeave implementation
+			// TODO:  Add RootWidget.OnMouseLeave implementation
 			return false;
 		}
 
-		public bool OnMouseWheel(System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms.SetSamplerState(0, SamplerStateMouseEventArgs e)
+		public bool OnMouseWheel(System.Windows.Forms.MouseEventArgs e)
 		{
-			// TODO:  Add RootWidget.SetSamplerState(0, SamplerStateOnMouseWheel implementation
+			// TODO:  Add RootWidget.OnMouseWheel implementation
 			return false;
 		}
 

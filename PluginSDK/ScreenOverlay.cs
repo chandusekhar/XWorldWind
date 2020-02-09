@@ -1,7 +1,6 @@
 using System;
-using WorldWind;
 
-namespace WorldWind(0, SamplerStateRenderable
+namespace WorldWind.Renderable
 {
 	public enum ScreenAlignment
 	{
@@ -16,63 +15,65 @@ namespace WorldWind(0, SamplerStateRenderable
     }
 
 	/// <summary>
-	/// Summary description for ScreenOverlay.SetSamplerState(0, SamplerState
+	/// Summary description for ScreenOverlay.
 	/// </summary>
-	public class ScreenOverlay : RenderableObject
+	public class ScreenOverlay : WorldWind.Renderable.RenderableObject
 	{
-		Widgets.SetSamplerState(0, SamplerStateForm overlay;
+		WorldWind.Widgets.Form overlay = null;
 
-		ScreenAlignment alignment = ScreenAlignment.SetSamplerState(0, SamplerStateLeft;
+		ScreenAlignment alignment = ScreenAlignment.Left;
 
-		string clickableUrl;
-        float m_Width;
-        float m_Height;
+		string clickableUrl = null;
+        float m_Width = 0;
+        float m_Height = 0;
 		bool m_ShowHeader = true;
-        public ScreenUnits OffsetXUnits = ScreenUnits.SetSamplerState(0, SamplerStatePixels;
-        public ScreenUnits OffsetYUnits = ScreenUnits.SetSamplerState(0, SamplerStatePixels;
-        public ScreenUnits SizeXUnits = ScreenUnits.SetSamplerState(0, SamplerStatePixels;
-        public ScreenUnits SizeYUnits = ScreenUnits.SetSamplerState(0, SamplerStatePixels;
-        public ScreenUnits PositionXUnits = ScreenUnits.SetSamplerState(0, SamplerStatePixels;
-        public ScreenUnits PositionYUnits = ScreenUnits.SetSamplerState(0, SamplerStatePixels;
+        public ScreenUnits OffsetXUnits = ScreenUnits.Pixels;
+        public ScreenUnits OffsetYUnits = ScreenUnits.Pixels;
+        public ScreenUnits SizeXUnits = ScreenUnits.Pixels;
+        public ScreenUnits SizeYUnits = ScreenUnits.Pixels;
+        public ScreenUnits PositionXUnits = ScreenUnits.Pixels;
+        public ScreenUnits PositionYUnits = ScreenUnits.Pixels;
 
-        float m_StartX;
-        float m_StartY;
-		string m_ImageUri;
-		string m_SaveFilePath;
-		double m_RefreshTimeSec;
-		bool m_HideBorder;
-		System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateColor m_BorderColor = System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateColor.SetSamplerState(0, SamplerStateWhite;
-        float m_offsetX;
-        float m_offsetY;
-		public System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateColor BorderColor
+        float m_StartX = 0;
+        float m_StartY = 0;
+		string m_ImageUri = null;
+		string m_SaveFilePath = null;
+		double m_RefreshTimeSec = 0;
+		bool m_HideBorder = false;
+		System.Drawing.Color m_BorderColor = System.Drawing.Color.White;
+        float m_offsetX = 0;
+        float m_offsetY = 0;
+		public System.Drawing.Color BorderColor
 		{
-			get{ return (this.SetSamplerState(0, SamplerStateoverlay == null ? this.SetSamplerState(0, SamplerStatem_BorderColor : this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateBorderColor); }
+			get{ return (overlay == null ? m_BorderColor : overlay.BorderColor); }
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_BorderColor = value;
-				if(this.SetSamplerState(0, SamplerStateoverlay != null) this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateBorderColor = value;
+				m_BorderColor = value;
+				if(overlay != null)
+					overlay.BorderColor = value;
 			}
 		}
 
         public float OffsetX
         {
-            get { return this.SetSamplerState(0, SamplerStatem_offsetX; }
-            set { this.SetSamplerState(0, SamplerStatem_offsetX = value; }
+            get { return m_offsetX; }
+            set { m_offsetX = value; }
         }
 
         public float OffsetY
         {
-            get { return this.SetSamplerState(0, SamplerStatem_offsetY; }
-            set { this.SetSamplerState(0, SamplerStatem_offsetY = value; }
+            get { return m_offsetY; }
+            set { m_offsetY = value; }
         }
 		
 		public bool HideBorder
 		{
-			get{ return (this.SetSamplerState(0, SamplerStateoverlay == null ? this.SetSamplerState(0, SamplerStatem_HideBorder : this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateHideBorder); }
+			get{ return (overlay == null ? m_HideBorder : overlay.HideBorder); }
 			set
-			{
-                this.SetSamplerState(0, SamplerStatem_HideBorder = value; 
-				if(this.SetSamplerState(0, SamplerStateoverlay != null) this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateHideBorder = value;
+			{ 
+				m_HideBorder = value; 
+				if(overlay != null)
+					overlay.HideBorder = value;
 			}
 		}
 
@@ -80,48 +81,49 @@ namespace WorldWind(0, SamplerStateRenderable
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStateclickableUrl;
+				return clickableUrl;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStateclickableUrl = value;
-				if(this.SetSamplerState(0, SamplerStatepBox != null) this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClickableUrl = value;
+				clickableUrl = value;
+				if(pBox != null)
+					pBox.ClickableUrl = value;
 			}
 		}
 		
 		public ScreenAlignment Alignment
 		{
-			get{ return this.SetSamplerState(0, SamplerStatealignment; }
-			set{ this.SetSamplerState(0, SamplerStatealignment = value; }
+			get{ return alignment; }
+			set{ alignment = value; }
 		}
 
 		public double RefreshTimeSec
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_RefreshTimeSec;
+				return m_RefreshTimeSec;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_RefreshTimeSec = value;
+				m_RefreshTimeSec = value;
 			}
 		}
 
 		public bool ShowHeader
 		{
-			get{ return this.SetSamplerState(0, SamplerStatem_ShowHeader; }
-			set{ this.SetSamplerState(0, SamplerStatem_ShowHeader = value; }
+			get{ return m_ShowHeader; }
+			set{ m_ShowHeader = value; }
 		}
 
 		public string SaveFilePath
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_SaveFilePath;
+				return m_SaveFilePath;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_SaveFilePath = value;
+				m_SaveFilePath = value;
 			}
 		}
 
@@ -129,11 +131,11 @@ namespace WorldWind(0, SamplerStateRenderable
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_Width;
+				return m_Width;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_Width = value;
+				m_Width = value;
 			}
 		}
 
@@ -141,120 +143,120 @@ namespace WorldWind(0, SamplerStateRenderable
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_Height;
+				return m_Height;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_Height = value;
+				m_Height = value;
 			}
 		}
 
         public ScreenOverlay(string name, float startX, float startY, string imageUri)
             : base(name)
 		{
-            this.SetSamplerState(0, SamplerStatem_StartX = startX;
-            this.SetSamplerState(0, SamplerStatem_StartY = startY;
-            this.SetSamplerState(0, SamplerStatem_ImageUri = imageUri;
+			m_StartX = startX;
+			m_StartY = startY;
+			m_ImageUri = imageUri;
 
-            if(DrawArgs.SetSamplerState(0, SamplerStateParentControl != null)
-                DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateResize += new EventHandler(this.SetSamplerState(0, SamplerStateParentControl_Resize);
+            if(DrawArgs.ParentControl != null)
+                DrawArgs.ParentControl.Resize += new EventHandler(ParentControl_Resize);
 		}
 
         void ParentControl_Resize(object sender, EventArgs e)
         {
-            if (this.SetSamplerState(0, SamplerStateoverlay != null)
+            if (overlay != null)
             {
-                if (this.SetSamplerState(0, SamplerStatealignment == ScreenAlignment.SetSamplerState(0, SamplerStateLeft)
+                if (alignment == ScreenAlignment.Left)
                 {
-                    int x = (int) this.SetSamplerState(0, SamplerStatem_StartX;
-                    int y = (int) this.SetSamplerState(0, SamplerStatem_StartY;
+                    int x = (int)m_StartX;
+                    int y = (int)m_StartY;
 
-                    int offsetX = (int) this.SetSamplerState(0, SamplerStatem_offsetX;
-                    int offsetY = (int) this.SetSamplerState(0, SamplerStatem_offsetY;
+                    int offsetX = (int)m_offsetX;
+                    int offsetY = (int)m_offsetY;
 
                     
 
-                    if (this.SetSamplerState(0, SamplerStatePositionXUnits == ScreenUnits.SetSamplerState(0, SamplerStateFraction)
-                        x = (int)(DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateWidth * this.SetSamplerState(0, SamplerStatem_StartX) - offsetX;
-                    if (this.SetSamplerState(0, SamplerStatePositionYUnits == ScreenUnits.SetSamplerState(0, SamplerStateFraction)
-                        y = (int)(DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateHeight * this.SetSamplerState(0, SamplerStatem_StartY) - offsetY;
+                    if (PositionXUnits == ScreenUnits.Fraction)
+                        x = (int)(DrawArgs.ParentControl.Width * m_StartX) - offsetX;
+                    if (PositionYUnits == ScreenUnits.Fraction)
+                        y = (int)(DrawArgs.ParentControl.Height * m_StartY) - offsetY;
 
-                    this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateClientLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(x, y);
+                    overlay.ClientLocation = new System.Drawing.Point(x, y);
                 }
                 else
                 {
-                    int x = (int)(DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateWidth - this.SetSamplerState(0, SamplerStatem_StartX);
-                    int y = (int) this.SetSamplerState(0, SamplerStatem_StartY;
+                    int x = (int)(DrawArgs.ParentControl.Width - m_StartX);
+                    int y = (int)m_StartY;
 
-                    if (this.SetSamplerState(0, SamplerStatePositionXUnits == ScreenUnits.SetSamplerState(0, SamplerStateFraction)
-                        x = (int)(DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateWidth - DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateWidth * this.SetSamplerState(0, SamplerStatem_StartX);
-                    if (this.SetSamplerState(0, SamplerStatePositionYUnits == ScreenUnits.SetSamplerState(0, SamplerStateFraction)
-                        y = (int)(DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateHeight * this.SetSamplerState(0, SamplerStatem_StartY);
-
-                    this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateClientLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(x, y);
+                    if (PositionXUnits == ScreenUnits.Fraction)
+                        x = (int)(DrawArgs.ParentControl.Width - DrawArgs.ParentControl.Width * m_StartX);
+                    if (PositionYUnits == ScreenUnits.Fraction)
+                        y = (int)(DrawArgs.ParentControl.Height * m_StartY);
+                    
+                    overlay.ClientLocation = new System.Drawing.Point(x, y);
                     
                 }
 
-                int width = (int) this.SetSamplerState(0, SamplerStatem_Width;
-                int height = (int) this.SetSamplerState(0, SamplerStatem_Height;
+                int width = (int)m_Width;
+                int height = (int)m_Height;
 
-                if (this.SetSamplerState(0, SamplerStateSizeXUnits == ScreenUnits.SetSamplerState(0, SamplerStateFraction)
-                    width = (int)(DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateWidth * this.SetSamplerState(0, SamplerStatem_Width);
-                if (this.SetSamplerState(0, SamplerStateSizeYUnits == ScreenUnits.SetSamplerState(0, SamplerStateFraction)
-                    height = (int)(DrawArgs.SetSamplerState(0, SamplerStateParentControl.SetSamplerState(0, SamplerStateHeight * this.SetSamplerState(0, SamplerStatem_Height);
+                if (SizeXUnits == ScreenUnits.Fraction)
+                    width = (int)(DrawArgs.ParentControl.Width * m_Width);
+                if (SizeYUnits == ScreenUnits.Fraction)
+                    height = (int)(DrawArgs.ParentControl.Height * m_Height);
 
-                this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateClientSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(width, height);
+                overlay.ClientSize = new System.Drawing.Size(width, height);
             }	
         }
 
 		public override void Dispose()
 		{
-			if(this.SetSamplerState(0, SamplerStateoverlay != null)
+			if(overlay != null)
 			{
-                this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateVisible = false;
+				overlay.Visible = false;
 			}
 
-            this.SetSamplerState(0, SamplerStateisInitialized = false;
+			isInitialized = false;
 		}
 
-		Widgets.SetSamplerState(0, SamplerStatePictureBox pBox;
+		Widgets.PictureBox pBox;
 
 		public override void Initialize(DrawArgs drawArgs)
 		{
-			if(this.SetSamplerState(0, SamplerStateoverlay == null)
+			if(overlay == null)
 			{
-                this.SetSamplerState(0, SamplerStateoverlay = new Widgets.SetSamplerState(0, SamplerStateForm();
-                this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateText = this.SetSamplerState(0, SamplerStatename;
-                this.SetSamplerState(0, SamplerStateParentControl_Resize(null, null);
-                this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateOnVisibleChanged += new Widgets.SetSamplerState(0, SamplerStateVisibleChangedHandler(this.SetSamplerState(0, SamplerStateoverlay_OnVisibleChanged);
+				overlay = new WorldWind.Widgets.Form();
+				overlay.Text = name;
+                ParentControl_Resize(null, null);
+                overlay.OnVisibleChanged += new WorldWind.Widgets.VisibleChangedHandler(overlay_OnVisibleChanged);
 
-                this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateAutoHideHeader = !this.SetSamplerState(0, SamplerStatem_ShowHeader;
-                this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateHideBorder = this.SetSamplerState(0, SamplerStatem_HideBorder;
-                this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateBorderColor = this.SetSamplerState(0, SamplerStatem_BorderColor;
+                overlay.AutoHideHeader = !m_ShowHeader;
+				overlay.HideBorder = m_HideBorder;
+				overlay.BorderColor = m_BorderColor;
 
-                this.SetSamplerState(0, SamplerStatepBox = new Widgets.SetSamplerState(0, SamplerStatePictureBox();
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClickableUrl = this.SetSamplerState(0, SamplerStateclickableUrl;
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateRefreshTime = this.SetSamplerState(0, SamplerStatem_RefreshTimeSec * 1000;
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateOpacity = this.SetSamplerState(0, SamplerStateOpacity;
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateParentWidget = this.SetSamplerState(0, SamplerStateoverlay;
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateImageUri = this.SetSamplerState(0, SamplerStatem_ImageUri;
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateSaveFilePath = this.SetSamplerState(0, SamplerStatem_SaveFilePath;
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClientLocation = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint(0, this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateHeaderHeight);
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClientSize = this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateClientSize;
-
-                this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateVisible = true;
-                if (this.SetSamplerState(0, SamplerStatem_Width <= 0 && this.SetSamplerState(0, SamplerStatem_Height <= 0)
+				pBox = new WorldWind.Widgets.PictureBox();
+				pBox.ClickableUrl = clickableUrl;
+				pBox.RefreshTime = m_RefreshTimeSec * 1000;
+				pBox.Opacity = Opacity;
+				pBox.ParentWidget = overlay;
+				pBox.ImageUri = m_ImageUri;
+				pBox.SaveFilePath = m_SaveFilePath;
+				pBox.ClientLocation = new System.Drawing.Point(0,overlay.HeaderHeight);
+                pBox.ClientSize = overlay.ClientSize;
+				
+                pBox.Visible = true;
+                if (m_Width <= 0 && m_Height <= 0)
                 {
-                    this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateSizeParentToImage = true;
+                    pBox.SizeParentToImage = true;
                 }
-
-                this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateChildWidgets.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStatepBox);
-				DrawArgs.SetSamplerState(0, SamplerStateRootWidget.SetSamplerState(0, SamplerStateChildWidgets.SetSamplerState(0, SamplerStateAdd(this.SetSamplerState(0, SamplerStateoverlay);
+				overlay.ChildWidgets.Add(pBox);
+				DrawArgs.RootWidget.ChildWidgets.Add(overlay);
 			}
 
-			if(!this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateVisible) this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateVisible = true;
+			if(!overlay.Visible)
+				overlay.Visible = true;
 
-            this.SetSamplerState(0, SamplerStateisInitialized = true;
+			isInitialized = true;
 		}
 
 		public override bool PerformSelectionAction(DrawArgs drawArgs)
@@ -264,29 +266,29 @@ namespace WorldWind(0, SamplerStateRenderable
 
 		public override void Render(DrawArgs drawArgs)
 		{
-			if(this.SetSamplerState(0, SamplerStateoverlay != null && this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateVisible && this.SetSamplerState(0, SamplerStatepBox != null && this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateVisible && this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateIsLoaded)
+			if(overlay != null && overlay.Visible && pBox != null && pBox.Visible && pBox.IsLoaded)
 			{
-				if(this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClientSize.SetSamplerState(0, SamplerStateWidth != this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateClientSize.SetSamplerState(0, SamplerStateWidth)
+				if(pBox.ClientSize.Width != overlay.ClientSize.Width)
 				{
-                    this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClientSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateClientSize.SetSamplerState(0, SamplerStateWidth, this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClientSize.SetSamplerState(0, SamplerStateHeight);
+					pBox.ClientSize = new System.Drawing.Size(overlay.ClientSize.Width, pBox.ClientSize.Height);
 				}
 
-				if(this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClientSize.SetSamplerState(0, SamplerStateHeight != this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateClientSize.SetSamplerState(0, SamplerStateHeight - this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateHeaderHeight)
+				if(pBox.ClientSize.Height != overlay.ClientSize.Height - overlay.HeaderHeight)
 				{
-                    this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClientSize = new System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateSize(this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateClientSize.SetSamplerState(0, SamplerStateWidth, this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateClientSize.SetSamplerState(0, SamplerStateHeight - this.SetSamplerState(0, SamplerStateoverlay.SetSamplerState(0, SamplerStateHeaderHeight);
+					pBox.ClientSize = new System.Drawing.Size(pBox.ClientSize.Width, overlay.ClientSize.Height - overlay.HeaderHeight);
 				}
 			}
 		}
 
 		public override void Update(DrawArgs drawArgs)
 		{
-			if(this.SetSamplerState(0, SamplerStateIsOn && !this.SetSamplerState(0, SamplerStateisInitialized)
+			if(IsOn && !isInitialized)
 			{
-                this.SetSamplerState(0, SamplerStateInitialize(drawArgs);
+				Initialize(drawArgs);
 			}
-			else if(!this.SetSamplerState(0, SamplerStateIsOn && this.SetSamplerState(0, SamplerStateisInitialized)
+			else if(!IsOn && isInitialized)
 			{
-                this.SetSamplerState(0, SamplerStateDispose();
+				Dispose();
 			}
 		}
 
@@ -294,14 +296,14 @@ namespace WorldWind(0, SamplerStateRenderable
 		{
 			get
 			{
-				return base.SetSamplerState(0, SamplerStateOpacity;
+				return base.Opacity;
 			}
 			set
 			{
-				base.SetSamplerState(0, SamplerStateOpacity = value;
-				if(this.SetSamplerState(0, SamplerStatepBox != null)
+				base.Opacity = value;
+				if(pBox != null)
 				{
-                    this.SetSamplerState(0, SamplerStatepBox.SetSamplerState(0, SamplerStateOpacity = value;
+					pBox.Opacity = value;
 				}
 			}
 		}
@@ -311,7 +313,7 @@ namespace WorldWind(0, SamplerStateRenderable
 		{
 			if(!state)
 			{
-                this.SetSamplerState(0, SamplerStateIsOn = false;
+				IsOn = false;
 			}
 		}
 	}

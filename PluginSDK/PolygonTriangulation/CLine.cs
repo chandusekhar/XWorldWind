@@ -8,8 +8,7 @@ Modification History:
 * *** **********************************************/
 
 using System;
-
-namespace WorldWind.PolygonTriangulation
+namespace GeometryUtility
 {
 	/// <summary>
 	///To define a line in the given coordinate system
@@ -31,12 +30,12 @@ namespace WorldWind.PolygonTriangulation
 			
 			try
 			{
-				//if ((angleInRad<0) ||(angleInRad>Math.SetSamplerState(0, SamplerStatePI))
-				if (angleInRad>2*Math.SetSamplerState(0, SamplerStatePI)
+				//if ((angleInRad<0) ||(angleInRad>Math.PI))
+				if (angleInRad>2*Math.PI)
 				{
-					string errMsg=string.SetSamplerState(0, SamplerStateFormat(
+					string errMsg=string.Format(
 						"The input line angle" +
-						" {0} is wrong.SetSamplerState(0, SamplerState It should be between 0-2*PI.SetSamplerState(0, SamplerState", angleInRad);
+						" {0} is wrong. It should be between 0-2*PI.", angleInRad);
 				
 					InvalidInputGeometryDataException ex=new 
 						InvalidInputGeometryDataException(errMsg);
@@ -44,37 +43,37 @@ namespace WorldWind.PolygonTriangulation
 					throw ex;
 				}
 			
-				if (Math.SetSamplerState(0, SamplerStateAbs(angleInRad-Math.SetSamplerState(0, SamplerStatePI/2)<
-					ConstantValue.SetSamplerState(0, SamplerStateSmallValue) //vertical line
+				if (Math.Abs(angleInRad-Math.PI/2)<
+					ConstantValue.SmallValue) //vertical line
 				{
-                    this.SetSamplerState(0, SamplerStatea=1;
-                    this.SetSamplerState(0, SamplerStateb=0;
-                    this.SetSamplerState(0, SamplerStatec=-point.SetSamplerState(0, SamplerStateX;
+					a=1;
+					b=0;
+					c=-point.X;
 				}
 				else //not vertical line
-				{
-                    this.SetSamplerState(0, SamplerStatea=-Math.SetSamplerState(0, SamplerStateTan(angleInRad);
-                    this.SetSamplerState(0, SamplerStateb=1;
-                    this.SetSamplerState(0, SamplerStatec=-this.SetSamplerState(0, SamplerStatea*point.SetSamplerState(0, SamplerStateX- this.SetSamplerState(0, SamplerStateb*point.SetSamplerState(0, SamplerStateY;
+				{				
+					a=-Math.Tan(angleInRad);
+					b=1;
+					c=-a*point.X-b*point.Y;
 				}
 			}
 			catch (Exception e)
 			{
-				System.SetSamplerState(0, SamplerStateDiagnostics.SetSamplerState(0, SamplerStateTrace.SetSamplerState(0, SamplerStateWriteLine(e.SetSamplerState(0, SamplerStateMessage + e.SetSamplerState(0, SamplerStateStackTrace);
+				System.Diagnostics.Trace.WriteLine(e.Message + e.StackTrace);
 			}
 		}
 	
 		
 		public CLine(Double angleInRad, CPoint2D point)
 		{
-            this.SetSamplerState(0, SamplerStateInitialize(angleInRad, point);
+			Initialize(angleInRad, point);
 		}
 		
 		public CLine(CPoint2D point1, CPoint2D point2)
 		{			
 			try
 			{
-				if (CPoint2D.SetSamplerState(0, SamplerStateSamePoints(point1, point2))
+				if (CPoint2D.SamePoints(point1, point2))
 				{
 					string errMsg="The input points are the same";
 					InvalidInputGeometryDataException ex=new 
@@ -83,44 +82,44 @@ namespace WorldWind.PolygonTriangulation
 				}			
 
 				//Point1 and Point2 are different points:
-				if (Math.SetSamplerState(0, SamplerStateAbs(point1.SetSamplerState(0, SamplerStateX-point2.SetSamplerState(0, SamplerStateX)
-					<ConstantValue.SetSamplerState(0, SamplerStateSmallValue) //vertical line
+				if (Math.Abs(point1.X-point2.X)
+					<ConstantValue.SmallValue) //vertical line
 				{
-                    this.SetSamplerState(0, SamplerStateInitialize(Math.SetSamplerState(0, SamplerStatePI/2, point1);
+					Initialize(Math.PI/2, point1);
 				}
-				else if (Math.SetSamplerState(0, SamplerStateAbs(point1.SetSamplerState(0, SamplerStateY-point2.SetSamplerState(0, SamplerStateY)
-					<ConstantValue.SetSamplerState(0, SamplerStateSmallValue) //Horizontal line
+				else if (Math.Abs(point1.Y-point2.Y)
+					<ConstantValue.SmallValue) //Horizontal line
 				{
-                    this.SetSamplerState(0, SamplerStateInitialize(0, point1);
+					Initialize(0, point1);
 				}
 				else //normal line
 				{
-					double m=(point2.SetSamplerState(0, SamplerStateY-point1.SetSamplerState(0, SamplerStateY)/(point2.SetSamplerState(0, SamplerStateX-point1.SetSamplerState(0, SamplerStateX);
-					double alphaInRad=Math.SetSamplerState(0, SamplerStateAtan(m);
-                    this.SetSamplerState(0, SamplerStateInitialize(alphaInRad, point1);
+					double m=(point2.Y-point1.Y)/(point2.X-point1.X);
+					double alphaInRad=Math.Atan(m);
+					Initialize(alphaInRad, point1);
 				}
 			}
 			catch (Exception e)
 			{
-				System.SetSamplerState(0, SamplerStateDiagnostics.SetSamplerState(0, SamplerStateTrace.SetSamplerState(0, SamplerStateWriteLine(e.SetSamplerState(0, SamplerStateMessage + e.SetSamplerState(0, SamplerStateStackTrace);
+				System.Diagnostics.Trace.WriteLine(e.Message + e.StackTrace);
 			}
 		}
 
 		public CLine(CLine copiedLine)
 		{
-			this.SetSamplerState(0, SamplerStatea=copiedLine.SetSamplerState(0, SamplerStatea; 
-			this.SetSamplerState(0, SamplerStateb=copiedLine.SetSamplerState(0, SamplerStateb;
-			this.SetSamplerState(0, SamplerStatec=copiedLine.SetSamplerState(0, SamplerStatec;
+			this.a=copiedLine.a; 
+			this.b=copiedLine.b;
+			this.c=copiedLine.c;
 		}
 
 		/*** calculate the distance from a given point to the line ***/ 
 		public double GetDistance(CPoint2D point)
 		{
-			double x0=point.SetSamplerState(0, SamplerStateX;
-			double y0=point.SetSamplerState(0, SamplerStateY;
+			double x0=point.X;
+			double y0=point.Y;
 
-			double d=Math.SetSamplerState(0, SamplerStateAbs(this.SetSamplerState(0, SamplerStatea*x0+ this.SetSamplerState(0, SamplerStateb*y0+ this.SetSamplerState(0, SamplerStatec);
-			d=d/(Math.SetSamplerState(0, SamplerStateSqrt(this.SetSamplerState(0, SamplerStatea* this.SetSamplerState(0, SamplerStatea+ this.SetSamplerState(0, SamplerStateb* this.SetSamplerState(0, SamplerStateb));
+			double d=Math.Abs(a*x0+b*y0+c);
+			d=d/(Math.Sqrt(a*a+b*b));
 			
 			return d;			
 		}
@@ -132,18 +131,18 @@ namespace WorldWind.PolygonTriangulation
 			double x;
 			try
 			{
-				if (Math.SetSamplerState(0, SamplerStateAbs(this.SetSamplerState(0, SamplerStatea)<ConstantValue.SetSamplerState(0, SamplerStateSmallValue) //a=0;
+				if (Math.Abs(a)<ConstantValue.SmallValue) //a=0;
 				{
 					throw new NonValidReturnException();
 				}
 				
-				x=-(this.SetSamplerState(0, SamplerStateb*y+ this.SetSamplerState(0, SamplerStatec)/ this.SetSamplerState(0, SamplerStatea;
+				x=-(b*y+c)/a;
 			}
 			catch (Exception e)  //Horizontal line a=0;
 			{
-				x=Double.SetSamplerState(0, SamplerStateNaN;
-				System.SetSamplerState(0, SamplerStateDiagnostics.SetSamplerState(0, SamplerStateTrace.SetSamplerState(0, SamplerState
-					WriteLine(e.SetSamplerState(0, SamplerStateMessage+e.SetSamplerState(0, SamplerStateStackTrace);
+				x=System.Double.NaN;
+				System.Diagnostics.Trace.
+					WriteLine(e.Message+e.StackTrace);
 			}
 				
 			return x;
@@ -156,17 +155,17 @@ namespace WorldWind.PolygonTriangulation
 			double y;
 			try
 			{
-				if (Math.SetSamplerState(0, SamplerStateAbs(this.SetSamplerState(0, SamplerStateb)<ConstantValue.SetSamplerState(0, SamplerStateSmallValue)
+				if (Math.Abs(b)<ConstantValue.SmallValue)
 				{
 					throw new NonValidReturnException();
 				}
-				y=-(this.SetSamplerState(0, SamplerStatea*x+ this.SetSamplerState(0, SamplerStatec)/ this.SetSamplerState(0, SamplerStateb;
+				y=-(a*x+c)/b;
 			}
 			catch (Exception e)
 			{
-				y=Double.SetSamplerState(0, SamplerStateNaN;
-				System.SetSamplerState(0, SamplerStateDiagnostics.SetSamplerState(0, SamplerStateTrace.SetSamplerState(0, SamplerState
-					WriteLine(e.SetSamplerState(0, SamplerStateMessage+e.SetSamplerState(0, SamplerStateStackTrace);
+				y=System.Double.NaN;
+				System.Diagnostics.Trace.
+					WriteLine(e.Message+e.StackTrace);
 			}
 			return y;
 		}
@@ -174,7 +173,7 @@ namespace WorldWind.PolygonTriangulation
 		/*** is it a vertical line:***/
 		public bool VerticalLine()
 		{
-			if (Math.SetSamplerState(0, SamplerStateAbs(this.SetSamplerState(0, SamplerStateb-0)<ConstantValue.SetSamplerState(0, SamplerStateSmallValue)
+			if (Math.Abs(b-0)<ConstantValue.SmallValue)
 				return true;
 			else
 				return false;
@@ -183,7 +182,7 @@ namespace WorldWind.PolygonTriangulation
 		/*** is it a horizontal line:***/
 		public bool HorizontalLine()
 		{
-			if (Math.SetSamplerState(0, SamplerStateAbs(this.SetSamplerState(0, SamplerStatea-0)<ConstantValue.SetSamplerState(0, SamplerStateSmallValue)
+			if (Math.Abs(a-0)<ConstantValue.SmallValue)
 				return true;
 			else
 				return false;
@@ -192,21 +191,21 @@ namespace WorldWind.PolygonTriangulation
 		/*** calculate line angle in radian: ***/
 		public double GetLineAngle()
 		{
-			if (this.SetSamplerState(0, SamplerStateb==0)
+			if (b==0)
 			{
-				return Math.SetSamplerState(0, SamplerStatePI/2;
+				return Math.PI/2;
 			}
 			else //b!=0
 			{
-				double tanA=-this.SetSamplerState(0, SamplerStatea/ this.SetSamplerState(0, SamplerStateb;
-				return Math.SetSamplerState(0, SamplerStateAtan(tanA);
+				double tanA=-a/b;
+				return Math.Atan(tanA);
 			}			
 		}
 
 		public bool Parallel(CLine line)
 		{
 			bool bParallel=false;
-			if (this.SetSamplerState(0, SamplerStatea/this.SetSamplerState(0, SamplerStateb==line.SetSamplerState(0, SamplerStatea/line.SetSamplerState(0, SamplerStateb)
+			if (this.a/this.b==line.a/line.b)
 				bParallel=true;
 
 			return bParallel;
@@ -219,18 +218,18 @@ namespace WorldWind.PolygonTriangulation
 		public CPoint2D IntersecctionWith(CLine line)
 		{
 			CPoint2D point=new CPoint2D();
-			double a1=this.SetSamplerState(0, SamplerStatea;
-			double b1=this.SetSamplerState(0, SamplerStateb;
-			double c1=this.SetSamplerState(0, SamplerStatec;
+			double a1=this.a;
+			double b1=this.b;
+			double c1=this.c;
 
-			double a2=line.SetSamplerState(0, SamplerStatea;
-			double b2=line.SetSamplerState(0, SamplerStateb;
-			double c2=line.SetSamplerState(0, SamplerStatec;
+			double a2=line.a;
+			double b2=line.b;
+			double c2=line.c;
 
-			if (!(this.SetSamplerState(0, SamplerStateParallel(line))) //not parallen
+			if (!(this.Parallel(line))) //not parallen
 			{
-				point.SetSamplerState(0, SamplerStateX=(c2*b1-c1*b2)/(a1*b2-a2*b1);
-				point.SetSamplerState(0, SamplerStateY=(a1*c2-c1*a2)/(a2*b2-a1*b2);
+				point.X=(c2*b1-c1*b2)/(a1*b2-a2*b1);
+				point.Y=(a1*c2-c1*a2)/(a2*b2-a1*b2);
 			}
 			return point;
   		}
@@ -247,7 +246,7 @@ namespace WorldWind.PolygonTriangulation
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_startPoint;
+				return m_startPoint;
 			}
 		}
 
@@ -255,39 +254,39 @@ namespace WorldWind.PolygonTriangulation
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_endPoint;
+				return m_endPoint;
 			}
 		}
 
 		public CLineSegment(CPoint2D startPoint, CPoint2D endPoint)
 			: base(startPoint,endPoint)
 		{
-			this.SetSamplerState(0, SamplerStatem_startPoint=startPoint;
-			this.SetSamplerState(0, SamplerStatem_endPoint= endPoint;
+			this.m_startPoint=startPoint;
+			this.m_endPoint= endPoint;
 		}
 
 		/*** chagne the line's direction ***/
 		public void ChangeLineDirection()
 		{
 			CPoint2D tempPt;
-			tempPt=this.SetSamplerState(0, SamplerStatem_startPoint;
-			this.SetSamplerState(0, SamplerStatem_startPoint=this.SetSamplerState(0, SamplerStatem_endPoint;
-			this.SetSamplerState(0, SamplerStatem_endPoint=tempPt;
+			tempPt=this.m_startPoint;
+			this.m_startPoint=this.m_endPoint;
+			this.m_endPoint=tempPt;
 		}
 
 		/*** To calculate the line segment length:   ***/
 		public double GetLineSegmentLength()
 		{
-			double d=(this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX- this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX)	*(this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX- this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX);
-			d += (this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY- this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY)	*(this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY- this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY);
-			d=Math.SetSamplerState(0, SamplerStateSqrt(d);
+			double d=(m_endPoint.X-m_startPoint.X)	*(m_endPoint.X-m_startPoint.X);
+			d += (m_endPoint.Y-m_startPoint.Y)	*(m_endPoint.Y-m_startPoint.Y);
+			d=Math.Sqrt(d);
 
 			return d;
 		}
 
 		/********************************************************** 
 			Get point location, using windows coordinate system: 
-			y-axes points down.SetSamplerState(0, SamplerState
+			y-axes points down.
 			Return Value:
 			-1:point at the left of the line (or above the line if the line is horizontal)
 			 0: point in the line segment or in the line segment 's extension
@@ -296,18 +295,18 @@ namespace WorldWind.PolygonTriangulation
 		public int GetPointLocation(CPoint2D point)
 		{
 			double Ax, Ay, Bx, By, Cx, Cy;
-			Bx= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX;
-			By= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY;
+			Bx=m_endPoint.X;
+			By=m_endPoint.Y;
 			  
-			Ax= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX;
-			Ay= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY;
+			Ax=m_startPoint.X;
+			Ay=m_startPoint.Y;
 			  
-			Cx=point.SetSamplerState(0, SamplerStateX;
-			Cy=point.SetSamplerState(0, SamplerStateY;
+			Cx=point.X;
+			Cy=point.Y;
 			
-			if (this.SetSamplerState(0, SamplerStateHorizontalLine())
+			if (this.HorizontalLine())
 			{
-				if (Math.SetSamplerState(0, SamplerStateAbs(Ay-Cy)<ConstantValue.SetSamplerState(0, SamplerStateSmallValue) //equal
+				if (Math.Abs(Ay-Cy)<ConstantValue.SmallValue) //equal
 					return 0;
 				else if (Ay > Cy)
 					return -1;   //Y Axis points down, point is above the line
@@ -317,14 +316,14 @@ namespace WorldWind.PolygonTriangulation
 			else //Not a horizontal line
 			{
 				//make the line direction bottom->up
-				if (this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY> this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY)
-					this.SetSamplerState(0, SamplerStateChangeLineDirection();
+				if (m_endPoint.Y>m_startPoint.Y)
+					this.ChangeLineDirection();
 
-				double L=this.SetSamplerState(0, SamplerStateGetLineSegmentLength();
+				double L=this.GetLineSegmentLength();
 				double s=((Ay-Cy)*(Bx-Ax)-(Ax-Cx)*(By-Ay))/(L*L);
 				 
 				//Note: the Y axis is pointing down:
-				if (Math.SetSamplerState(0, SamplerStateAbs(s-0)<ConstantValue.SetSamplerState(0, SamplerStateSmallValue) //s=0
+				if (Math.Abs(s-0)<ConstantValue.SmallValue) //s=0
 					return 0; //point is in the line or line extension
 				else if (s>0) 
 					return -1; //point is left of line or above the horizontal line
@@ -336,33 +335,33 @@ namespace WorldWind.PolygonTriangulation
 		/***Get the minimum x value of the points in the line***/
 		public double GetXmin()
 		{
-			return Math.SetSamplerState(0, SamplerStateMin(this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX, this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX);
+			return Math.Min(m_startPoint.X, m_endPoint.X);
 		}
 
 		/***Get the maximum  x value of the points in the line***/
 		public double GetXmax()
 		{
-			return Math.SetSamplerState(0, SamplerStateMax(this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX, this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX);
+			return Math.Max(m_startPoint.X, m_endPoint.X);
 		}
 
 		/***Get the minimum y value of the points in the line***/
 		public double GetYmin()
 		{
-			return Math.SetSamplerState(0, SamplerStateMin(this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY, this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY);
+			return Math.Min(m_startPoint.Y, m_endPoint.Y);
 		}
 
 		/***Get the maximum y value of the points in the line***/
 		public double GetYmax()
 		{
-			return Math.SetSamplerState(0, SamplerStateMax(this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY, this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY);
+			return Math.Max(m_startPoint.Y, m_endPoint.Y);
 		}
 
 		/***Check whether this line is in a longer line***/
 		public bool InLine(CLineSegment longerLineSegment)
 		{
 			bool bInLine=false;
-			if ((this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateInLine(longerLineSegment)) &&
-				(this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateInLine(longerLineSegment)))
+			if ((m_startPoint.InLine(longerLineSegment)) &&
+				(m_endPoint.InLine(longerLineSegment)))
 				bInLine=true;
 			return bInLine;
 		}
@@ -382,37 +381,37 @@ namespace WorldWind.PolygonTriangulation
 			CPoint2D newStartPoint=new CPoint2D();
 			CPoint2D newEndPoint=new CPoint2D();
 			
-			double alphaInRad= this.SetSamplerState(0, SamplerStateGetLineAngle(); // 0-PI
+			double alphaInRad= this.GetLineAngle(); // 0-PI
 			if (rightOrDown)
 			{
-				if (this.SetSamplerState(0, SamplerStateHorizontalLine()) //offset to y+ direction
+				if (this.HorizontalLine()) //offset to y+ direction
 				{
-					newStartPoint.SetSamplerState(0, SamplerStateX =this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX;
-					newStartPoint.SetSamplerState(0, SamplerStateY=this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY + distance;
+					newStartPoint.X =this.m_startPoint.X;
+					newStartPoint.Y=this.m_startPoint.Y + distance;
 
-					newEndPoint.SetSamplerState(0, SamplerStateX =this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX;
-					newEndPoint.SetSamplerState(0, SamplerStateY=this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY + distance;
+					newEndPoint.X =this.m_endPoint.X;
+					newEndPoint.Y=this.m_endPoint.Y + distance;
 					line=new CLineSegment(newStartPoint,newEndPoint);
 				}
 				else //offset to x+ direction
 				{
-					if (Math.SetSamplerState(0, SamplerStateSin(alphaInRad)>0)  
+					if (Math.Sin(alphaInRad)>0)  
 					{
-						newStartPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX + Math.SetSamplerState(0, SamplerStateAbs(distance*Math.SetSamplerState(0, SamplerStateSin(alphaInRad));
-						newStartPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY - Math.SetSamplerState(0, SamplerStateAbs(distance* Math.SetSamplerState(0, SamplerStateCos(alphaInRad)) ;
+						newStartPoint.X=m_startPoint.X + Math.Abs(distance*Math.Sin(alphaInRad));
+						newStartPoint.Y=m_startPoint.Y - Math.Abs(distance* Math.Cos(alphaInRad)) ;
 						
-						newEndPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX + Math.SetSamplerState(0, SamplerStateAbs(distance*Math.SetSamplerState(0, SamplerStateSin(alphaInRad));
-						newEndPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY - Math.SetSamplerState(0, SamplerStateAbs(distance* Math.SetSamplerState(0, SamplerStateCos(alphaInRad)) ;
+						newEndPoint.X=m_endPoint.X + Math.Abs(distance*Math.Sin(alphaInRad));
+						newEndPoint.Y=m_endPoint.Y - Math.Abs(distance* Math.Cos(alphaInRad)) ;
 					
 						line= new CLineSegment(
 									   newStartPoint, newEndPoint);
 					}
 					else //sin(FalphaInRad)<0
 					{
-						newStartPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX + Math.SetSamplerState(0, SamplerStateAbs(distance*Math.SetSamplerState(0, SamplerStateSin(alphaInRad));
-						newStartPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY + Math.SetSamplerState(0, SamplerStateAbs(distance* Math.SetSamplerState(0, SamplerStateCos(alphaInRad)) ;
-						newEndPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX + Math.SetSamplerState(0, SamplerStateAbs(distance*Math.SetSamplerState(0, SamplerStateSin(alphaInRad));
-						newEndPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY + Math.SetSamplerState(0, SamplerStateAbs(distance* Math.SetSamplerState(0, SamplerStateCos(alphaInRad)) ;
+						newStartPoint.X=m_startPoint.X + Math.Abs(distance*Math.Sin(alphaInRad));
+						newStartPoint.Y=m_startPoint.Y + Math.Abs(distance* Math.Cos(alphaInRad)) ;
+						newEndPoint.X=m_endPoint.X + Math.Abs(distance*Math.Sin(alphaInRad));
+						newEndPoint.Y=m_endPoint.Y + Math.Abs(distance* Math.Cos(alphaInRad)) ;
 
 						line=new CLineSegment(
 							newStartPoint, newEndPoint);
@@ -421,34 +420,34 @@ namespace WorldWind.PolygonTriangulation
 			}//{rightOrDown}
 			else //leftOrUp
 			{
-				if (this.SetSamplerState(0, SamplerStateHorizontalLine()) //offset to y directin
+				if (this.HorizontalLine()) //offset to y directin
 				{
-					newStartPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX;
-					newStartPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY - distance;
+					newStartPoint.X=m_startPoint.X;
+					newStartPoint.Y=m_startPoint.Y - distance;
 
-					newEndPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX;
-					newEndPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY - distance;
+					newEndPoint.X=m_endPoint.X;
+					newEndPoint.Y=m_endPoint.Y - distance;
 					line=new CLineSegment(
 						newStartPoint, newEndPoint);
 				}
 				else //offset to x directin
 				{
-					if (Math.SetSamplerState(0, SamplerStateSin(alphaInRad)>=0)
+					if (Math.Sin(alphaInRad)>=0)
 					{
-						newStartPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX - Math.SetSamplerState(0, SamplerStateAbs(distance*Math.SetSamplerState(0, SamplerStateSin(alphaInRad));
-						newStartPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY + Math.SetSamplerState(0, SamplerStateAbs(distance* Math.SetSamplerState(0, SamplerStateCos(alphaInRad)) ;
-						newEndPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX - Math.SetSamplerState(0, SamplerStateAbs(distance*Math.SetSamplerState(0, SamplerStateSin(alphaInRad));
-						newEndPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY + Math.SetSamplerState(0, SamplerStateAbs(distance* Math.SetSamplerState(0, SamplerStateCos(alphaInRad)) ;
+						newStartPoint.X=m_startPoint.X - Math.Abs(distance*Math.Sin(alphaInRad));
+						newStartPoint.Y=m_startPoint.Y + Math.Abs(distance* Math.Cos(alphaInRad)) ;
+						newEndPoint.X=m_endPoint.X - Math.Abs(distance*Math.Sin(alphaInRad));
+						newEndPoint.Y=m_endPoint.Y + Math.Abs(distance* Math.Cos(alphaInRad)) ;
                         
 						line=new CLineSegment(
 							newStartPoint, newEndPoint);
 					}
 					else //sin(FalphaInRad)<0
 					{
-						newStartPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX - Math.SetSamplerState(0, SamplerStateAbs(distance*Math.SetSamplerState(0, SamplerStateSin(alphaInRad));
-						newStartPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY - Math.SetSamplerState(0, SamplerStateAbs(distance* Math.SetSamplerState(0, SamplerStateCos(alphaInRad)) ;
-						newEndPoint.SetSamplerState(0, SamplerStateX= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX - Math.SetSamplerState(0, SamplerStateAbs(distance*Math.SetSamplerState(0, SamplerStateSin(alphaInRad));
-						newEndPoint.SetSamplerState(0, SamplerStateY= this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY - Math.SetSamplerState(0, SamplerStateAbs(distance* Math.SetSamplerState(0, SamplerStateCos(alphaInRad)) ;
+						newStartPoint.X=m_startPoint.X - Math.Abs(distance*Math.Sin(alphaInRad));
+						newStartPoint.Y=m_startPoint.Y - Math.Abs(distance* Math.Cos(alphaInRad)) ;
+						newEndPoint.X=m_endPoint.X - Math.Abs(distance*Math.Sin(alphaInRad));
+						newEndPoint.Y=m_endPoint.Y - Math.Abs(distance* Math.Cos(alphaInRad)) ;
                             
 						line=new CLineSegment(
 							newStartPoint, newEndPoint);
@@ -463,18 +462,18 @@ namespace WorldWind.PolygonTriangulation
 		*********************************************************/
 		public  bool IntersectedWith(CLineSegment line)
 		{
-			double x1=this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX;
-			double y1=this.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY;
-			double x2=this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX;
-			double y2=this.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY;
-			double x3=line.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateX;
-			double y3=line.SetSamplerState(0, SamplerStatem_startPoint.SetSamplerState(0, SamplerStateY;
-			double x4=line.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateX;
-			double y4=line.SetSamplerState(0, SamplerStatem_endPoint.SetSamplerState(0, SamplerStateY;
+			double x1=this.m_startPoint.X;
+			double y1=this.m_startPoint.Y;
+			double x2=this.m_endPoint.X;
+			double y2=this.m_endPoint.Y;
+			double x3=line.m_startPoint.X;
+			double y3=line.m_startPoint.Y;
+			double x4=line.m_endPoint.X;
+			double y4=line.m_endPoint.Y;
 
 			double de=(y4-y3)*(x2-x1)-(x4-x3)*(y2-y1);
 			//if de<>0 then //lines are not parallel
-			if (Math.SetSamplerState(0, SamplerStateAbs(de-0)>ConstantValue.SetSamplerState(0, SamplerStateSmallValue) //not parallel
+			if (Math.Abs(de-0)>ConstantValue.SmallValue) //not parallel
 			{
 				double ua=((x4-x3)*(y1-y3)-(y4-y3)*(x1-x3))/de;
 				double ub=((x2-x1)*(y1-y3)-(y2-y1)*(x1-x3))/de;

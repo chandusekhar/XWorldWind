@@ -1,6 +1,7 @@
 using System;
+using System.ComponentModel;
 
-namespace WorldWind.Terrain(0, SamplerStateTerrain
+namespace WorldWind.Terrain
 {
 	/// <summary>
 	/// Terrain (elevation) interface
@@ -22,11 +23,11 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_name;
+				return m_name;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_name = value;
+				m_name = value;
 			}
 		}
 
@@ -37,11 +38,11 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_north;
+				return m_north;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_north = value;
+				m_north = value;
 			}
 		}
 
@@ -52,11 +53,11 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_south;
+				return m_south;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_south = value;
+				m_south = value;
 			}
 		}
 
@@ -67,11 +68,11 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_west;
+				return m_west;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_west = value;
+				m_west = value;
 			}
 		}
 
@@ -82,11 +83,11 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_east;
+				return m_east;
 			}
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_east = value;
+				m_east = value;
 			}
 		}
 
@@ -95,8 +96,8 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
         {
             get 
             {
-                if (this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets != null)
-                    return this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets.SetSamplerState(0, SamplerStateLength;
+                if (m_higherResolutionSubsets != null)
+                    return m_higherResolutionSubsets.Length;
                 else
                     return 0;
             }
@@ -104,82 +105,82 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
 
         public TerrainAccessor[] HighResSubsets
         {
-            get { return this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets; }
+            get { return m_higherResolutionSubsets; }
         }
 
         /// <summary>
-        /// Hide/Show this object.SetSamplerState(0, SamplerState
+        /// Hide/Show this object.
         /// </summary>
-        [Description("This layer's enabled status.SetSamplerState(0, SamplerState")]
+        [Description("This layer's enabled status.")]
         public virtual bool IsOn
         {
-            get { return this.SetSamplerState(0, SamplerStateisOn; }
+            get { return this.isOn; }
             set
             {
                 //if (isOn && !value)
-                //    this.SetSamplerState(0, SamplerStateDispose();
-                this.SetSamplerState(0, SamplerStateisOn = value;
+                //    this.Dispose();
+                this.isOn = value;
             }
         }
 
 		/// <summary>
 		/// Gets the terrain elevation at a given Latitude, Longitude, 
-		/// and resolution accuracy in the latitude/longitude geographic frame of reference.SetSamplerState(0, SamplerState
+		/// and resolution accuracy in the latitude/longitude geographic frame of reference.
 		/// </summary>
-		/// <param name="latitude">Latitude in decimal degrees.SetSamplerState(0, SamplerState</param>
-		/// <param name="longitude">Longitude in decimal degrees.SetSamplerState(0, SamplerState</param>
+		/// <param name="latitude">Latitude in decimal degrees.</param>
+		/// <param name="longitude">Longitude in decimal degrees.</param>
 		/// <param name="targetSamplesPerDegree"></param>
-		/// <returns>Returns 0 if the tile is not available on disk.SetSamplerState(0, SamplerState</returns>
+		/// <returns>Returns 0 if the tile is not available on disk.</returns>
 		public abstract float GetElevationAt(double latitude, double longitude, double targetSamplesPerDegree);
 
 		/// <summary>
-		/// Get terrain elevation at specified location.SetSamplerState(0, SamplerState  
+		/// Get terrain elevation at specified location.  
 		/// </summary>
-		/// <param name="latitude">Latitude in decimal degrees.SetSamplerState(0, SamplerState</param>
-		/// <param name="longitude">Longitude in decimal degrees.SetSamplerState(0, SamplerState</param>
-		/// <returns>Returns 0 if the tile is not available on disk.SetSamplerState(0, SamplerState</returns>
+		/// <param name="latitude">Latitude in decimal degrees.</param>
+		/// <param name="longitude">Longitude in decimal degrees.</param>
+		/// <returns>Returns 0 if the tile is not available on disk.</returns>
 		public virtual float GetElevationAt(double latitude, double longitude)
 		{
-			return this.SetSamplerState(0, SamplerStateGetElevationAt(latitude, longitude, 0);
+			return GetElevationAt(latitude, longitude, 0);
 		}
 
 		/// <summary>
-        /// Get fast terrain elevation at specified location from cached data.SetSamplerState(0, SamplerState 
-        /// Will not trigger any download or file loading from cache - just memory.SetSamplerState(0, SamplerState
+        /// Get fast terrain elevation at specified location from cached data. 
+        /// Will not trigger any download or file loading from cache - just memory.
         /// </summary>
-        /// <param name="latitude">Latitude in decimal degrees.SetSamplerState(0, SamplerState</param>
-        /// <param name="longitude">Longitude in decimal degrees.SetSamplerState(0, SamplerState</param>
-        /// <returns>Returns 0 if the tile is not available in cache.SetSamplerState(0, SamplerState</returns>
+        /// <param name="latitude">Latitude in decimal degrees.</param>
+        /// <param name="longitude">Longitude in decimal degrees.</param>
+        /// <returns>Returns 0 if the tile is not available in cache.</returns>
         public virtual float GetCachedElevationAt(double latitude, double longitude)
         {
             return 0f;
         }
 
         /// <summary>
-		/// Gets the elevation array for given geographic bounding box and resolution.SetSamplerState(0, SamplerState
+		/// Gets the elevation array for given geographic bounding box and resolution.
 		/// </summary>
-		/// <param name="north">North edge in decimal degrees.SetSamplerState(0, SamplerState</param>
-		/// <param name="south">South edge in decimal degrees.SetSamplerState(0, SamplerState</param>
-		/// <param name="west">West edge in decimal degrees.SetSamplerState(0, SamplerState</param>
-		/// <param name="east">East edge in decimal degrees.SetSamplerState(0, SamplerState</param>
+		/// <param name="north">North edge in decimal degrees.</param>
+		/// <param name="south">South edge in decimal degrees.</param>
+		/// <param name="west">West edge in decimal degrees.</param>
+		/// <param name="east">East edge in decimal degrees.</param>
 		/// <param name="samples"></param>
 		public virtual TerrainTile GetElevationArray(double north, double south, double west, double east, int samples)
 		{
 			TerrainTile res = null;
 			res = new TerrainTile(null);
-			res.SetSamplerState(0, SamplerStateNorth = north;
-			res.SetSamplerState(0, SamplerStateSouth = south;
-			res.SetSamplerState(0, SamplerStateWest = west;
-			res.SetSamplerState(0, SamplerStateEast = east;
-			res.SetSamplerState(0, SamplerStateSamplesPerTile = samples;
-			res.SetSamplerState(0, SamplerStateIsInitialized = true;
-			res.SetSamplerState(0, SamplerStateIsValid = true;
+			res.North = north;
+			res.South = south;
+			res.West = west;
+			res.East = east;
+			res.SamplesPerTile = samples;
+			res.IsInitialized = true;
+			res.IsValid = true;
 
-			double latrange = Math.SetSamplerState(0, SamplerStateAbs(north - south);
-			double lonrange = Math.SetSamplerState(0, SamplerStateAbs(east - west);
+			double latrange = Math.Abs(north - south);
+			double lonrange = Math.Abs(east - west);
 
 			float[,] data = new float[samples,samples];
-			float scaleFactor = (float)1.SetSamplerState(0, SamplerState0/(samples - 1);
+			float scaleFactor = (float)1.0/(samples - 1);
 			for (int x = 0; x < samples; x++)
 			{
 				for (int y = 0; y < samples; y++)
@@ -187,10 +188,10 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
 					double curLat = north - scaleFactor * latrange * x;
 					double curLon = west + scaleFactor * lonrange * y;
 
-					data[x, y] = this.SetSamplerState(0, SamplerStateGetElevationAt(curLat, curLon, 0);
+					data[x, y] = GetElevationAt(curLat, curLon, 0);
 				}
 			}
-			res.SetSamplerState(0, SamplerStateElevationData = data;
+			res.ElevationData = data;
 
 			return res;
 		}
@@ -207,16 +208,17 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
         public void AddHigherResolutionSubset(TerrainAccessor newHighResSubset)
         {
             //need to lock array here
-            if (this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets == null) this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets = new TerrainAccessor[0];
-            lock (this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets)
+            if (m_higherResolutionSubsets == null)
+                m_higherResolutionSubsets = new TerrainAccessor[0];
+            lock (m_higherResolutionSubsets)
             {
-                TerrainAccessor[] temp_highres = new TerrainAccessor[this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets.SetSamplerState(0, SamplerStateLength + 1];
-                for (int i = 0; i < this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets.SetSamplerState(0, SamplerStateLength; i++)
+                TerrainAccessor[] temp_highres = new TerrainAccessor[m_higherResolutionSubsets.Length + 1];
+                for (int i = 0; i < m_higherResolutionSubsets.Length; i++)
                 {
-                    temp_highres[i] = this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets[i];
+                    temp_highres[i] = m_higherResolutionSubsets[i];
                 }
-                temp_highres[temp_highres.SetSamplerState(0, SamplerStateLength - 1] = newHighResSubset;
-                this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets = temp_highres;
+                temp_highres[temp_highres.Length - 1] = newHighResSubset;
+                m_higherResolutionSubsets = temp_highres;
             }
         }
 
@@ -228,17 +230,17 @@ namespace WorldWind.Terrain(0, SamplerStateTerrain
         public void RemoveHigherResolutionSubset(TerrainAccessor highResSubset)
         {
             // lock array here
-            if (this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets == null) this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets = new TerrainAccessor[0];
-            lock (this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets)
+            if (m_higherResolutionSubsets == null)
+                m_higherResolutionSubsets = new TerrainAccessor[0];
+            lock (m_higherResolutionSubsets)
             {
-                TerrainAccessor[] temp_highres = new TerrainAccessor[this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets.SetSamplerState(0, SamplerStateLength + 1];
-                for (int i = 0; i < this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets.SetSamplerState(0, SamplerStateLength; i++)
+                TerrainAccessor[] temp_highres = new TerrainAccessor[m_higherResolutionSubsets.Length + 1];
+                for (int i = 0; i < m_higherResolutionSubsets.Length; i++)
                 {
-                    if (this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets[i] != highResSubset)
-                        temp_highres[i] = this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets[i];
+                    if (m_higherResolutionSubsets[i] != highResSubset)
+                        temp_highres[i] = m_higherResolutionSubsets[i];
                 }
-
-                this.SetSamplerState(0, SamplerStatem_higherResolutionSubsets = temp_highres;
+                m_higherResolutionSubsets = temp_highres;
             }
         }
     }

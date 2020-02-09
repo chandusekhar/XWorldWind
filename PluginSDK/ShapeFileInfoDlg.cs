@@ -1,6 +1,11 @@
+using System;
 using System.IO;
 using System.Data;
 using System.Data.Odbc;
+using System.Drawing;
+using System.Collections;
+using System.ComponentModel;
+using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace WorldWind
@@ -21,14 +26,14 @@ namespace WorldWind
 			//
 			// Required for Windows Form Designer support
 			//
-            this.InitializeComponent();
+			InitializeComponent();
 
 			if(dbfPath != "")
 			{
 				if(!isInZip)
-                    this.setDbfInfo(dbfPath);
+					setDbfInfo(dbfPath);
 				else
-                    this.setDbfInfoFromZip(dbfPath);
+					setDbfInfoFromZip(dbfPath);
 			}
 		}
 
@@ -57,9 +62,9 @@ namespace WorldWind
 
 		private void setDbfInfo(string dbfPath)
 		{
-			DataTable dt= this.getInfoFromDBF(dbfPath);
-            this.dataGrid1.DataSource=dt;
-            this.dataGrid1.CaptionText=dbfPath;			
+			DataTable dt=getInfoFromDBF(dbfPath);			
+			dataGrid1.DataSource=dt;
+			dataGrid1.CaptionText=dbfPath;			
 		}
 
 		private void setDbfInfoFromZip(string dbfPath)
@@ -75,8 +80,8 @@ namespace WorldWind
 						//Extracts the file in temp
 						FastZip fz = new FastZip();
 						fz.ExtractZip(dbfPath, Path.GetTempPath(),
-							FastZip.Overwrite.Always,null,"","");
-                        this.setDbfInfo(Path.Combine(Path.GetTempPath(),ze.Name));						
+							ICSharpCode.SharpZipLib.Zip.FastZip.Overwrite.Always,null,"","");
+						setDbfInfo(Path.Combine(Path.GetTempPath(),ze.Name));						
 					}
 				}						
 			}
@@ -101,9 +106,9 @@ namespace WorldWind
 		{
 			if( disposing )
 			{
-				if(this.components != null)
+				if(components != null)
 				{
-                    this.components.Dispose();
+					components.Dispose();
 				}
 			}
 			base.Dispose( disposing );

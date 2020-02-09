@@ -1,4 +1,8 @@
-namespace WorldWind
+using System;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
+
+namespace WorldWind.Widgets
 {
 	/// <summary>
 	/// Summary description for TextLabel.
@@ -10,8 +14,8 @@ namespace WorldWind
 		System.Drawing.Size m_Size = new System.Drawing.Size(0,20);
 		bool m_Visible = true;
 		bool m_Enabled = true;
-		IWidget m_ParentWidget;
-		object m_Tag;
+		IWidget m_ParentWidget = null;
+		object m_Tag = null;
 		System.Drawing.Color m_ForeColor = System.Drawing.Color.White;
 		string m_Name = "";
 
@@ -25,33 +29,33 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Name;
+				return m_Name;
 			}
 			set
 			{
-                this.m_Name = value;
+				m_Name = value;
 			}
 		}
 		public System.Drawing.Color ForeColor
 		{
 			get
 			{
-				return this.m_ForeColor;
+				return m_ForeColor;
 			}
 			set
 			{
-                this.m_ForeColor = value;
+				m_ForeColor = value;
 			}
 		}
 		public string Text
 		{
 			get
 			{
-				return this.m_Text;
+				return m_Text;
 			}
 			set
 			{
-                this.m_Text = value;
+				m_Text = value;
 			}
 		}
 		#endregion
@@ -62,11 +66,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_ParentWidget;
+				return m_ParentWidget;
 			}
 			set
 			{
-                this.m_ParentWidget = value;
+				m_ParentWidget = value;
 			}
 		}
 
@@ -74,11 +78,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Visible;
+				return m_Visible;
 			}
 			set
 			{
-                this.m_Visible = value;
+				m_Visible = value;
 			}
 		}
 
@@ -86,11 +90,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Tag;
+				return m_Tag;
 			}
 			set
 			{
-                this.m_Tag = value;
+				m_Tag = value;
 			}
 		}
 
@@ -111,11 +115,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Size;
+				return m_Size;
 			}
 			set
 			{
-                this.m_Size = value;
+				m_Size = value;
 			}
 		}
 
@@ -123,11 +127,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Enabled;
+				return m_Enabled;
 			}
 			set
 			{
-                this.m_Enabled = value;
+				m_Enabled = value;
 			}
 		}
 
@@ -135,11 +139,11 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.m_Location;
+				return m_Location;
 			}
 			set
 			{
-                this.m_Location = value;
+				m_Location = value;
 			}
 		}
 
@@ -147,27 +151,31 @@ namespace WorldWind
 		{
 			get
 			{
-				if(this.m_ParentWidget != null)
+				if(m_ParentWidget != null)
 				{
-					return new System.Drawing.Point(this.m_Location.X + this.m_ParentWidget.AbsoluteLocation.X, this.m_Location.Y + this.m_ParentWidget.AbsoluteLocation.Y);
+					return new System.Drawing.Point(
+						m_Location.X + m_ParentWidget.AbsoluteLocation.X,
+						m_Location.Y + m_ParentWidget.AbsoluteLocation.Y);
 					
 				}
 				else
 				{
-					return this.m_Location;
+					return m_Location;
 				}
 			}
 		}
 
 		public void Render(DrawArgs drawArgs)
 		{
-			if(this.m_Visible)
+			if(m_Visible)
 			{
 
 				drawArgs.defaultDrawingFont.DrawText(
-					null, this.m_Text,
-					new System.Drawing.Rectangle(this.AbsoluteLocation.X, this.AbsoluteLocation.Y, this.m_Size.Width, this.m_Size.Height),
-					DrawTextFormat.NoClip, this.m_ForeColor);
+					null,
+					m_Text,
+					new System.Drawing.Rectangle(AbsoluteLocation.X, AbsoluteLocation.Y, m_Size.Width, m_Size.Height),
+					DrawTextFormat.NoClip,
+					m_ForeColor);
 			}
 				
 		}

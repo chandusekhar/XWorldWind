@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Rss;
+using System.Threading;
 using WorldWind.Renderable;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -13,8 +16,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public string Name
         {
-            get { return this.m_name; }
-            set { this.m_name = value; }
+            get { return m_name; }
+            set { m_name = value; }
         }
         string m_name;
 
@@ -23,8 +26,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public RssFeed Feed
         {
-            get { return this.m_feed; }
-            set { this.m_feed = value; }
+            get { return m_feed; }
+            set { m_feed = value; }
         }
         private RssFeed m_feed;
 
@@ -34,8 +37,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public Icons Layer
         {
-            get { return this.m_layer; }
-            set { this.m_layer = value; }
+            get { return m_layer; }
+            set { m_layer = value; }
         }
         Icons m_layer;
 
@@ -44,8 +47,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public bool HasChanges
         {
-            get { return this.m_hasChanges; }
-            set { this.m_hasChanges = value; }
+            get { return m_hasChanges; }
+            set { m_hasChanges = value; }
         }
         private bool m_hasChanges;
 
@@ -54,8 +57,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public DateTime LastUpdate
         {
-            get { return this.m_lastUpdate; }
-            set { this.m_lastUpdate = value; }
+            get { return m_lastUpdate; }
+            set { m_lastUpdate = value; }
         }
         DateTime m_lastUpdate;
 
@@ -64,8 +67,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public TimeSpan UpdateInterval
         {
-            get { return this.m_updateInterval; }
-            set { this.m_updateInterval = value; }
+            get { return m_updateInterval; }
+            set { m_updateInterval = value; }
         }
         TimeSpan m_updateInterval;
 
@@ -74,15 +77,15 @@ namespace WorldWind.GeoRSS
         /// </summary>
         public string IconFileName
         {
-            get { return this.m_iconFileName; }
-            set { this.m_iconFileName = value; }
+            get { return m_iconFileName; }
+            set { m_iconFileName = value; }
         }
         private string m_iconFileName;
 
         public string Url
         {
-            get { return this.m_url; }
-            set { this.m_url = value; }
+            get { return m_url; }
+            set { m_url = value; }
         }
         string m_url;
 
@@ -92,8 +95,8 @@ namespace WorldWind.GeoRSS
         /// </summary>
         internal bool NeedsUpdate
         {
-            get { return this.m_needsUpdate; }
-            set { this.m_needsUpdate = value; }
+            get { return m_needsUpdate; }
+            set { m_needsUpdate = value; }
         }
         private bool m_needsUpdate;
 
@@ -104,22 +107,22 @@ namespace WorldWind.GeoRSS
         /// <param name="update"></param>
         public GeoRssFeed(string name, string url, TimeSpan update, Icons layer)
         {
-            this.m_name = name;
-            this.m_url = url;
-            this.m_updateInterval = update;
-            this.m_layer = layer;
-            this.m_needsUpdate = true;
-            this.m_iconFileName = Application.StartupPath + @"\Plugins\GeoRSS\georss-small.png";
+            m_name = name;
+            m_url = url;
+            m_updateInterval = update;
+            m_layer = layer;
+            m_needsUpdate = true;
+            m_iconFileName = Application.StartupPath + @"\Plugins\GeoRSS\georss-small.png";
         }
 
         public GeoRssFeed(string name, string url, TimeSpan update, Icons layer, string iconName)
         {
-            this.m_name = name;
-            this.m_url = url;
-            this.m_updateInterval = update;
-            this.m_layer = layer;
-            this.m_needsUpdate = true;
-            this.m_iconFileName = iconName;
+            m_name = name;
+            m_url = url;
+            m_updateInterval = update;
+            m_layer = layer;
+            m_needsUpdate = true;
+            m_iconFileName = iconName;
         }
 
         /// <summary>
@@ -135,44 +138,44 @@ namespace WorldWind.GeoRSS
 
         public void Update()
         {
-            if (this.m_needsUpdate)
+            if (m_needsUpdate)
             {
                 try
                 {
                     DateTime lastModified = new DateTime(); 
-                    if (this.m_feed == null)
+                    if (m_feed == null)
                     {
-                        this.m_feed = RssFeed.Read(this.m_url);
+                        m_feed = RssFeed.Read(m_url);
                     }
                     else
                     {
-                        lastModified = this.m_feed.LastModified;
-                        this.m_feed = RssFeed.Read(this.m_feed);
+                        lastModified = m_feed.LastModified;
+                        m_feed = RssFeed.Read(m_feed);
                     }
 
                     // if the page was modified and there was stuff update everything.
-                    if (lastModified.CompareTo(this.m_feed.LastModified) != 0 )
+                    if (lastModified.CompareTo(m_feed.LastModified) != 0 )
                     {
-                        this.m_layer.RemoveAll();
+                        m_layer.RemoveAll();
 
-                        if (this.m_feed.Channels.Count > 0)
+                        if (m_feed.Channels.Count > 0)
                         {
-                            if (this.m_feed.Channels.Count == 1)
+                            if (m_feed.Channels.Count == 1)
                             {
-                                foreach (RssItem item in this.m_feed.Channels[0].Items)
+                                foreach (RssItem item in m_feed.Channels[0].Items)
                                 {
                                     if ((item.GeoPoint != null) && (item.GeoPoint.IsValid))
                                     {
-                                        Icon icon = new Icon(item.Title, this.StripTags(item.Description), item.GeoPoint.Lat, item.GeoPoint.Lon, item.GeoPoint.Alt, this.m_iconFileName, 0, 0, item.Link.ToString());
+                                        Icon icon = new Icon(item.Title, StripTags(item.Description), item.GeoPoint.Lat, item.GeoPoint.Lon, item.GeoPoint.Alt, m_iconFileName, 0, 0, item.Link.ToString());
                                         icon.isSelectable = true;
                                         icon.AutoScaleIcon = true;
-                                        this.m_layer.Add(icon);
+                                        m_layer.Add(icon);
                                     }
                                 }
                             }
                             else
                             {
-                                foreach (RssChannel channel in this.m_feed.Channels)
+                                foreach (RssChannel channel in m_feed.Channels)
                                 {
                                     string name = channel.Title;
                                     if (name.Trim() == "")
@@ -180,13 +183,13 @@ namespace WorldWind.GeoRSS
                                         name = "Unknown Channel";
                                     }
                                     Icons channelLayer = new Icons(name);
-                                    this.m_layer.Add(channelLayer);
+                                    m_layer.Add(channelLayer);
 
                                     foreach (RssItem item in channel.Items)
                                     {
                                         if ((item.GeoPoint != null) && (item.GeoPoint.IsValid))
                                         {
-                                            Icon icon = new Icon(item.Title, this.StripTags(item.Description), item.GeoPoint.Lat, item.GeoPoint.Lon, item.GeoPoint.Alt, this.m_iconFileName, 0, 0, item.Link.ToString());
+                                            Icon icon = new Icon(item.Title, StripTags(item.Description), item.GeoPoint.Lat, item.GeoPoint.Lon, item.GeoPoint.Alt, m_iconFileName, 0, 0, item.Link.ToString());
                                             icon.isSelectable = true;
                                             icon.AutoScaleIcon = true;
                                             channelLayer.Add(icon);
@@ -196,8 +199,7 @@ namespace WorldWind.GeoRSS
                             }
                         }
                     }
-
-                    this.m_needsUpdate = false;
+                    m_needsUpdate = false;
                 }
                 catch (Exception)
                 {

@@ -1,4 +1,4 @@
-﻿namespace WorldWind.GeoRSS(0, SamplerStateGeoRSS {
+﻿namespace WorldWind.GeoRSS {
     
     
     public partial class GeoRssDataSet {

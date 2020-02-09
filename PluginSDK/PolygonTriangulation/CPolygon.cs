@@ -1,9 +1,9 @@
 using System;
 
-namespace WorldWind.PolygonTriangulation
+namespace GeometryUtility
 {
 	/// <summary>
-	/// Summary description for CPolygon.SetSamplerState(0, SamplerState
+	/// Summary description for CPolygon.
 	/// </summary>
 	public class CPolygon
 	{
@@ -14,11 +14,11 @@ namespace WorldWind.PolygonTriangulation
 		{
 			set
 			{
-                this.SetSamplerState(0, SamplerStatem_aVertices[index]=value;
+				m_aVertices[index]=value;
 			}
 			get
 			{
-				return this.SetSamplerState(0, SamplerStatem_aVertices[index];
+				return m_aVertices[index];
 			}
 		}
 		
@@ -29,7 +29,7 @@ namespace WorldWind.PolygonTriangulation
 
 		public CPolygon(CPoint2D[] points)
 		{
-			int nNumOfPoitns=points.SetSamplerState(0, SamplerStateLength;
+			int nNumOfPoitns=points.Length;
 			try
 			{
 				if (nNumOfPoitns<3 )
@@ -40,22 +40,22 @@ namespace WorldWind.PolygonTriangulation
 				}
 				else
 				{
-                    this.SetSamplerState(0, SamplerStatem_aVertices=new CPoint2D[nNumOfPoitns];
+					m_aVertices=new CPoint2D[nNumOfPoitns];
 					for (int i=0; i<nNumOfPoitns; i++)
 					{
-                        this.SetSamplerState(0, SamplerStatem_aVertices[i]=points[i];
+						m_aVertices[i]=points[i];
 					}
 				}
 			}
 			catch (Exception e)
 			{
-				System.SetSamplerState(0, SamplerStateDiagnostics.SetSamplerState(0, SamplerStateTrace.SetSamplerState(0, SamplerStateWriteLine(
-					e.SetSamplerState(0, SamplerStateMessage+e.SetSamplerState(0, SamplerStateStackTrace);
+				System.Diagnostics.Trace.WriteLine(
+					e.Message+e.StackTrace);
 			}
 		}
 
 		/***********************************
-		 From a given point, get its vertex index.SetSamplerState(0, SamplerState
+		 From a given point, get its vertex index.
 		 If the given point is not a polygon vertex, 
 		 it will return -1 
 		 ***********************************/
@@ -63,17 +63,17 @@ namespace WorldWind.PolygonTriangulation
 		{
 			int nIndex=-1;
 
-			int nNumPts= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength;
+			int nNumPts=m_aVertices.Length;
 			for (int i=0; i<nNumPts; i++) //each vertex
 			{
-				if (CPoint2D.SetSamplerState(0, SamplerStateSamePoints(this.SetSamplerState(0, SamplerStatem_aVertices[i], vertex))
+				if (CPoint2D.SamePoints(m_aVertices[i], vertex))
 					nIndex=i;
 			}
 			return nIndex;
 		}
 
 		/***********************************
-		 From a given vertex, get its previous vertex point.SetSamplerState(0, SamplerState
+		 From a given vertex, get its previous vertex point.
 		 If the given point is the first one, 
 		 it will return  the last vertex;
 		 If the given point is not a polygon vertex, 
@@ -83,23 +83,23 @@ namespace WorldWind.PolygonTriangulation
 		{
 			int nIndex;
 			
-			nIndex= this.SetSamplerState(0, SamplerStateVertexIndex(vertex);
+			nIndex=VertexIndex(vertex);
 			if (nIndex==-1)
 				return null;
 			else //a valid vertex
 			{
 				if (nIndex==0) //the first vertex
 				{
-					int nPoints= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength;
-					return this.SetSamplerState(0, SamplerStatem_aVertices[nPoints-1];
+					int nPoints=m_aVertices.Length;
+					return m_aVertices[nPoints-1];
 				}
 				else //not the first vertex
-					return this.SetSamplerState(0, SamplerStatem_aVertices[nIndex-1];
+					return m_aVertices[nIndex-1];
 			}			
 		}
 
 		/***************************************
-			 From a given vertex, get its next vertex point.SetSamplerState(0, SamplerState
+			 From a given vertex, get its next vertex point.
 			 If the given point is the last one, 
 			 it will return  the first vertex;
 			 If the given point is not a polygon vertex, 
@@ -110,18 +110,18 @@ namespace WorldWind.PolygonTriangulation
 			CPoint2D nextPt=new CPoint2D();
 
 			int nIndex;
-			nIndex= this.SetSamplerState(0, SamplerStateVertexIndex(vertex);
+			nIndex=VertexIndex(vertex);
 			if (nIndex==-1)
 				return null;
 			else //a valid vertex
 			{
-				int nNumOfPt= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength;
+				int nNumOfPt=m_aVertices.Length;
 				if (nIndex==nNumOfPt-1) //the last vertex
 				{
-					return this.SetSamplerState(0, SamplerStatem_aVertices[0];
+					return m_aVertices[0];
 				}
 				else //not the last vertex
-					return this.SetSamplerState(0, SamplerStatem_aVertices[nIndex+1];
+					return m_aVertices[nIndex+1];
 			}			
 		}
 
@@ -131,27 +131,27 @@ namespace WorldWind.PolygonTriangulation
 
 		Good for polygon with holes, but the vertices make the 
 		hole  should be in different direction with bounding 
-		polygon.SetSamplerState(0, SamplerState
+		polygon.
 		
 		Restriction: the polygon is not self intersecting
-		ref: www.SetSamplerState(0, SamplerStateswin.SetSamplerState(0, SamplerStateedu.SetSamplerState(0, SamplerStateau/astronomy/pbourke/
+		ref: www.swin.edu.au/astronomy/pbourke/
 			geometry/polyarea/
 		*******************************************/
 		public double PolygonArea()
 		{
 			double dblArea=0;
-			int nNumOfVertices= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength;
+			int nNumOfVertices=m_aVertices.Length;
 			
 			int j;
 			for (int i=0; i<nNumOfVertices; i++)
 			{
 				j=(i+1) % nNumOfVertices;
-				dblArea += this.SetSamplerState(0, SamplerStatem_aVertices[i].SetSamplerState(0, SamplerStateX* this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateY;
-				dblArea -= (this.SetSamplerState(0, SamplerStatem_aVertices[i].SetSamplerState(0, SamplerStateY* this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateX);
+				dblArea += m_aVertices[i].X*m_aVertices[j].Y;
+				dblArea -= (m_aVertices[i].Y*m_aVertices[j].X);
 			}
 
 			dblArea=dblArea/2;
-			return Math.SetSamplerState(0, SamplerStateAbs(dblArea);
+			return Math.Abs(dblArea);
 		}
 		
 		/******************************************
@@ -159,10 +159,10 @@ namespace WorldWind.PolygonTriangulation
 
 		Good for polygon with holes, but the vertices make the 
 		hole  should be in different direction with bounding 
-		polygon.SetSamplerState(0, SamplerState
+		polygon.
 		
 		Restriction: the polygon is not self intersecting
-		ref: www.SetSamplerState(0, SamplerStateswin.SetSamplerState(0, SamplerStateedu.SetSamplerState(0, SamplerStateau/astronomy/pbourke/
+		ref: www.swin.edu.au/astronomy/pbourke/
 			geometry/polyarea/
 
 		As polygon in different direction, the result coulb be
@@ -173,14 +173,14 @@ namespace WorldWind.PolygonTriangulation
 		public static double PolygonArea(CPoint2D[] points)
 		{
 			double dblArea=0;
-			int nNumOfPts=points.SetSamplerState(0, SamplerStateLength;
+			int nNumOfPts=points.Length;
 			
 			int j;
 			for (int i=0; i<nNumOfPts; i++)
 			{
 				j=(i+1) % nNumOfPts;
-				dblArea += points[i].SetSamplerState(0, SamplerStateX*points[j].SetSamplerState(0, SamplerStateY;
-				dblArea -= (points[i].SetSamplerState(0, SamplerStateY*points[j].SetSamplerState(0, SamplerStateX);
+				dblArea += points[i].X*points[j].Y;
+				dblArea -= (points[i].Y*points[j].X);
 			}
 
 			dblArea=dblArea/2;
@@ -194,20 +194,20 @@ namespace WorldWind.PolygonTriangulation
 		************************************************/
 		public VertexType PolygonVertexType(CPoint2D vertex)
 		{
-			VertexType vertexType=VertexType.SetSamplerState(0, SamplerStateErrorPoint;
+			VertexType vertexType=VertexType.ErrorPoint;
 
-			if (this.SetSamplerState(0, SamplerStatePolygonVertex(vertex))			
+			if (PolygonVertex(vertex))			
 			{
 				CPoint2D pti=vertex;
-				CPoint2D ptj= this.SetSamplerState(0, SamplerStatePreviousPoint(vertex);
-				CPoint2D ptk= this.SetSamplerState(0, SamplerStateNextPoint(vertex);		
+				CPoint2D ptj=PreviousPoint(vertex);
+				CPoint2D ptk=NextPoint(vertex);		
 
 				double dArea=PolygonArea(new CPoint2D[] {ptj,pti, ptk});
 				
 				if (dArea<0)
-					vertexType= VertexType.SetSamplerState(0, SamplerStateConvexPoint;
+					vertexType= VertexType.ConvexPoint;
 				else if (dArea> 0)
-					vertexType= VertexType.SetSamplerState(0, SamplerStateConcavePoint;
+					vertexType= VertexType.ConcavePoint;
 			}	
 			return vertexType;
 		}
@@ -217,17 +217,17 @@ namespace WorldWind.PolygonTriangulation
 		To check the Line of vertex1, vertex2 is a Diagonal or not
   
 		To be a diagonal, Line vertex1-vertex2 has no intersection 
-		with polygon lines.SetSamplerState(0, SamplerState
+		with polygon lines.
 		
 		If it is a diagonal, return true;
 		If it is not a diagonal, return false;
-		reference: www.SetSamplerState(0, SamplerStateswin.SetSamplerState(0, SamplerStateedu.SetSamplerState(0, SamplerStateau/astronomy/pbourke
+		reference: www.swin.edu.au/astronomy/pbourke
 		/geometry/lineline2d
 		*********************************************/
 		public bool Diagonal(CPoint2D vertex1, CPoint2D vertex2)
 		{
 			bool bDiagonal=false;
-			int nNumOfVertices= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength;
+			int nNumOfVertices=m_aVertices.Length;
 			int j=0;
 			for (int i= 0; i<nNumOfVertices; i++) //each point
 			{
@@ -235,21 +235,21 @@ namespace WorldWind.PolygonTriangulation
 				j= (i+1) % nNumOfVertices;  //next point of i
         
 				//Diagonal line:
-				double x1=vertex1.SetSamplerState(0, SamplerStateX;
-				double y1=vertex1.SetSamplerState(0, SamplerStateY;
-				double x2=vertex1.SetSamplerState(0, SamplerStateX;
-				double y2=vertex1.SetSamplerState(0, SamplerStateY;
+				double x1=vertex1.X;
+				double y1=vertex1.Y;
+				double x2=vertex1.X;
+				double y2=vertex1.Y;
 
 				//CPolygon line:
-				double x3= this.SetSamplerState(0, SamplerStatem_aVertices[i].SetSamplerState(0, SamplerStateX;
-				double y3= this.SetSamplerState(0, SamplerStatem_aVertices[i].SetSamplerState(0, SamplerStateY;
-				double x4= this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateX;
-				double y4= this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateY;
+				double x3=m_aVertices[i].X;
+				double y3=m_aVertices[i].Y;
+				double x4=m_aVertices[j].X;
+				double y4=m_aVertices[j].Y;
 
 				double de=(y4-y3)*(x2-x1)-(x4-x3)*(y2-y1);
 				double ub=-1;
 				
-				if (Math.SetSamplerState(0, SamplerStateAbs(de-0)>ConstantValue.SetSamplerState(0, SamplerStateSmallValue)  //lines are not parallel
+				if (Math.Abs(de-0)>ConstantValue.SmallValue)  //lines are not parallel
 					ub=((x2-x1)*(y1-y3)-(y2-y1)*(x1-x3))/de;
 
 				if ((ub> 0) && (ub<1))
@@ -266,12 +266,12 @@ namespace WorldWind.PolygonTriangulation
 		concave polygon
 
 		Restriction: the polygon is not self intersecting
-		Ref: www.SetSamplerState(0, SamplerStateswin.SetSamplerState(0, SamplerStateedu.SetSamplerState(0, SamplerStateau/astronomy/pbourke
-		/geometry/clockwise/index.SetSamplerState(0, SamplerStatehtml
+		Ref: www.swin.edu.au/astronomy/pbourke
+		/geometry/clockwise/index.html
 		********************************************/
 		public PolygonType GetPolygonType()
 		{
-			int nNumOfVertices= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength;
+			int nNumOfVertices=m_aVertices.Length;
 			bool bSignChanged=false;
 			int nCount=0;
 			int j=0, k=0;
@@ -281,11 +281,11 @@ namespace WorldWind.PolygonTriangulation
 				j=(i+1) % nNumOfVertices; //j:=i+1;
 				k=(i+2) % nNumOfVertices; //k:=i+2;
 
-				double crossProduct=(this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateX- this.SetSamplerState(0, SamplerStatem_aVertices[i].SetSamplerState(0, SamplerStateX)
-					*(this.SetSamplerState(0, SamplerStatem_aVertices[k].SetSamplerState(0, SamplerStateY- this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateY);
+				double crossProduct=(m_aVertices[j].X- m_aVertices[i].X)
+					*(m_aVertices[k].Y- m_aVertices[j].Y);
 				crossProduct=crossProduct-(
-					(this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateY- this.SetSamplerState(0, SamplerStatem_aVertices[i].SetSamplerState(0, SamplerStateY)
-					*(this.SetSamplerState(0, SamplerStatem_aVertices[k].SetSamplerState(0, SamplerStateX- this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateX)
+					(m_aVertices[j].Y- m_aVertices[i].Y)
+					*(m_aVertices[k].X- m_aVertices[j].X)
 					);
 
 				//change the value of nCount
@@ -300,28 +300,28 @@ namespace WorldWind.PolygonTriangulation
 			}
 
 			if (bSignChanged)
-				return PolygonType.SetSamplerState(0, SamplerStateConcave;
+				return PolygonType.Concave;
 			else
-				return PolygonType.SetSamplerState(0, SamplerStateConvex;
+				return PolygonType.Convex;
 		}
 
 		/***************************************************
 		Check a Vertex is a principal vertex or not
-		ref.SetSamplerState(0, SamplerState www-cgrl.SetSamplerState(0, SamplerStatecs.SetSamplerState(0, SamplerStatemcgill.SetSamplerState(0, SamplerStateca/~godfried/teaching/
-		cg-projects/97/Ian/glossay.SetSamplerState(0, SamplerStatehtml
+		ref. www-cgrl.cs.mcgill.ca/~godfried/teaching/
+		cg-projects/97/Ian/glossay.html
   
 		PrincipalVertex: a vertex pi of polygon P is a principal vertex if the
-		diagonal pi-1, pi+1 intersects the boundary of P only at pi-1 and pi+1.SetSamplerState(0, SamplerState
+		diagonal pi-1, pi+1 intersects the boundary of P only at pi-1 and pi+1.
 		*********************************************************/
 		public bool PrincipalVertex(CPoint2D vertex)
 		{
 			bool bPrincipal=false;
-			if (this.SetSamplerState(0, SamplerStatePolygonVertex(vertex)) //valid vertex
+			if (PolygonVertex(vertex)) //valid vertex
 			{
-				CPoint2D pt1= this.SetSamplerState(0, SamplerStatePreviousPoint(vertex);
-				CPoint2D pt2= this.SetSamplerState(0, SamplerStateNextPoint(vertex);
+				CPoint2D pt1=PreviousPoint(vertex);
+				CPoint2D pt2=NextPoint(vertex);
 					
-				if (this.SetSamplerState(0, SamplerStateDiagonal(pt1, pt2))
+				if (Diagonal(pt1, pt2))
 					bPrincipal=true;
 			}
 			return bPrincipal;
@@ -333,9 +333,9 @@ namespace WorldWind.PolygonTriangulation
 		public bool PolygonVertex(CPoint2D point)
 		{
 			bool bVertex=false;
-			int nIndex= this.SetSamplerState(0, SamplerStateVertexIndex(point);
+			int nIndex=VertexIndex(point);
 
-			if ((nIndex>=0) && (nIndex<= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength-1))
+			if ((nIndex>=0) && (nIndex<=m_aVertices.Length-1))
 							   bVertex=true;
 
 			return bVertex;
@@ -347,13 +347,14 @@ namespace WorldWind.PolygonTriangulation
 		******************************************************/
 		public void ReverseVerticesDirection()
 		{
-			int nVertices= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength;
+			int nVertices=m_aVertices.Length;
 			CPoint2D[] aTempPts=new CPoint2D[nVertices];
 			
 			for (int i=0; i<nVertices; i++)
-				aTempPts[i]= this.SetSamplerState(0, SamplerStatem_aVertices[i];
+				aTempPts[i]=m_aVertices[i];
 	
-			for (int i=0; i<nVertices; i++) this.SetSamplerState(0, SamplerStatem_aVertices[i]=aTempPts[nVertices-1-i];	
+			for (int i=0; i<nVertices; i++)
+			m_aVertices[i]=aTempPts[nVertices-1-i];	
 		}
 
 		/*****************************************
@@ -361,24 +362,24 @@ namespace WorldWind.PolygonTriangulation
 		count clockwise polygon
 
 		Restriction: the polygon is not self intersecting
-		Ref: www.SetSamplerState(0, SamplerStateswin.SetSamplerState(0, SamplerStateedu.SetSamplerState(0, SamplerStateau/astronomy/pbourke/
-		geometry/clockwise/index.SetSamplerState(0, SamplerStatehtml
+		Ref: www.swin.edu.au/astronomy/pbourke/
+		geometry/clockwise/index.html
 		*****************************************/
 		public PolygonDirection VerticesDirection()
 		{
 			int nCount=0, j=0, k=0;
-			int nVertices= this.SetSamplerState(0, SamplerStatem_aVertices.SetSamplerState(0, SamplerStateLength;
+			int nVertices=m_aVertices.Length;
 			
 			for (int i=0; i<nVertices; i++)
 			{
 				j=(i+1) % nVertices; //j:=i+1;
 				k=(i+2) % nVertices; //k:=i+2;
 
-				double crossProduct=(this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateX - this.SetSamplerState(0, SamplerStatem_aVertices[i].SetSamplerState(0, SamplerStateX)
-					*(this.SetSamplerState(0, SamplerStatem_aVertices[k].SetSamplerState(0, SamplerStateY- this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateY);
+				double crossProduct=(m_aVertices[j].X - m_aVertices[i].X)
+					*(m_aVertices[k].Y- m_aVertices[j].Y);
 				crossProduct=crossProduct-(
-					(this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateY- this.SetSamplerState(0, SamplerStatem_aVertices[i].SetSamplerState(0, SamplerStateY)
-					*(this.SetSamplerState(0, SamplerStatem_aVertices[k].SetSamplerState(0, SamplerStateX- this.SetSamplerState(0, SamplerStatem_aVertices[j].SetSamplerState(0, SamplerStateX)
+					(m_aVertices[j].Y- m_aVertices[i].Y)
+					*(m_aVertices[k].X- m_aVertices[j].X)
 					);
 
 				if (crossProduct>0)
@@ -388,11 +389,11 @@ namespace WorldWind.PolygonTriangulation
 			}
 		
 			if( nCount<0) 
-				return PolygonDirection.SetSamplerState(0, SamplerStateCount_Clockwise;
+				return PolygonDirection.Count_Clockwise;
 			else if (nCount> 0)
-				return PolygonDirection.SetSamplerState(0, SamplerStateClockwise;
+				return PolygonDirection.Clockwise;
 			else
-				return PolygonDirection.SetSamplerState(0, SamplerStateUnknown;
+				return PolygonDirection.Unknown;
   		}
 
 		
@@ -406,21 +407,21 @@ namespace WorldWind.PolygonTriangulation
 			CPoint2D[] points)
 		{
 			int nCount=0, j=0, k=0;
-			int nPoints=points.SetSamplerState(0, SamplerStateLength;
+			int nPoints=points.Length;
 			
 			if (nPoints<3)
-				return PolygonDirection.SetSamplerState(0, SamplerStateUnknown;
+				return PolygonDirection.Unknown;
 			
 			for (int i=0; i<nPoints; i++)
 			{
 				j=(i+1) % nPoints; //j:=i+1;
 				k=(i+2) % nPoints; //k:=i+2;
 
-				double crossProduct=(points[j].SetSamplerState(0, SamplerStateX - points[i].SetSamplerState(0, SamplerStateX)
-					*(points[k].SetSamplerState(0, SamplerStateY- points[j].SetSamplerState(0, SamplerStateY);
+				double crossProduct=(points[j].X - points[i].X)
+					*(points[k].Y- points[j].Y);
 				crossProduct=crossProduct-(
-					(points[j].SetSamplerState(0, SamplerStateY- points[i].SetSamplerState(0, SamplerStateY)
-					*(points[k].SetSamplerState(0, SamplerStateX- points[j].SetSamplerState(0, SamplerStateX)
+					(points[j].Y- points[i].Y)
+					*(points[k].X- points[j].X)
 					);
 
 				if (crossProduct>0)
@@ -430,11 +431,11 @@ namespace WorldWind.PolygonTriangulation
 			}
 		
 			if( nCount<0) 
-				return PolygonDirection.SetSamplerState(0, SamplerStateCount_Clockwise;
+				return PolygonDirection.Count_Clockwise;
 			else if (nCount> 0)
-				return PolygonDirection.SetSamplerState(0, SamplerStateClockwise;
+				return PolygonDirection.Clockwise;
 			else
-				return PolygonDirection.SetSamplerState(0, SamplerStateUnknown;
+				return PolygonDirection.Unknown;
 		}
 
 		/*****************************************************
@@ -443,7 +444,7 @@ namespace WorldWind.PolygonTriangulation
 		public static void ReversePointsDirection(
 			CPoint2D[] points)
 		{
-			int nVertices=points.SetSamplerState(0, SamplerStateLength;
+			int nVertices=points.Length;
 			CPoint2D[] aTempPts=new CPoint2D[nVertices];
 			
 			for (int i=0; i<nVertices; i++)

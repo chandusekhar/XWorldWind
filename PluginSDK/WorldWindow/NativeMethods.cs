@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WorldWind.WorldWindow
+namespace WorldWind
 {
 	/// <summary>
 	/// Interop methods for WorldWindow namespace

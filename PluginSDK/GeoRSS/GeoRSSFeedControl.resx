@@ -1,66 +1,66 @@
-<?xml version="1.SetSamplerState(0, SamplerState0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
     
-    Version 2.SetSamplerState(0, SamplerState0
+    Version 2.0
     
     The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable.SetSamplerState(0, SamplerState The generation and parsing of the 
+    that is mostly human readable. The generation and parsing of the 
     various data types are done through the TypeConverter classes 
-    associated with the data types.SetSamplerState(0, SamplerState
+    associated with the data types.
     
     Example:
     
-    .SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState ado.SetSamplerState(0, SamplerStatenet/XML headers & schema .SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState
+    ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.SetSamplerState(0, SamplerState0</resheader>
-    <resheader name="reader">System.SetSamplerState(0, SamplerStateResources.SetSamplerState(0, SamplerStateResXResourceReader, System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms, .SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState</resheader>
-    <resheader name="writer">System.SetSamplerState(0, SamplerStateResources.SetSamplerState(0, SamplerStateResXResourceWriter, System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms, .SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState.SetSamplerState(0, SamplerState</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateColor, System.SetSamplerState(0, SamplerStateDrawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.SetSamplerState(0, SamplerStatenet.SetSamplerState(0, SamplerStateobject.SetSamplerState(0, SamplerStatebinary.SetSamplerState(0, SamplerStatebase64">
-        <value>[base64 mime encoded serialized .SetSamplerState(0, SamplerStateNET Framework object]</value>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="Icon1" type="System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStateIcon, System.SetSamplerState(0, SamplerStateDrawing" mimetype="application/x-microsoft.SetSamplerState(0, SamplerStatenet.SetSamplerState(0, SamplerStateobject.SetSamplerState(0, SamplerStatebytearray.SetSamplerState(0, SamplerStatebase64">
-        <value>[base64 mime encoded string representing a byte array form of the .SetSamplerState(0, SamplerStateNET Framework object]</value>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
                 
     There are any number of "resheader" rows that contain simple 
-    name/value pairs.SetSamplerState(0, SamplerState
+    name/value pairs.
     
-    Each data row contains a name, and value.SetSamplerState(0, SamplerState The row also contains a 
-    type or mimetype.SetSamplerState(0, SamplerState Type corresponds to a .SetSamplerState(0, SamplerStateNET class that support 
-    text/value conversion through the TypeConverter architecture.SetSamplerState(0, SamplerState 
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
     Classes that don't support this are serialized and stored with the 
-    mimetype set.SetSamplerState(0, SamplerState
+    mimetype set.
     
     The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object.SetSamplerState(0, SamplerState This is currently not 
-    extensible.SetSamplerState(0, SamplerState For a given mimetype the value must be set accordingly:
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
     
-    Note - application/x-microsoft.SetSamplerState(0, SamplerStatenet.SetSamplerState(0, SamplerStateobject.SetSamplerState(0, SamplerStatebinary.SetSamplerState(0, SamplerStatebase64 is the format 
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
     that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.SetSamplerState(0, SamplerState
+    read any of the formats listed below.
     
-    mimetype: application/x-microsoft.SetSamplerState(0, SamplerStatenet.SetSamplerState(0, SamplerStateobject.SetSamplerState(0, SamplerStatebinary.SetSamplerState(0, SamplerStatebase64
+    mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.SetSamplerState(0, SamplerStateRuntime.SetSamplerState(0, SamplerStateSerialization.SetSamplerState(0, SamplerStateFormatters.SetSamplerState(0, SamplerStateBinary.SetSamplerState(0, SamplerStateBinaryFormatter
-            : and then encoded with base64 encoding.SetSamplerState(0, SamplerState
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
     
-    mimetype: application/x-microsoft.SetSamplerState(0, SamplerStatenet.SetSamplerState(0, SamplerStateobject.SetSamplerState(0, SamplerStatesoap.SetSamplerState(0, SamplerStatebase64
+    mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with 
-            : System.SetSamplerState(0, SamplerStateRuntime.SetSamplerState(0, SamplerStateSerialization.SetSamplerState(0, SamplerStateFormatters.SetSamplerState(0, SamplerStateSoap.SetSamplerState(0, SamplerStateSoapFormatter
-            : and then encoded with base64 encoding.SetSamplerState(0, SamplerState
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
-    mimetype: application/x-microsoft.SetSamplerState(0, SamplerStatenet.SetSamplerState(0, SamplerStateobject.SetSamplerState(0, SamplerStatebytearray.SetSamplerState(0, SamplerStatebase64
+    mimetype: application/x-microsoft.net.object.bytearray.base64
     value   : The object must be serialized into a byte array 
-            : using a System.SetSamplerState(0, SamplerStateComponentModel.SetSamplerState(0, SamplerStateTypeConverter
-            : and then encoded with base64 encoding.SetSamplerState(0, SamplerState
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.SetSamplerState(0, SamplerStatew3.SetSamplerState(0, SamplerStateorg/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.SetSamplerState(0, SamplerStatew3.SetSamplerState(0, SamplerStateorg/XML/1998/namespace" />
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -109,33 +109,33 @@
     <value>text/microsoft-resx</value>
   </resheader>
   <resheader name="version">
-    <value>2.SetSamplerState(0, SamplerState0</value>
+    <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.SetSamplerState(0, SamplerStateResources.SetSamplerState(0, SamplerStateResXResourceReader, System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.SetSamplerState(0, SamplerStateResources.SetSamplerState(0, SamplerStateResXResourceWriter, System.SetSamplerState(0, SamplerStateWindows.SetSamplerState(0, SamplerStateForms, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="Icon.SetSamplerState(0, SamplerStateUserAddedColumn" type="System.SetSamplerState(0, SamplerStateBoolean, mscorlib, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="Icon.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="name.SetSamplerState(0, SamplerStateUserAddedColumn" type="System.SetSamplerState(0, SamplerStateBoolean, mscorlib, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="name.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="url.SetSamplerState(0, SamplerStateUserAddedColumn" type="System.SetSamplerState(0, SamplerStateBoolean, mscorlib, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="url.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="interval.SetSamplerState(0, SamplerStateUserAddedColumn" type="System.SetSamplerState(0, SamplerStateBoolean, mscorlib, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="interval.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="lastUpdate.SetSamplerState(0, SamplerStateUserAddedColumn" type="System.SetSamplerState(0, SamplerStateBoolean, mscorlib, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="lastUpdate.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="updateNow.SetSamplerState(0, SamplerStateUserAddedColumn" type="System.SetSamplerState(0, SamplerStateBoolean, mscorlib, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="updateNow.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="openFileDialog.SetSamplerState(0, SamplerStateTrayLocation" type="System.SetSamplerState(0, SamplerStateDrawing.SetSamplerState(0, SamplerStatePoint, System.SetSamplerState(0, SamplerStateDrawing, Version=2.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0.SetSamplerState(0, SamplerState0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
 </root>
