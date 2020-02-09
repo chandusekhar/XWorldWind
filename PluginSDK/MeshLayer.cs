@@ -1,4 +1,6 @@
 using System;
+using SharpDX;
+using SharpDX.Direct3D9;
 using Utility;
 
 namespace WorldWind
@@ -83,7 +85,7 @@ namespace WorldWind
 		public override void Render(DrawArgs drawArgs)
 		{
 //			Vector3 here = MathEngine.SphericalToCartesian(drawArgs.WorldCamera.Latitude, drawArgs.WorldCamera.Longitude, this.layerRadius);
-			Matrix currentWorld = drawArgs.device.Transform.World;
+			Matrix currentWorld = drawArgs.device.GetTransform(TransformState.World);
 			drawArgs.device.SetRenderState(RenderState.Lighting , true);
 			drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 			drawArgs.device.Lights[0].Diffuse = System.Drawing.Color.White; 
