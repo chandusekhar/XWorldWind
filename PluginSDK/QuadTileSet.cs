@@ -851,28 +851,28 @@ namespace WorldWind
 					// terrain mapped layers to avoid Z buffer fighting
 					//if (lastRenderTime == DrawArgs.CurrentFrameStartTicks)
 					device.Clear(ClearFlags.ZBuffer, 0, 1.0f, 0);
-					device.SetRenderState(RenderState.ZBufferEnable = true;
+					device.SetRenderState(RenderState.ZEnable , true);
 					lastRenderTime = DrawArgs.CurrentFrameStartTicks;
 
 					//							  if (m_renderPriority < RenderPriority.TerrainMappedImages)
 					//									  // No Z buffering needed for "flat" layers
-					//									  device.SetRenderState(RenderState.ZBufferEnable = false;
+					//									  device.SetRenderState(RenderState.ZEnable , false);
 
 
 					/*	  if (m_opacity < 255 && device.Capabilities.DestinationBlendCaps.SupportsBlendFactor)
 							{
 									// Blend
-									device.SetRenderState(RenderState.AlphaBlendEnable = true;
-									device.SetRenderState(RenderState.SourceBlend = m_sourceBlend;
-									device.SetRenderState(RenderState.DestinationBlend = m_destinationBlend;
+									device.SetRenderState(RenderState.AlphaBlendEnable , true);
+									device.SetRenderState(RenderState.SourceBlend , m_sourceBlend);
+									device.SetRenderState(RenderState.DestinationBlend , m_destinationBlend);
 									// Set Red, Green and Blue = opacity
-									device.SetRenderState(RenderState.BlendFactorColor = (m_opacity << 16) | (m_opacity << 8) | m_opacity;
+									device.SetRenderState(RenderState.BlendFactorColor , (m_opacity << 16) | (m_opacity << 8) | m_opacity;
 							}
 							else if (EnableColorKeying && device.Capabilities.TextureCaps.SupportsAlpha)
 							{
-									device.SetRenderState(RenderState.AlphaBlendEnable = true;
-									device.SetRenderState(RenderState.SourceBlend = Blend.SourceAlpha;
-									device.SetRenderState(RenderState.DestinationBlend = Blend.InvSourceAlpha;
+									device.SetRenderState(RenderState.AlphaBlendEnable , true);
+									device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
+									device.SetRenderState(RenderState.DestinationBlend , Blend.InvSourceAlpha);
 							}
 		*/
 					if (!World.Settings.EnableSunShading)
@@ -898,13 +898,13 @@ namespace WorldWind
 					device.SetTextureStageState(1, TextureStageStates.TextureCoordinateIndex, 1);
 
 					if (this.RenderPriority < RenderPriority.TerrainMappedImages)
-						device.SetRenderState(RenderState.ZBufferEnable = true;
+						device.SetRenderState(RenderState.ZEnable , true);
 					/*
 														   if (m_opacity < 255 || EnableColorKeying)
 														   {
 																   // Restore alpha blend state
-																   device.SetRenderState(RenderState.SourceBlend = Blend.SourceAlpha;
-																   device.SetRenderState(RenderState.DestinationBlend = Blend.InvSourceAlpha;
+																   device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
+																   device.SetRenderState(RenderState.DestinationBlend , Blend.InvSourceAlpha);
 														   }*/
 				}
 			}
@@ -1028,7 +1028,7 @@ namespace WorldWind
             if (this.progressBar == null) this.progressBar = new ProgressBar(40, 4);
 
             this.progressBar.Draw(drawArgs, projectedPoint.X, projectedPoint.Y + 24, request.ProgressPercent, World.Settings.DownloadProgressColor.ToArgb());
-            DrawArgs.Device.SetRenderState(RenderState.ZBufferEnable = true;
+            DrawArgs.Device.SetRenderState(RenderState.ZEnable , true);
 
         }
         public void RenderDownloadProgressSprite(DrawArgs drawArgs,int offset)

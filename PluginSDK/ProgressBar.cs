@@ -167,7 +167,7 @@ namespace WorldWind
             this.progressRight[3].Y = y + this.halfHeight;
 
 			drawArgs.device.VertexFormat = CustomVertex.TransformedColored.Format;
-			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			drawArgs.device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, this.progressBar);
 			drawArgs.device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, this.progressRight);
 			drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, 4, this.progressBarOutline);

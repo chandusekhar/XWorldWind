@@ -267,7 +267,7 @@ namespace WorldWind
 			axis[1].Color = System.Drawing.Color.Pink.ToArgb();
 
 			drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
-			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
 				(float)-drawArgs.WorldCamera.ReferenceCenter.X,
 				(float)-drawArgs.WorldCamera.ReferenceCenter.Y,
@@ -1389,9 +1389,9 @@ namespace WorldWind
                     this.vCamera.Z = drawArgs.WorldCamera.Position.Z;
 
 					drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
-					drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+					drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 					if (drawArgs.device.SetRenderState(RenderState.Lighting)
-						drawArgs.device.SetRenderState(RenderState.Lighting = false;
+						drawArgs.device.SetRenderState(RenderState.Lighting , false);
 
 					drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
 						(float)-drawArgs.WorldCamera.ReferenceCenter.X,
@@ -1476,7 +1476,7 @@ namespace WorldWind
                         this.UpdateLightVector();
 						// Use SkyGradient geometry
                         this.UpdateSkyMesh(drawArgs, horizonSpan);
-						drawArgs.device.SetRenderState(RenderState.CullMode = Cull.Clockwise;
+						drawArgs.device.SetRenderState(RenderState.CullMode , Cull.Clockwise);
                         this.skyMesh.DrawSubset(0);
 					}
 					drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;

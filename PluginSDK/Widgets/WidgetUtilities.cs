@@ -1,5 +1,5 @@
 //========================= (UNCLASSIFIED) ==============================
-// Copyright © 2005-2006 The Johns Hopkins University /
+// Copyright ï¿½ 2005-2006 The Johns Hopkins University /
 // Applied Physics Laboratory.  All rights reserved.
 //
 // WorldWind Source Code - Copyright 2005 NASA World Wind 
@@ -12,10 +12,10 @@
 // Copyright (c) 2005 The Johns Hopkins University. 
 //
 // This software was developed at The Johns Hopkins University/Applied 
-// Physics Laboratory (“JHU/APL”) that is the author thereof under the 
-// “work made for hire” provisions of the copyright law.  Permission is 
+// Physics Laboratory (ï¿½JHU/APLï¿½) that is the author thereof under the 
+// ï¿½work made for hireï¿½ provisions of the copyright law.  Permission is 
 // hereby granted, free of charge, to any person obtaining a copy of this 
-// software and associated documentation (the “Software”), to use the 
+// software and associated documentation (the ï¿½Softwareï¿½), to use the 
 // Software without restriction, including without limitation the rights 
 // to copy, modify, merge, publish, distribute, sublicense, and/or sell 
 // copies of the Software, and to permit others to do so, subject to the 
@@ -65,7 +65,7 @@ namespace WorldWind.Widgets
 				lineVerts[i].Color = color;
 			}
 
-			device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			device.VertexFormat = CustomVertex.TransformedColored.Format;
 
 			device.DrawUserPrimitives(PrimitiveType.LineStrip, lineVerts.Length - 1, lineVerts);
@@ -95,7 +95,7 @@ namespace WorldWind.Widgets
 			verts[3].Color = color;
 
 			device.VertexFormat = CustomVertex.TransformedColored.Format;
-			device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			device.DrawUserPrimitives(PrimitiveType.TriangleStrip, verts.Length - 2, verts);
 		}
 
@@ -119,7 +119,7 @@ namespace WorldWind.Widgets
 			}
 
 			device.VertexFormat = CustomVertex.TransformedColored.Format;
-			device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			device.DrawUserPrimitives(PrimitiveType.TriangleFan, verts.Length - 2, verts);
 		}
 
@@ -160,9 +160,9 @@ namespace WorldWind.Widgets
 			while ( deg >= 360L ) deg -= 360L;
 
 			if (pos.ToString().ToUpper() == "E")
-				return String.Format("{0:000}° {1:00}' {2:00.000}\" {3}", deg, min, sec, dir);
+				return String.Format("{0:000}ï¿½ {1:00}' {2:00.000}\" {3}", deg, min, sec, dir);
 			else
-				return String.Format("{0:00}° {1:00}' {2:00.000}\" {3}", deg, min, sec, dir);
+				return String.Format("{0:00}ï¿½ {1:00}' {2:00.000}\" {3}", deg, min, sec, dir);
 		}
 	}
 }

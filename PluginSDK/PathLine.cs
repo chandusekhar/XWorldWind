@@ -348,11 +348,11 @@ namespace WorldWind
 					if(this.linePoints != null)
 					{
                         //Fix for sunshading screwing with everything
-                        bool lighting = drawArgs.device.SetRenderState(RenderState.Lighting;
-                        drawArgs.device.SetRenderState(RenderState.Lighting = this.m_enableLighting;
+                        bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
+                        drawArgs.device.SetRenderState(RenderState.Lighting , this.m_enableLighting);
 
                         drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
-						drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+						drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 
 						drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
 							(float)-drawArgs.WorldCamera.ReferenceCenter.X,
@@ -364,7 +364,7 @@ namespace WorldWind
 						drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
 
                         //put lighting back like it was (see above fix)
-                        drawArgs.device.SetRenderState(RenderState.Lighting = lighting;
+                        drawArgs.device.SetRenderState(RenderState.Lighting , lighting);
                     }
 				}
 			}

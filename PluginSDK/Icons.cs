@@ -1,7 +1,7 @@
 //
-// Copyright © 2005 NASA. Available under the NOSA License
+// Copyright ï¿½ 2005 NASA. Available under the NOSA License
 //
-// Portions copied from JHU_Icons - Copyright © 2005-2006 The Johns Hopkins University 
+// Portions copied from JHU_Icons - Copyright ï¿½ 2005-2006 The Johns Hopkins University 
 // Applied Physics Laboratory.  Available under the JHU/APL Open Source Agreement.
 //
 
@@ -553,13 +553,13 @@ namespace WorldWind
                         // save device state
                         Texture origTexture = drawArgs.device.GetTexture(0);
                         VertexFormat origVertexFormat = drawArgs.device.VertexFormat;
-                        float origPointScaleA = drawArgs.device.SetRenderState(RenderState.PointScaleA;
-                        float origPointScaleB = drawArgs.device.SetRenderState(RenderState.PointScaleB;
-                        float origPointScaleC = drawArgs.device.SetRenderState(RenderState.PointScaleC;
-                        bool origPointSpriteEnable = drawArgs.device.SetRenderState(RenderState.PointSpriteEnable;
-                        bool origPointScaleEnable = drawArgs.device.SetRenderState(RenderState.PointScaleEnable;
-                        Blend origSourceBlend = drawArgs.device.SetRenderState(RenderState.SourceBlend;
-                        Blend origDestBlend = drawArgs.device.SetRenderState(RenderState.DestinationBlend;
+                        float origPointScaleA , drawArgs.device.SetRenderState(RenderState.PointScaleA);
+                        float origPointScaleB , drawArgs.device.SetRenderState(RenderState.PointScaleB);
+                        float origPointScaleC , drawArgs.device.SetRenderState(RenderState.PointScaleC);
+                        bool origPointSpriteEnable , drawArgs.device.SetRenderState(RenderState.PointSpriteEnable);
+                        bool origPointScaleEnable , drawArgs.device.SetRenderState(RenderState.PointScaleEnable);
+                        Blend origSourceBlend , drawArgs.device.SetRenderState(RenderState.SourceBlend);
+                        Blend origDestBlend , drawArgs.device.SetRenderState(RenderState.DestinationBlend);
 
                         // set device to do point sprites
                         drawArgs.device.SetTexture(0, this.m_pointTexture.Texture);
@@ -567,9 +567,9 @@ namespace WorldWind
                         drawArgs.device.SetRenderState(RenderState.PointScaleA, 1f);
                         drawArgs.device.SetRenderState(RenderState.PointScaleB, 0f);
                         drawArgs.device.SetRenderState(RenderState.PointScaleC, 0f);
-                        //drawArgs.device.SetRenderState(RenderState.PointScaleA = 0f;
-                        //drawArgs.device.SetRenderState(RenderState.PointScaleB = 0f;
-                        //drawArgs.device.SetRenderState(RenderState.PointScaleC = .0000000000001f;
+                        //drawArgs.device.SetRenderState(RenderState.PointScaleA , 0f);
+                        //drawArgs.device.SetRenderState(RenderState.PointScaleB , 0f);
+                        //drawArgs.device.SetRenderState(RenderState.PointScaleC , .0000000000001f);
                         drawArgs.device.SetRenderState(RenderState.PointSpriteEnable, true);
                         drawArgs.device.SetRenderState(RenderState.PointScaleEnable, true);
                         drawArgs.device.SetRenderState(RenderState.SourceBlend, Blend.One);
@@ -584,13 +584,13 @@ namespace WorldWind
                         // restore device state
                         drawArgs.device.SetTexture(0, origTexture);
                         drawArgs.device.VertexFormat = origVertexFormat;
-                        drawArgs.device.SetRenderState(RenderState.PointScaleA, = origPointScaleA);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleB, = origPointScaleB);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleC, = origPointScaleC);
-                        drawArgs.device.SetRenderState(RenderState.PointSpriteEnable, = origPointSpriteEnable);
-                        drawArgs.device.SetRenderState(RenderState.PointScaleEnable, = origPointScaleEnable);
-                        drawArgs.device.SetRenderState(RenderState.SourceBlend, = origSourceBlend);
-                        drawArgs.device.SetRenderState(RenderState.DestinationBlend, = origDestBlend);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleA, , origPointScaleA);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleB, , origPointScaleB);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleC, , origPointScaleC);
+                        drawArgs.device.SetRenderState(RenderState.PointSpriteEnable, , origPointSpriteEnable);
+                        drawArgs.device.SetRenderState(RenderState.PointScaleEnable, , origPointScaleEnable);
+                        drawArgs.device.SetRenderState(RenderState.SourceBlend, , origSourceBlend);
+                        drawArgs.device.SetRenderState(RenderState.DestinationBlend, , origDestBlend);
                     }
                 }
                 catch (Exception ex)

@@ -108,7 +108,7 @@ namespace WorldWind
 			if(this.isInitialized)
 			{
 				drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
-				drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+				drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 				drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this._vertices.Length, this._indices.Length / 3, this._indices, false, this._vertices);
 			}
 		}

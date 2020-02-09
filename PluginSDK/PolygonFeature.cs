@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
-using System.Drawing;
+using SharpDX;
+using SharpDX.Direct3D9;
 using Tao.OpenGl;
 using Utility;
+using Color = System.Drawing.Color;
+using Point = System.Drawing.Point;
 
 namespace WorldWind
 {
@@ -805,13 +808,13 @@ namespace WorldWind
                     return;
 
                 // save state
-                Cull currentCull = drawArgs.device.SetRenderState(RenderState.CullMode;
-                bool currentZBufferEnable = drawArgs.device.SetRenderState(RenderState.ZBufferEnable;
+                Cull currentCull , drawArgs.device.SetRenderState(RenderState.CullMode);
+                bool currentZBufferEnable , drawArgs.device.SetRenderState(RenderState.ZEnable);
 
                 try
                 {
-                    drawArgs.device.SetRenderState(RenderState.CullMode = Cull.None;
-                    drawArgs.device.SetRenderState(RenderState.ZBufferEnable = this.m_ZBufferEnable;
+                    drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
+                    drawArgs.device.SetRenderState(RenderState.ZEnable , this.m_ZBufferEnable);
 
                     drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
                         (float)-drawArgs.WorldCamera.ReferenceCenter.X + this.m_localOrigin.X,
@@ -827,29 +830,29 @@ namespace WorldWind
                             (float)sunPosition.Y,
                             (float)sunPosition.Z);
 
-                        drawArgs.device.SetRenderState(RenderState.Lighting = true;
+                        drawArgs.device.SetRenderState(RenderState.Lighting , true);
                         Material material = new Material();
                         material.Diffuse = Color.White;
                         material.Ambient = Color.White;
 
                         drawArgs.device.Material = material;
-                        drawArgs.device.SetRenderState(RenderState.AmbientColor = World.Settings.ShadingAmbientColor.ToArgb();
-                        drawArgs.device.SetRenderState(RenderState.NormalizeNormals = true;
-                        drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable = true;
+                        drawArgs.device.SetRenderState(RenderState.AmbientColor , World.Settings.ShadingAmbientColor.ToArgb();
+                        drawArgs.device.SetRenderState(RenderState.NormalizeNormals , true);
+                        drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 
                         drawArgs.device.Lights[0].Enabled = true;
                         drawArgs.device.Lights[0].Type = LightType.Directional;
                         drawArgs.device.Lights[0].Diffuse = Color.White;
                         drawArgs.device.Lights[0].Direction = sunVector;
 
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Modulate;
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse;
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.TextureColor;
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Modulate);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.TextureColor);
                     }
                     else
                     {
-                        drawArgs.device.SetRenderState(RenderState.Lighting = false;
-                        drawArgs.device.SetRenderState(RenderState.Ambient = World.Settings.StandardAmbientColor;
+                        drawArgs.device.SetRenderState(RenderState.Lighting , false);
+                        drawArgs.device.SetRenderState(RenderState.Ambient , World.Settings.StandardAmbientColor);
                     }
 
                     //if(m_vertices != null)
@@ -858,7 +861,7 @@ namespace WorldWind
                         if (this.primList.Count > 0)
                         {
                             drawArgs.device.VertexFormat = CustomVertex.PositionNormalColored.Format;
-                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
                             for (int i = 0; i < this.primList.Count; i++)
                             {
                                 int vertexCount = 0;
@@ -894,8 +897,8 @@ namespace WorldWind
                 {
                     // restore device state
                     drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
-                    drawArgs.device.SetRenderState(RenderState.CullMode = currentCull;
-                    drawArgs.device.SetRenderState(RenderState.ZBufferEnable = currentZBufferEnable;
+                    drawArgs.device.SetRenderState(RenderState.CullMode , currentCull);
+                    drawArgs.device.SetRenderState(RenderState.ZEnable , currentZBufferEnable);
                 }
             }
 		}

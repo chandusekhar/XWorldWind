@@ -181,8 +181,8 @@ namespace WorldWind
                 this.setupReflectionEffect(drawArgs);
 
 			//render the effect
-            bool alphastate = device.SetRenderState(RenderState.AlphaBlendEnable;
-			device.SetRenderState(RenderState.AlphaBlendEnable = true;
+            bool alphastate , device.SetRenderState(RenderState.AlphaBlendEnable);
+			device.SetRenderState(RenderState.AlphaBlendEnable , true);
             this.effect.Begin(0);
             this.effect.BeginPass(0);
              
@@ -191,11 +191,11 @@ namespace WorldWind
 
             this.effect.EndPass();
             this.effect.End();
-			device.SetRenderState(RenderState.AlphaBlendEnable = alphastate;
+			device.SetRenderState(RenderState.AlphaBlendEnable , alphastate);
             
 
             drawArgs.device.SetTransform(TransformState.World, currentWorld;
-            drawArgs.device.SetRenderState(RenderState.Lighting = false;
+            drawArgs.device.SetRenderState(RenderState.Lighting , false);
 		}
 
         private void setupBumpEffect(DrawArgs drawArgs)
@@ -272,13 +272,13 @@ namespace WorldWind
 			effect.SetValue("time", waterTime);
 
 			//render the effect
-			//device.SetRenderState(RenderState.AlphaBlendEnable = true;
+			//device.SetRenderState(RenderState.AlphaBlendEnable , true);
 			effect.Begin(0);
 			effect.BeginPass(0);
 			mesh.DrawSubset(0);
 			effect.EndPass();
 			effect.End();
-			//device.SetRenderState(RenderState.AlphaBlendEnable = false;
+			//device.SetRenderState(RenderState.AlphaBlendEnable , false);
 		}
         */
         public override void Dispose()

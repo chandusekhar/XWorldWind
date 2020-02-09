@@ -1,123 +1,124 @@
 using System;
+using WorldWind.Net.Wms;
 
 namespace WorldWind
 {
-    public interface IGlobe
-    {
-        void SetDisplayMessages(System.SetSamplerState(0, SamplerStateCollections.SetSamplerState(0, SamplerStateIList messages);
-        void SetLatLonGridShow(bool show);
-        void SetLayers(System.SetSamplerState(0, SamplerStateCollections.SetSamplerState(0, SamplerStateIList layers);
-        void SetVerticalExaggeration(double exageration);
-        void SetViewDirection(String type, double horiz, double vert, double elev);
-        void SetViewPosition(double degreesLatitude, double degreesLongitude,
-        double metersElevation);
-        void SetWmsImage(WmsDescriptor imageA, WmsDescriptor imageB, double alpha);
-    }
+	public interface IGlobe
+	{
+		void SetDisplayMessages(System.Collections.IList messages);
+		void SetLatLonGridShow(bool show);
+		void SetLayers(System.Collections.IList layers);
+		void SetVerticalExaggeration(double exageration);
+		void SetViewDirection(String type, double horiz, double vert, double elev);
+		void SetViewPosition(double degreesLatitude, double degreesLongitude,
+			double metersElevation);
+		void SetWmsImage(WmsDescriptor imageA, WmsDescriptor imageB, double alpha);
+	}
 
-    public sealed class OnScreenMessage
-    {
-        private String message;
-        private double x;
-        private double y;
+	public sealed class OnScreenMessage
+	{
+		private String message;
+		private double x;
+		private double y;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref= "T:WorldWind.SetSamplerState(0, SamplerStateOnScreenMessage"/> class.SetSamplerState(0, SamplerState
-        /// </summary>
-        public OnScreenMessage() {}
+		/// <summary>
+		/// Initializes a new instance of the <see cref= "T:WorldWind.OnScreenMessage"/> class.
+		/// </summary>
+		public OnScreenMessage() {}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref= "T:WorldWind.SetSamplerState(0, SamplerStateOnScreenMessage"/> class.SetSamplerState(0, SamplerState
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="message"></param>
-        public OnScreenMessage(double x, double y, String message)
-        {
-            this.SetSamplerState(0, SamplerStatex = x;
-            this.SetSamplerState(0, SamplerStatey = y;
-            this.SetSamplerState(0, SamplerStatemessage = message;
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref= "T:WorldWind.OnScreenMessage"/> class.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="message"></param>
+		public OnScreenMessage(double x, double y, String message)
+		{
+			this.x = x;
+			this.y = y;
+			this.message = message;
+		}
 
-        public String Message
-        {
-            get {return this.SetSamplerState(0, SamplerStatemessage;}
-            set {this.SetSamplerState(0, SamplerStatemessage = value;}
-        }
+		public String Message
+		{
+			get {return this.message;}
+			set {this.message = value;}
+		}
 		
-        public double X
-        {
-            get {return this.SetSamplerState(0, SamplerStatex;}
-            set {this.SetSamplerState(0, SamplerStatex = value;}
-        }
+		public double X
+		{
+			get {return this.x;}
+			set {this.x = value;}
+		}
 		
-        public double Y
-        {
-            get {return this.SetSamplerState(0, SamplerStatey;}
-            set {this.SetSamplerState(0, SamplerStatey = value;}
-        }
+		public double Y
+		{
+			get {return this.y;}
+			set {this.y = value;}
+		}
 
-    }
+	}
 
-    public sealed class LayerDescriptor
-    {
-        private String category;
-        private String name;
-        private double opacity;
+	public sealed class LayerDescriptor
+	{
+		private String category;
+		private String name;
+		private double opacity;
 
-        public LayerDescriptor() {}
+		public LayerDescriptor() {}
 
-        public LayerDescriptor(String category, String name, double opacity)
-        {
-            this.SetSamplerState(0, SamplerStatecategory = category;
-            this.SetSamplerState(0, SamplerStatename = name;
-            this.SetSamplerState(0, SamplerStateopacity = opacity;
-        }
+		public LayerDescriptor(String category, String name, double opacity)
+		{
+			this.category = category;
+			this.name = name;
+			this.opacity = opacity;
+		}
 
-        public String Category
-        {
-            get {return this.SetSamplerState(0, SamplerStatecategory;}
-            set {this.SetSamplerState(0, SamplerStatecategory = value;}
-        }
+		public String Category
+		{
+			get {return this.category;}
+			set {this.category = value;}
+		}
 
-        public String Name
-        {
-            get {return this.SetSamplerState(0, SamplerStatename;}
-            set {this.SetSamplerState(0, SamplerStatename = value;}
-        }
+		public String Name
+		{
+			get {return this.name;}
+			set {this.name = value;}
+		}
 
-        public double Opacity
-        {
-            get {return this.SetSamplerState(0, SamplerStateopacity;}
-            set {this.SetSamplerState(0, SamplerStateopacity = value;}
-        }
-    }
+		public double Opacity
+		{
+			get {return this.opacity;}
+			set {this.opacity = value;}
+		}
+	}
+}
 
-    (0, SamplerStateNet.SetSamplerState(0, SamplerStateWms
-    {
-    public sealed class WmsDescriptor
-    {
-        private Uri url;
-        private double opacity;
+namespace WorldWind.Net.Wms
+{
+	public sealed class WmsDescriptor
+	{
+		private System.Uri url;
+		private double opacity;
 
-        public WmsDescriptor() {}
+		public WmsDescriptor() {}
 
-        public WmsDescriptor(Uri url, double opacity)
-        {
-            this.SetSamplerState(0, SamplerStateurl = url;
-            this.SetSamplerState(0, SamplerStateopacity = opacity;
-        }
+		public WmsDescriptor(System.Uri url, double opacity)
+		{
+			this.url = url;
+			this.opacity = opacity;
+		}
 
-        public Uri Url
-        {
-            get {return this.SetSamplerState(0, SamplerStateurl;}
-            set {this.SetSamplerState(0, SamplerStateurl = value;}
-        }
+		public System.Uri Url
+		{
+			get {return this.url;}
+			set {this.url = value;}
+		}
 
-        public double Opacity
-        {
-            get {return this.SetSamplerState(0, SamplerStateopacity;}
-            set {this.SetSamplerState(0, SamplerStateopacity = value;}
-        }
-    }
-    }
+		public double Opacity
+		{
+			get {return this.opacity;}
+			set {this.opacity = value;}
+		}
+	}
 }

@@ -595,9 +595,9 @@ namespace WorldWind.Menu
                             }
 
                             drawArgs.device.VertexFormat = CustomVertex.TransformedColored.Format;
-                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
                             drawArgs.device.DrawUserPrimitives(PrimitiveType.TriangleList, 1, this.enabledChevron);
-                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
+                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
                         }
 
                         button.RenderEnabledIcon(this.m_sprite,

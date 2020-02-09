@@ -744,11 +744,11 @@ namespace WorldWind
                     if (this.m_lineString != null)
                         return;
 
-                    Cull currentCull = drawArgs.device.SetRenderState(RenderState.CullMode;
-                    drawArgs.device.SetRenderState(RenderState.CullMode = Cull.None;
+                    Cull currentCull = drawArgs.device.GetRenderState(RenderState.CullMode);
+                    drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
 
-                    bool currentAlpha = drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable;
-                    drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable = true;
+                    bool currentAlpha = drawArgs.device.GetRenderState(RenderState.AlphaBlendEnable);
+                    drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 
                     drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
                         (float)-drawArgs.WorldCamera.ReferenceCenter.X + this.m_localOrigin.X,
@@ -757,29 +757,29 @@ namespace WorldWind
                         );
 
                     //Fix for sunshading screwing with everything
-                    bool lighting = drawArgs.device.SetRenderState(RenderState.Lighting;
-                    drawArgs.device.SetRenderState(RenderState.Lighting = this.m_enableLighting;
+                    bool lighting = drawArgs.device.GetRenderState(RenderState.Lighting);
+                    drawArgs.device.SetRenderState(RenderState.Lighting , this.m_enableLighting);
 
                     if (this.m_wallVertices != null)
                     {
-                        drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+                        drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 
                         if (this.m_texture != null && !this.m_texture.Disposed)
                         {
                             drawArgs.device.SetTexture(0, this.m_texture);
-                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate;
-                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Add;
-                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor;
+                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate);
+                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Add);
+                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor);
                         }
                         else
                         {
-                            // drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+                            // drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 
-                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse;
-                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
+                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
+                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
 
-                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse;
-                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1;
+                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse);
+                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1);
                         }
 
                         Material mat = new Material();
@@ -801,13 +801,13 @@ namespace WorldWind
                         if (this.m_outline)
                         {
 
-                            // drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+                            // drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 
-                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse;
-                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
+                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
+                            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
 
-                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse;
-                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1;
+                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse);
+                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1);
 
                             drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
                             drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, this.m_topVertices.Length - 1, this.m_topVertices);
@@ -822,24 +822,24 @@ namespace WorldWind
                     }
                     else
                     {
-                        // drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse;
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
+                        // drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
 
-                        drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse;
-                        drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1;
+                        drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1);
 
                         drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
                         drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, this.m_topVertices.Length - 1, this.m_topVertices);
                     }
 
                     drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
-                    drawArgs.device.SetRenderState(RenderState.CullMode = currentCull;
-                    drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable = currentAlpha;
+                    drawArgs.device.SetRenderState(RenderState.CullMode , currentCull);
+                    drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , currentAlpha);
 
 
                     //put lighting back like it was (see above fix)
-                    drawArgs.device.SetRenderState(RenderState.Lighting = lighting;
+                    drawArgs.device.SetRenderState(RenderState.Lighting , lighting);
                 }
                 catch//(Exception ex)
                 {

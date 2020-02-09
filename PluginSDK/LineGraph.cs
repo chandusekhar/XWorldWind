@@ -137,7 +137,7 @@ namespace WorldWind
 				}
 			}
 
-			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			drawArgs.device.VertexFormat = CustomVertex.TransformedColored.Format;
 
 			drawArgs.device.VertexFormat = CustomVertex.TransformedColored.Format;

@@ -265,15 +265,15 @@ namespace WorldWind
 
             // save current state
             Matrix currentWorld = drawArgs.device.Transform.World;
-            Cull cullMode = drawArgs.device.SetRenderState(RenderState.CullMode;
-            bool lighting = drawArgs.device.SetRenderState(RenderState.Lighting;
-            int ambientColor = drawArgs.device.SetRenderState(RenderState.AmbientColor;
-            bool normalizeNormals = drawArgs.device.SetRenderState(RenderState.NormalizeNormals;
+            Cull cullMode , drawArgs.device.SetRenderState(RenderState.CullMode);
+            bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
+            int ambientColor , drawArgs.device.SetRenderState(RenderState.AmbientColor);
+            bool normalizeNormals , drawArgs.device.SetRenderState(RenderState.NormalizeNormals);
 
-            drawArgs.device.SetRenderState(RenderState.CullMode = Cull.None;
-            drawArgs.device.SetRenderState(RenderState.Lighting = true;
-            drawArgs.device.SetRenderState(RenderState.AmbientColor = 0xCCCCCC; //  0x808080;
-            drawArgs.device.SetRenderState(RenderState.NormalizeNormals = true;
+            drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
+            drawArgs.device.SetRenderState(RenderState.Lighting , true);
+            drawArgs.device.SetRenderState(RenderState.AmbientColor , 0xCCCCCC); //  0x808080);
+            drawArgs.device.SetRenderState(RenderState.NormalizeNormals , true);
 
             drawArgs.device.Lights[0].Diffuse = Color.FromArgb(255, 255, 255);
             drawArgs.device.Lights[0].Ambient = this.TintColor;
@@ -284,9 +284,9 @@ namespace WorldWind
             drawArgs.device.SetSamplerState(0, SamplerState.AddressU = TextureAddress.Wrap;
             drawArgs.device.SetSamplerState(0, SamplerState.AddressV = TextureAddress.Wrap;
 
-            drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable = true;
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor;
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
+            drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , true);
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
 
             // Put the light somewhere up in space
             drawArgs.device.Lights[0].Position = new Vector3(
@@ -336,10 +336,10 @@ namespace WorldWind
             }
 
             drawArgs.device.SetTransform(TransformState.World, currentWorld;
-            drawArgs.device.SetRenderState(RenderState.Lighting = lighting;
-            drawArgs.device.SetRenderState(RenderState.CullMode = cullMode;
-            drawArgs.device.SetRenderState(RenderState.AmbientColor = ambientColor;
-            drawArgs.device.SetRenderState(RenderState.NormalizeNormals = normalizeNormals;
+            drawArgs.device.SetRenderState(RenderState.Lighting , lighting);
+            drawArgs.device.SetRenderState(RenderState.CullMode , cullMode);
+            drawArgs.device.SetRenderState(RenderState.AmbientColor , ambientColor);
+            drawArgs.device.SetRenderState(RenderState.NormalizeNormals , normalizeNormals);
         }
 
 

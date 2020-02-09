@@ -84,15 +84,15 @@ namespace WorldWind
 		{
 //			Vector3 here = MathEngine.SphericalToCartesian(drawArgs.WorldCamera.Latitude, drawArgs.WorldCamera.Longitude, this.layerRadius);
 			Matrix currentWorld = drawArgs.device.Transform.World;
-			drawArgs.device.SetRenderState(RenderState.Lighting = true;
-			drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+			drawArgs.device.SetRenderState(RenderState.Lighting , true);
+			drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 			drawArgs.device.Lights[0].Diffuse = System.Drawing.Color.White; 
 			drawArgs.device.Lights[0].Type = LightType.Point; 
 			drawArgs.device.Lights[0].Range = 100000;
 			drawArgs.device.Lights[0].Position = new Vector3(this.layerRadius, 0, 0);
 			drawArgs.device.Lights[0].Enabled = true ; 
 
-			drawArgs.device.SetRenderState(RenderState.CullMode = Cull.None;
+			drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
 			drawArgs.device.SetTransform(TransformState.World, Matrix.Identity;
 			drawArgs.device.Transform.World *= Matrix.Scaling(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 			//drawArgs.device.Transform.World *= Matrix.RotationX(MathEngine.RadiansToDegrees(90));
@@ -103,8 +103,8 @@ namespace WorldWind
 			
 			//drawArgs.device.Transform.World *= Matrix.RotationQuaternion(drawArgs.WorldCamera.CurrentOrientation);
 		
-			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
-			drawArgs.device.SetRenderState(RenderState.NormalizeNormals = true;
+			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
+			drawArgs.device.SetRenderState(RenderState.NormalizeNormals , true);
 		
 			
 			for( int i = 0; i < this.meshMaterials.Length; i++ )
@@ -114,8 +114,8 @@ namespace WorldWind
 			}
 			
 			drawArgs.device.SetTransform(TransformState.World, currentWorld;
-			drawArgs.device.SetRenderState(RenderState.CullMode = Cull.Clockwise;
-			drawArgs.device.SetRenderState(RenderState.Lighting = false;
+			drawArgs.device.SetRenderState(RenderState.CullMode , Cull.Clockwise);
+			drawArgs.device.SetRenderState(RenderState.Lighting , false);
 		}
 	}
 }

@@ -659,32 +659,32 @@ namespace WorldWind
 
 				if(this._disableZbuffer)
 				{
-					if(drawArgs.device.SetRenderState(RenderState.ZBufferEnable)
-						drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
+					if(drawArgs.device.SetRenderState(RenderState.ZEnable)
+						drawArgs.device.SetRenderState(RenderState.ZEnable , false);
 				}
 				else
 				{
-					if(!drawArgs.device.SetRenderState(RenderState.ZBufferEnable)
-						drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+					if(!drawArgs.device.SetRenderState(RenderState.ZEnable)
+						drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 				}
 
-				drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+				drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 				drawArgs.device.Clear(ClearFlags.ZBuffer, 0, 1.0f, 0);
 
 			/*	if (m_opacity < 255 && device.Capabilities.DestinationBlendCaps.SupportsBlendFactor)
 				{
 					// Blend
-					device.SetRenderState(RenderState.AlphaBlendEnable = true;
-					device.SetRenderState(RenderState.SourceBlend = m_sourceBlend;
-					device.SetRenderState(RenderState.DestinationBlend = m_destinationBlend;
+					device.SetRenderState(RenderState.AlphaBlendEnable , true);
+					device.SetRenderState(RenderState.SourceBlend , m_sourceBlend);
+					device.SetRenderState(RenderState.DestinationBlend , m_destinationBlend);
 					// Set Red, Green and Blue = opacity
-					device.SetRenderState(RenderState.BlendFactorColor = (m_opacity << 16) | (m_opacity << 8) | m_opacity;
+					device.SetRenderState(RenderState.BlendFactorColor , (m_opacity << 16) | (m_opacity << 8) | m_opacity;
 				}*/
 			//	else if (EnableColorKeying && device.Capabilities.TextureCaps.SupportsAlpha)
 			//	{
-			//		device.SetRenderState(RenderState.AlphaBlendEnable = true;
-			//		device.SetRenderState(RenderState.SourceBlend = Blend.SourceAlpha;
-			//		device.SetRenderState(RenderState.DestinationBlend = Blend.InvSourceAlpha;
+			//		device.SetRenderState(RenderState.AlphaBlendEnable , true);
+			//		device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
+			//		device.SetRenderState(RenderState.DestinationBlend , Blend.InvSourceAlpha);
 			//	}
 
                 drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
@@ -704,38 +704,38 @@ namespace WorldWind
                             (float)sunPosition.Y,
                             (float)sunPosition.Z);
 
-                        this.device.SetRenderState(RenderState.Lighting = true;
+                        this.device.SetRenderState(RenderState.Lighting , true);
                         Material material = new Material();
                         material.Diffuse = System.Drawing.Color.White;
                         material.Ambient = System.Drawing.Color.White;
 
                         this.device.Material = material;
-                        this.device.SetRenderState(RenderState.AmbientColor = World.Settings.ShadingAmbientColor.ToArgb();
-                        this.device.SetRenderState(RenderState.NormalizeNormals = true;
-                        this.device.SetRenderState(RenderState.AlphaBlendEnable = true;
+                        this.device.SetRenderState(RenderState.AmbientColor , World.Settings.ShadingAmbientColor.ToArgb();
+                        this.device.SetRenderState(RenderState.NormalizeNormals , true);
+                        this.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 
                         this.device.Lights[0].Enabled = true;
                         this.device.Lights[0].Type = LightType.Directional;
                         this.device.Lights[0].Diffuse = System.Drawing.Color.White;
                         this.device.Lights[0].Direction = sunVector;
 
-                        this.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Modulate;
-                        this.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse;
-                        this.device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.TextureColor;
+                        this.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Modulate);
+                        this.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
+                        this.device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.TextureColor);
                     }
                     else
                     {
-                        this.device.SetRenderState(RenderState.Lighting = false;
-                        this.device.SetRenderState(RenderState.Ambient = World.Settings.StandardAmbientColor;
+                        this.device.SetRenderState(RenderState.Lighting , false);
+                        this.device.SetRenderState(RenderState.Ambient , World.Settings.StandardAmbientColor);
 
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
-                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor;
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
+                        drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
                     }
 
-                    this.device.SetRenderState(RenderState.TextureFactor = System.Drawing.Color.FromArgb(this.m_opacity, 255, 255, 255).ToArgb();
-                    this.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate;
-                    this.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor;
-                    this.device.SetTextureStageState(0, TextureStage.AlphaArg2,TextureArgument.TFactor;
+                    this.device.SetRenderState(RenderState.TextureFactor , System.Drawing.Color.FromArgb(this.m_opacity, 255, 255, 255).ToArgb();
+                    this.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate);
+                    this.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor);
+                    this.device.SetTextureStageState(0, TextureStage.AlphaArg2,TextureArgument.TFactor);
 
                     drawArgs.device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
 
@@ -779,12 +779,12 @@ namespace WorldWind
 				if (this.m_opacity < 255)
 				{
 					// Restore alpha blend state
-                    this.device.SetRenderState(RenderState.SourceBlend = Blend.SourceAlpha;
-                    this.device.SetRenderState(RenderState.DestinationBlend = Blend.InvSourceAlpha;
+                    this.device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
+                    this.device.SetRenderState(RenderState.DestinationBlend , Blend.InvSourceAlpha);
 				}
 
 				if(this._disableZbuffer)
-					drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+					drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 			}
 		}
 
@@ -815,7 +815,7 @@ namespace WorldWind
 				(float)-drawArgs.WorldCamera.ReferenceCenter.Z
 			);
 
-            this.device.SetRenderState(RenderState.ZBufferEnable = false;
+            this.device.SetRenderState(RenderState.ZEnable , false);
 			double centerLat = 0.5 * (this.maxLat + this.minLat);
 			double centerLon = 0.5 * (this.maxLon + this.minLon);
 
@@ -854,7 +854,7 @@ namespace WorldWind
                 this.DrawProgressBar(drawArgs, v.X + 100, v.Y + 30, 180, 10, World.Settings.downloadProgressColor);
 			}
 
-            this.device.SetRenderState(RenderState.ZBufferEnable = true;
+            this.device.SetRenderState(RenderState.ZEnable , true);
 			drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
 		}
 
@@ -891,7 +891,7 @@ namespace WorldWind
 			progressBarOutline[4].Color = color;
 
 			drawArgs.device.VertexFormat = CustomVertex.TransformedColored.Format;
-			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, 4, progressBarOutline);
 				
 			int barlength = (int)(this.downloadPercent * 2 * halfWidth);

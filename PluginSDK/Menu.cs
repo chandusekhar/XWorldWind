@@ -5,8 +5,14 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using SharpDX;
+using SharpDX.Direct3D9;
 using Utility;
 using WorldWind.Menu;
+using Color = System.Drawing.Color;
+using Font = System.Drawing.Font;
+using Point = System.Drawing.Point;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace WorldWind
 {
@@ -1218,7 +1224,7 @@ namespace WorldWind
 				lineVerts[i].Color = color;
 			}
 
-			device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			device.VertexFormat = CustomVertex.TransformedColored.Format;
 
 			device.DrawUserPrimitives(PrimitiveType.LineStrip, lineVerts.Length - 1, lineVerts);
@@ -1248,7 +1254,7 @@ namespace WorldWind
 			verts[3].Color = color;
 
 			device.VertexFormat = CustomVertex.TransformedColored.Format;
-			device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			device.DrawUserPrimitives(PrimitiveType.TriangleStrip, verts.Length - 2, verts);
 		}
 
@@ -1272,7 +1278,7 @@ namespace WorldWind
 			}
 
 			device.VertexFormat = CustomVertex.TransformedColored.Format;
-			device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+			device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 			device.DrawUserPrimitives(PrimitiveType.TriangleFan, verts.Length - 2, verts);
 		}
 	}

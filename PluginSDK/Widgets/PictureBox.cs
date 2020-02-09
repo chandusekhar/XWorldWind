@@ -377,7 +377,7 @@ namespace WorldWind.Widgets
 				{
 					drawArgs.device.SetTexture(0, this.m_ImageTexture);
 							
-					drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
+					drawArgs.device.SetRenderState(RenderState.ZEnable , false);
 
 					System.Drawing.Point ul = new System.Drawing.Point(this.AbsoluteLocation.X, this.AbsoluteLocation.Y);
 					System.Drawing.Point ur = new System.Drawing.Point(this.AbsoluteLocation.X + this.m_Size.Width, this.AbsoluteLocation.Y);

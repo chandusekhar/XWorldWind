@@ -369,10 +369,10 @@ namespace WorldWind
 				{
 					drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
 						
-					float curPointSize = drawArgs.device.SetRenderState(RenderState.PointSize;
+					float curPointSize , drawArgs.device.SetRenderState(RenderState.PointSize);
 						
-					drawArgs.device.SetRenderState(RenderState.PointSize = 5.0f;
-					drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
+					drawArgs.device.SetRenderState(RenderState.PointSize , 5.0f);
+					drawArgs.device.SetRenderState(RenderState.ZEnable , false);
 					CustomVertex.PositionColored[] verts = new SharpDX.Direct3D9.CustomVertex.PositionColored[1];
 					Vector3 camPoint = MathEngine.SphericalToCartesian(drawArgs.WorldCamera.Latitude.Degrees, drawArgs.WorldCamera.Longitude.Degrees, this.m_ShapeTileArgs.LayerRadius);
 					
@@ -392,8 +392,8 @@ namespace WorldWind
 					}
 
 					drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix);
-					drawArgs.device.SetRenderState(RenderState.PointSize = curPointSize;
-					drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+					drawArgs.device.SetRenderState(RenderState.PointSize , curPointSize);
+					drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 				}
 
 				if(this.m_LabelList.Count > 0)

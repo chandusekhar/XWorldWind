@@ -220,7 +220,7 @@ namespace WorldWind
 			
 			if(drawArgs.RenderWireFrame)
 			{
-				drawArgs.device.SetRenderState(RenderState.FillMode = FillMode.Solid;
+				drawArgs.device.SetRenderState(RenderState.FillMode , FillMode.Solid);
 			}
 			using(Surface renderSurface = this.m_RenderTexture.GetSurfaceLevel(0))
 			{
@@ -228,7 +228,7 @@ namespace WorldWind
 					drawArgs.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, System.Drawing.Color.Black, 1.0f, 0);
 
 					drawArgs.device.VertexFormat = CustomVertex.TransformedColoredTextured.Format;
-					drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
+					drawArgs.device.SetRenderState(RenderState.ZEnable , false);
 
 					double latRange = this.m_North - this.m_South;
 					double lonRange = this.m_East - this.m_West;
@@ -294,15 +294,15 @@ namespace WorldWind
 								currentSurfaceImage.ParentRenderable.Opacity,
 								0,0,0).ToArgb();
 						
-							drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable = true;
-							drawArgs.device.SetRenderState(RenderState.SourceBlend = Blend.SourceAlpha;
-							drawArgs.device.SetRenderState(RenderState.DestinationBlend = Blend.InverseSourceAlpha;
+							drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , true);
+							drawArgs.device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
+							drawArgs.device.SetRenderState(RenderState.DestinationBlend , Blend.InverseSourceAlpha);
 
 							drawArgs.device.SetSamplerState(0, SamplerState.BorderColor = System.Drawing.Color.FromArgb(0,0,0,0);
 							drawArgs.device.SamplerState[1].BorderColor = System.Drawing.Color.FromArgb(0,0,0,0);
 							drawArgs.device.SetTexture(0, currentSurfaceImage.ImageTexture);
 							drawArgs.device.SetTexture(1, currentSurfaceImage.ImageTexture);
-							drawArgs.device.SetTextureStageState(1, TextureStage.TextureCoordinateIndex = 0;
+							drawArgs.device.SetTextureStageState(1, TextureStage.TextureCoordinateIndex , 0);
 							
 							drawArgs.device.SetSamplerState(0, SamplerState.MinFilter = TextureFilter.Linear;
 							drawArgs.device.SetSamplerState(0, SamplerState.MagFilter = TextureFilter.Linear;
@@ -341,13 +341,13 @@ namespace WorldWind
 						}
 
                         this.m_ParentWorldSurfaceRenderer.RenderToSurface.EndScene(Filter.Box);
-						drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+						drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 					}
 			}
 
 			if(drawArgs.RenderWireFrame)
 			{
-				drawArgs.device.SetRenderState(RenderState.FillMode = FillMode.Wireframe;
+				drawArgs.device.SetRenderState(RenderState.FillMode , FillMode.Wireframe);
 			}
 
             this.m_LastUpdate = DateTime.Now;

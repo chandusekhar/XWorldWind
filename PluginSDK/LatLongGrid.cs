@@ -100,9 +100,9 @@ namespace WorldWind
 
             float offsetDegrees = (float)drawArgs.WorldCamera.TrueViewRange.Degrees / 6;
 
-            drawArgs.device.SetRenderState(RenderState.ZBufferEnable = this.useZBuffer;
+            drawArgs.device.SetRenderState(RenderState.ZEnable , this.useZBuffer);
 
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
             drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
             drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
                     (float)-drawArgs.WorldCamera.ReferenceCenter.X,
@@ -116,7 +116,7 @@ namespace WorldWind
                     (float)drawArgs.WorldCamera.ReferenceCenter.Z);
 
             // Turn off light
-            if (World.Settings.EnableSunShading) drawArgs.device.SetRenderState(RenderState.Lighting = false;
+            if (World.Settings.EnableSunShading) drawArgs.device.SetRenderState(RenderState.Lighting , false;
 
             // Draw longitudes
             for (float longitude = this.MinVisibleLongitude; longitude < this.MaxVisibleLongitude; longitude += this.LongitudeInterval)
@@ -209,8 +209,8 @@ namespace WorldWind
             drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
             if (!this.useZBuffer)
                 // Reset Z buffer setting
-                drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
-            if (World.Settings.EnableSunShading) drawArgs.device.SetRenderState(RenderState.Lighting = true;
+                drawArgs.device.SetRenderState(RenderState.ZEnable , true);
+            if (World.Settings.EnableSunShading) drawArgs.device.SetRenderState(RenderState.Lighting , true;
         }
 
         public override void Initialize(DrawArgs drawArgs)

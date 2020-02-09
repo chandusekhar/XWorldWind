@@ -226,8 +226,8 @@ namespace WorldWind.Renderable
 
         private void renderHighlight(DrawArgs drawArgs)
         {
-            bool lighting = drawArgs.device.SetRenderState(RenderState.Lighting;
-            drawArgs.device.SetRenderState(RenderState.Lighting = false;
+            bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
+            drawArgs.device.SetRenderState(RenderState.Lighting , false);
 
             if (m_highlightVertices == null)
             {
@@ -276,17 +276,17 @@ namespace WorldWind.Renderable
                 );
 
             drawArgs.device.Transform.World *= Matrix.Translation(surfacePos - rc);
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor;
-            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor;
-            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1;
-            drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
+            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor);
+            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1);
+            drawArgs.device.SetRenderState(RenderState.ZEnable , false);
             drawArgs.device.SetTexture(0, HighlightTexture);
             drawArgs.device.VertexFormat = CustomVertex.PositionColoredTextured.Format;
 
             drawArgs.device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, m_highlightVertices);
-            drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
-            drawArgs.device.SetRenderState(RenderState.Lighting = lighting;
+            drawArgs.device.SetRenderState(RenderState.ZEnable , true);
+            drawArgs.device.SetRenderState(RenderState.Lighting , lighting);
         }
 
         bool m_isMouseInside;
@@ -306,11 +306,11 @@ namespace WorldWind.Renderable
                     this.Bar3D.Render(drawArgs);
                     offset = this.Bar3D.RenderedHeight;
                 }
-                Cull cull = drawArgs.device.SetRenderState(RenderState.CullMode;
-                drawArgs.device.SetRenderState(RenderState.CullMode = Cull.None;
-                drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
-                drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
-                drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor;
+                Cull cull , drawArgs.device.SetRenderState(RenderState.CullMode);
+                drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
+                drawArgs.device.SetRenderState(RenderState.ZEnable , true);
+                drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
+                drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
 
                 Vector3 surfacePos = MathEngine.SphericalToCartesian(this.m_latitude, this.m_longitude, this.World.EquatorialRadius);
 
@@ -341,11 +341,11 @@ namespace WorldWind.Renderable
                         if (this.OnMouseLeaveEvent != null) this.OnMouseLeaveEvent(this, null);
                     }
                 }
-                drawArgs.device.SetRenderState(RenderState.CullMode = Cull.None;
+                drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
 
                 if (this.ShowHighlight) this.renderHighlight(drawArgs);
                 this.RenderFlag(drawArgs, offset);
-                drawArgs.device.SetRenderState(RenderState.CullMode = cull;
+                drawArgs.device.SetRenderState(RenderState.CullMode , cull);
             }
             catch (Exception ex)
             {
@@ -404,10 +404,10 @@ namespace WorldWind.Renderable
             drawArgs.device.Transform.World *= Matrix.Translation(surfacePos - rc);
 
             drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse;
-            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse;
-            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1;
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
+            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Diffuse);
+            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1);
             drawArgs.device.VertexShader = null;
             drawArgs.device.PixelShader = null;
             drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 

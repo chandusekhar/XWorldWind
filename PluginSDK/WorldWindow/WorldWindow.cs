@@ -125,12 +125,12 @@
 	contractor pursuant to Government Agency contract and rights obtained
 	from creator by assignment.  Government Agency will insert the year
 	and its Agency designation and remove the bracketed language.]
-	Copyright ã {YEAR} United States Government as represented by ______
+	Copyright ï¿½ {YEAR} United States Government as represented by ______
 	_________________________.  All Rights Reserved.
 
 	[The following copyright notice will be used if created by civil
 	servants only. Government Agency will insert the year and its Agency
-	designation and remove the bracketed language.]  Copyright Ó {YEAR}
+	designation and remove the bracketed language.]  Copyright ï¿½ {YEAR}
 	United States Government as represented by _____________
 	_____________________________.  No copyright is claimed in the United
 	States under Title 17, U.S.Code. All Other Rights Reserved.
@@ -1131,7 +1131,7 @@ namespace WorldWind
                 double heading = this.drawArgs.WorldCamera.Heading.Degrees;
                 if (heading < 0)
                     heading += 360;
-                captionText += String.Format("Latitude: {0:f6}°\nLongitude: {1:f6}°\nHeading: {2:f2}°\nTilt: {3:f2}°\nAltitude: {4}\nDistance: {5}\nFOV: {6}",
+                captionText += String.Format("Latitude: {0:f6}ï¿½\nLongitude: {1:f6}ï¿½\nHeading: {2:f2}ï¿½\nTilt: {3:f2}ï¿½\nAltitude: {4}\nDistance: {5}\nFOV: {6}",
                     this.drawArgs.WorldCamera.Latitude.Degrees,
                     this.drawArgs.WorldCamera.Longitude.Degrees,
                     heading,

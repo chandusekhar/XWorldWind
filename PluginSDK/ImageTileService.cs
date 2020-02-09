@@ -1,15 +1,15 @@
 using System;
-using System.SetSamplerState(0, SamplerStateGlobalization;
+using System.Globalization;
 
 namespace WorldWind
 {
 	/// <summary>
-	/// Summary description for ImageTileService.SetSamplerState(0, SamplerState
+	/// Summary description for ImageTileService.
 	/// </summary>
 	public class ImageTileService
 	{
 		#region Private Members
-		TimeSpan _cacheExpirationTime = TimeSpan.SetSamplerState(0, SamplerStateMaxValue;
+		TimeSpan _cacheExpirationTime = TimeSpan.MaxValue;
 		string _datasetName;
 		string _serverUri;
 		string _serverLogoPath;
@@ -21,7 +21,7 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerState_cacheExpirationTime;
+				return this._cacheExpirationTime;
 			}								   
 		}
 
@@ -29,17 +29,17 @@ namespace WorldWind
 		{
 			get
 			{
-				return this.SetSamplerState(0, SamplerState_serverLogoPath;
+				return this._serverLogoPath;
 			}
 			set
 			{
-				this.SetSamplerState(0, SamplerState_serverLogoPath = value;
+				this._serverLogoPath = value;
 			}								   
 		}
 		#endregion
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref= "T:WorldWind.SetSamplerState(0, SamplerStateImageTileService"/> class.SetSamplerState(0, SamplerState
+		/// Initializes a new instance of the <see cref= "T:WorldWind.ImageTileService"/> class.
 		/// </summary>
 		/// <param name="datasetName"></param>
 		/// <param name="serverUri"></param>
@@ -51,14 +51,14 @@ namespace WorldWind
 			string serverLogoPath,
 			TimeSpan cacheExpirationTime)
 		{
-			this.SetSamplerState(0, SamplerState_serverUri = serverUri;
-			this.SetSamplerState(0, SamplerState_datasetName = datasetName;
-			this.SetSamplerState(0, SamplerState_serverLogoPath = serverLogoPath;
-			this.SetSamplerState(0, SamplerState_cacheExpirationTime = cacheExpirationTime;
+			this._serverUri = serverUri;
+			this._datasetName = datasetName;
+			this._serverLogoPath = serverLogoPath;
+			this._cacheExpirationTime = cacheExpirationTime;
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref= "T:WorldWind.SetSamplerState(0, SamplerStateImageTileService"/> class.SetSamplerState(0, SamplerState
+		/// Initializes a new instance of the <see cref= "T:WorldWind.ImageTileService"/> class.
 		/// </summary>
 		/// <param name="datasetName"></param>
 		/// <param name="serverUri"></param>
@@ -68,14 +68,14 @@ namespace WorldWind
 			string serverUri,
 			string serverLogoPath)
 		{
-			this.SetSamplerState(0, SamplerState_serverUri = serverUri;
-			this.SetSamplerState(0, SamplerState_datasetName = datasetName;
-			this.SetSamplerState(0, SamplerState_serverLogoPath = serverLogoPath;
+			this._serverUri = serverUri;
+			this._datasetName = datasetName;
+			this._serverLogoPath = serverLogoPath;
 		}
 
 		public virtual string GetImageTileServiceUri(int level, int row, int col)
 		{
-			return String.SetSamplerState(0, SamplerStateFormat(CultureInfo.SetSamplerState(0, SamplerStateInvariantCulture, "{0}?T={1}&L={2}&X={3}&Y={4}", this.SetSamplerState(0, SamplerState_serverUri, this.SetSamplerState(0, SamplerState_datasetName, level, col, row);
+			return String.Format(CultureInfo.InvariantCulture, "{0}?T={1}&L={2}&X={3}&Y={4}", this._serverUri, this._datasetName, level, col, row);
 		}
 	}
 }

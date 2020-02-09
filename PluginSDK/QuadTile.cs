@@ -1110,13 +1110,13 @@ namespace WorldWind
             this.downloadRectangle[4].Z = this.downloadRectangle[0].Z;
             this.downloadRectangle[4].Color = color;
 
-            drawArgs.device.SetRenderState(RenderState.ZBufferEnable = false;
+            drawArgs.device.SetRenderState(RenderState.ZEnable , false);
             drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
             drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, 4, this.downloadRectangle);
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.SelectArg1;
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
             drawArgs.device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
-            drawArgs.device.SetRenderState(RenderState.ZBufferEnable = true;
+            drawArgs.device.SetRenderState(RenderState.ZEnable , true);
         }
 
         private static Effect grayscaleEffect = null;
@@ -1301,7 +1301,7 @@ namespace WorldWind
                             (float) sunPosition.Y,
                             (float) sunPosition.Z);
 
-                        device.SetRenderState(RenderState.Lighting = true;
+                        device.SetRenderState(RenderState.Lighting , true);
                         Material material = new Material();
                         material.Diffuse = Color.White;
                         material.Ambient = Color.White;
@@ -1316,7 +1316,7 @@ namespace WorldWind
                         device.Lights[0].Diffuse = World.Settings.LightColor;
                         device.Lights[0].Direction = sunVector;
 
-                        device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Modulate);
+                        device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Modulate);
                         device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
                         device.SetTextureStageState(0, TextureStage.ColorArg2,TextureArgument.Texture);
                     }

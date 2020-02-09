@@ -269,8 +269,8 @@ namespace WorldWind.Renderable
         private void RenderBar(DrawArgs drawArgs)
         {
 
-            bool lighting = drawArgs.device.SetRenderState(RenderState.Lighting;
-            drawArgs.device.SetRenderState(RenderState.Lighting = false;
+            bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
+            drawArgs.device.SetRenderState(RenderState.Lighting , false);
 
             Matrix translation = Matrix.Translation(
 
@@ -370,7 +370,7 @@ namespace WorldWind.Renderable
 
             drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.LineList, 0, this.m_outlineVertices.Length, this.m_outlineIndices.Length / 2, this.m_outlineIndices, true, this.m_outlineVertices);
 
-            drawArgs.device.SetRenderState(RenderState.Lighting = lighting;
+            drawArgs.device.SetRenderState(RenderState.Lighting , lighting);
         }
 
 

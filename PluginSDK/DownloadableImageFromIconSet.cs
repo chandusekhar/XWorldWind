@@ -617,7 +617,7 @@ namespace WorldWind
                 this.progressBarOutline[4].Color = progressColor;
 
 				drawArgs.device.VertexFormat = CustomVertex.TransformedColored.Format;
-				drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+				drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 				drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, 4, this.progressBarOutline);
 				
 				int barlength = (int)(this.downloadProgress * 2 * halfIconWidth);

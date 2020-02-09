@@ -92,7 +92,7 @@ namespace WorldWind
 			if(this.isInitialized)
 			{
 				drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
-				drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation = TextureOperation.Disable;
+				drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Disable);
 				drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, this.vertices.Length - 1, this.vertices);
 			}
 		}
