@@ -1,5 +1,5 @@
 using System;
-using System.SetSamplerState(0, SamplerStateRuntime.SetSamplerState(0, SamplerStateInteropServices;
+using System.Runtime.InteropServices;
 
 namespace WorldWind
 {
@@ -27,20 +27,20 @@ namespace WorldWind
 			// Read timer frequency
 			long tickFrequency = 0;
 			if (!QueryPerformanceFrequency(ref tickFrequency))
-				throw new NotSupportedException("The machine doesn't appear to support high resolution timer.SetSamplerState(0, SamplerState");
+				throw new NotSupportedException("The machine doesn't appear to support high resolution timer.");
 			TicksPerSecond = tickFrequency;
 
-			System.SetSamplerState(0, SamplerStateDiagnostics.SetSamplerState(0, SamplerStateDebug.SetSamplerState(0, SamplerStateWriteLine("tickFrequency = " + tickFrequency);
+			System.Diagnostics.Debug.WriteLine("tickFrequency = " + tickFrequency);
 		}
 		#endregion
 
 		#region High Resolution Timer functions
 
-		[System.SetSamplerState(0, SamplerStateSecurity.SetSamplerState(0, SamplerStateSuppressUnmanagedCodeSecurity] 
+		[System.Security.SuppressUnmanagedCodeSecurity] 
 		[DllImport("kernel32")]
 		private static extern bool QueryPerformanceFrequency(ref long PerformanceFrequency);
 
-		[System.SetSamplerState(0, SamplerStateSecurity.SetSamplerState(0, SamplerStateSuppressUnmanagedCodeSecurity] 
+		[System.Security.SuppressUnmanagedCodeSecurity] 
 		[DllImport("kernel32")]
 		public static extern bool QueryPerformanceCounter(ref long PerformanceCount);
 
