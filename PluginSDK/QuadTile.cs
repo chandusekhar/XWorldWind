@@ -6,6 +6,7 @@ using System.Reflection;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
+using WorldWind.Extensions;
 using WorldWind.Terrain;
 using Color = System.Drawing.Color;
 using Rectangle = System.Drawing.Rectangle;
@@ -135,7 +136,7 @@ namespace WorldWind
             this.Row = MathEngine.GetRowFromLatitude(this.South, this.North - this.South);
             this.Col = MathEngine.GetColFromLongitude(this.West, this.North - this.South);
 
-            this.DownloadRequests = new List<global::GeoSpatialDownloadRequest>();
+            this.DownloadRequests = new List<GeoSpatialDownloadRequest>();
 
             this.key = string.Format("{0,4}", this.Level)
                        + "_"
@@ -1300,11 +1301,11 @@ namespace WorldWind
 
                         device.SetRenderState(RenderState.Lighting , true);
                         Material material = new Material();
-                        material.Diffuse = Color.White;
-                        material.Ambient = Color.White;
+                        material.Diffuse = Color.White.ToRawColor4();;
+                        material.Ambient = Color.White.ToRawColor4();;
 
                         device.Material = material;
-                        device.SetRenderState(RenderState.AmbientColor,  World.Settings.ShadingAmbientColor.ToArgb());
+                        device.SetRenderState(RenderState.Ambient,  World.Settings.ShadingAmbientColor.ToArgb());
                         device.SetRenderState(RenderState.NormalizeNormals, true);
                         device.SetRenderState(RenderState.AlphaBlendEnable, true);
 
@@ -1320,7 +1321,7 @@ namespace WorldWind
                     else
                     {
                         device.SetRenderState(RenderState.Lighting, false);
-                        device.SetRenderState(RenderState.Ambient, World.Settings.StandardAmbientColor);
+                        device.SetRenderState(RenderState.Ambient, World.Settings.StandardAmbientColor.ToRawColor4());
                     }
 
                     device.SetRenderState(RenderState.TextureFactor,Color.FromArgb(this.m_CurrentOpacity, 255, 255, 255).ToArgb());

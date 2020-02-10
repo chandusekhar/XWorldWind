@@ -12,6 +12,7 @@
 using System;
 using SharpDX;
 using SharpDX.Direct3D9;
+using WorldWind.Extensions;
 using Color = System.Drawing.Color;
 
 namespace WorldWind
@@ -134,7 +135,7 @@ namespace WorldWind
             drawArgs.device.SetRenderState(RenderState.NormalizeNormals, true);
 
             Light lLight = new Light();
-            lLight.Ambient = Color.FromArgb(255, 255, 255);
+            lLight.Ambient = Color.FromArgb(255, 255, 255).ToRawColor4();;
             lLight.Type = LightType.Directional;
             lLight.Direction = new Vector3(1f, 1f, 1f);
             // Put the light somewhere up in space
@@ -238,12 +239,12 @@ namespace WorldWind
             //set the technique
             this.effect.Technique = "Textured";
             //set the texturs
-            this.effect.SetValue("ColorTexture", this.texture);
-            this.effect.SetValue("CubeEnvMap", this.texCube);
+            this.effect.SetValue("ColorTexture", this.texture.NativePointer);
+            this.effect.SetValue("CubeEnvMap", this.texCube.NativePointer);
             //set the matrices
             this.effect.SetValue("WorldViewProj", worldViewProj);
             this.effect.SetValue("WorldIT", worldIT);
-            this.effect.SetValue("World", drawArgs.device.GetTransform(TransformState.World);
+            this.effect.SetValue("World", drawArgs.device.GetTransform(TransformState.World));
             this.effect.SetValue("ViewI", viewI);
         }
         /*

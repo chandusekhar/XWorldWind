@@ -636,7 +636,7 @@ namespace WorldWind
 					null,
 					"E",
 					new Rectangle(this.Right - 16, this.Top + 2, 20, this.topBorder),
-					DrawTextFormat.None, this.TextColor);
+                    FontDrawFlags.None, this.TextColor);
 
 				int numItems = this.GetNumberOfUncollapsedItems();
 				int totalHeight = this.GetItemsHeight(drawArgs);//numItems * ItemHeight;
@@ -684,7 +684,7 @@ namespace WorldWind
 				this.headerFont.DrawText(
 					null, "Layer Manager",
 					new Rectangle(this.Left+5, this.Top+1, this.Width, this.topBorder-2 ),
-					DrawTextFormat.VerticalCenter, this.TextColor);
+                    FontDrawFlags.VerticalCenter, this.TextColor);
 
 				SharpDX.Vector2[] headerLinePoints = new SharpDX.Vector2[2];
 				headerLinePoints[0].X = this.Left;
@@ -777,7 +777,7 @@ namespace WorldWind
 			{
 				Rectangle rect = drawArgs.defaultDrawingFont.MeasureString(
 					null,
-					this.m_renderableObject.Name, DrawTextFormat.None, Color.White.ToArgb());
+					this.m_renderableObject.Name, FontDrawFlags.None, Color.White.ToArgb());
 
 				int height = rect.Height;
 				
@@ -987,7 +987,7 @@ namespace WorldWind
 				int consumedHeight = 20;
 				
 				Rectangle textRect = drawingFont.MeasureString(null, this.m_renderableObject.Name,
-					DrawTextFormat.None,
+                FontDrawFlags.SingleLine,
 					Color.White.ToArgb());
 
 				consumedHeight = textRect.Height;
@@ -1030,7 +1030,7 @@ namespace WorldWind
 								null,
 								(this.isExpanded ? "L" : "A"),
 								new Rectangle(x + this._itemXOffset, this._y, this._expandArrowXSize, height),
-								DrawTextFormat.None,
+                                FontDrawFlags.SingleLine,
 								color );
 						}
 					}
@@ -1050,7 +1050,7 @@ namespace WorldWind
 							x + this._itemXOffset + this._expandArrowXSize, this._y,
 							this._checkBoxXOffset,
 							height),
-							DrawTextFormat.NoClip,
+                            FontDrawFlags.NoClip,
 							color );
 
 
@@ -1060,7 +1060,7 @@ namespace WorldWind
 						x + this._itemXOffset + this._expandArrowXSize + this._checkBoxXOffset, this._y,
 						width - (this._itemXOffset + this._expandArrowXSize + this._checkBoxXOffset),
 						height),
-						DrawTextFormat.None,
+                        FontDrawFlags.SingleLine,
 						color );
 
 					if(this.m_renderableObject.Description != null && this.m_renderableObject.Description.Length > 0 && !(this.m_renderableObject is Icon))
@@ -1071,7 +1071,7 @@ namespace WorldWind
 								x + this._itemXOffset + this._expandArrowXSize + this._checkBoxXOffset, this._y + textRect.Height,
 								width - (this._itemXOffset + this._expandArrowXSize + this._checkBoxXOffset),
 								height),
-							DrawTextFormat.WordBreak,
+                            FontDrawFlags.WordBreak,
 							Color.Gray.ToArgb());
 					}
 

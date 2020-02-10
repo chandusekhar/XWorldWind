@@ -1386,7 +1386,7 @@ namespace WorldWind
         /// hammering the server.
         /// </summary>
         /// <param name="downloadRequest"></param>
-        public void RecordFailedRequest(global::GeoSpatialDownloadRequest downloadRequest)
+        public void RecordFailedRequest(GeoSpatialDownloadRequest downloadRequest)
         {
             //use the QuadTile's String as a key, assuming this would be unique
             String quadTileKey = downloadRequest.QuadTile.ToString();

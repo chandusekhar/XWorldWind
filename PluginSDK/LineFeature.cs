@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using SharpDX;
 using SharpDX.Direct3D9;
+using WorldWind.Extensions;
 using Color = System.Drawing.Color;
 
 namespace WorldWind
@@ -300,7 +301,7 @@ namespace WorldWind
 
         public override void Dispose()
         {
-            if (this.m_texture != null && !this.m_texture.Disposed)
+            if (this.m_texture != null && !this.m_texture.IsDisposed)
             {
                 this.m_texture.Dispose();
                 this.m_texture = null;
@@ -744,10 +745,10 @@ namespace WorldWind
                     if (this.m_lineString != null)
                         return;
 
-                    Cull currentCull = drawArgs.device.GetRenderState(RenderState.CullMode);
+                    Cull currentCull = drawArgs.device.GetRenderState<Cull>(RenderState.CullMode);
                     drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
 
-                    bool currentAlpha = drawArgs.device.GetRenderState(RenderState.AlphaBlendEnable);
+                    bool currentAlpha = drawArgs.device.GetRenderState<bool>(RenderState.AlphaBlendEnable);
                     drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 
                     drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
@@ -757,19 +758,19 @@ namespace WorldWind
                         );
 
                     //Fix for sunshading screwing with everything
-                    bool lighting = drawArgs.device.GetRenderState(RenderState.Lighting);
+                    bool lighting = drawArgs.device.GetRenderState<bool>(RenderState.Lighting);
                     drawArgs.device.SetRenderState(RenderState.Lighting , this.m_enableLighting);
 
                     if (this.m_wallVertices != null)
                     {
                         drawArgs.device.SetRenderState(RenderState.ZEnable , true);
 
-                        if (this.m_texture != null && !this.m_texture.Disposed)
+                        if (this.m_texture != null && !this.m_texture.IsDisposed)
                         {
                             drawArgs.device.SetTexture(0, this.m_texture);
                             drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate);
                             drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Add);
-                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor);
+                            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Texture);
                         }
                         else
                         {
@@ -783,11 +784,11 @@ namespace WorldWind
                         }
 
                         Material mat = new Material();
-                        mat.Diffuse = mat.Ambient = this.finalPolygonColor; // this.m_polygonColor;
+                        mat.Diffuse = mat.Ambient = this.finalPolygonColor.ToRawColor4();; // this.m_polygonColor;
 
                         drawArgs.device.Material = mat;
 
-                        if (this.m_texture != null && !this.m_texture.Disposed)
+                        if (this.m_texture != null && !this.m_texture.IsDisposed)
                         {
                             drawArgs.device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
                             drawArgs.device.DrawUserPrimitives(PrimitiveType.TriangleStrip, this.m_wallVertices.Length - 2, this.m_wallVertices);

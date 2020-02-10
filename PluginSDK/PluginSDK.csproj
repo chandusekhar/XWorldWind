@@ -174,12 +174,24 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ConfigurationSaver.cs" />
+    <Compile Include="CustomVertex\PositionColored.cs" />
+    <Compile Include="CustomVertex\PositionColoredTextured.cs" />
+    <Compile Include="CustomVertex\PositionNormalColored.cs" />
+    <Compile Include="CustomVertex\PositionNormalTextured.cs" />
+    <Compile Include="CustomVertex\PositionTextured.cs" />
+    <Compile Include="CustomVertex\TransformedColoredTextured.cs" />
+    <Compile Include="CustomVertex\TransformedColored.cs" />
     <Compile Include="DataSource\DataRequest.cs" />
     <Compile Include="DataSource\DataRequestHTTP.cs" />
     <Compile Include="DataSource\DataStore.cs" />
-    <Compile Include="DataSource\QueueMonitor.cs" />
+    <Compile Include="DataSource\QueueMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DirectXProfiler.cs" />
-    <Compile Include="EnterTextBox.cs" />
+    <Compile Include="EnterTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="GeoRSS\GeoRssDataSet.cs">
       <DependentUpon>GeoRssDataSet.xsd</DependentUpon>
     </Compile>
@@ -196,7 +208,9 @@
       <DependentUpon>GeoRSSFeedControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GeoRSS\GeoRssFeeds.cs" />
-    <Compile Include="GeoRSS\GeoRssForm.cs" />
+    <Compile Include="GeoRSS\GeoRssForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GeoRSS\GeoRssForm.Designer.cs">
       <DependentUpon>GeoRssForm.cs</DependentUpon>
     </Compile>
@@ -206,7 +220,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSource\TextureSource.cs" />
-    <Compile Include="KMLDialog.cs" />
+    <Compile Include="KMLDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="KMLIcon.cs" />
     <Compile Include="KMLReader\KMLLoader.cs" />
     <Compile Include="KMLReader\KMLNetworkLink.cs" />
@@ -430,7 +446,9 @@
     <Compile Include="TimeKeeper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TimeSetterDialog.cs" />
+    <Compile Include="TimeSetterDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TimeSetterDialog.Designer.cs">
       <DependentUpon>TimeSetterDialog.cs</DependentUpon>
     </Compile>
@@ -438,7 +456,9 @@
     <Compile Include="ViewFrustum.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VisualControl\ColorBar.cs" />
+    <Compile Include="VisualControl\ColorBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="VisualControl\PropertyBrowser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -451,6 +471,28 @@
     <Compile Include="Widgets.LayerManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Widgets\ButtonWidget.cs" />
+    <Compile Include="Widgets\CompassWidget.cs" />
+    <Compile Include="Widgets\ControlWidget.cs" />
+    <Compile Include="Widgets\FormWidget.cs" />
+    <Compile Include="Widgets\IInteractive.cs" />
+    <Compile Include="Widgets\IWidget.cs" />
+    <Compile Include="Widgets\IWidgetCollection.cs" />
+    <Compile Include="Widgets\LabelWidget.cs" />
+    <Compile Include="Widgets\PanelWidget.cs" />
+    <Compile Include="Widgets\PictureBox.cs" />
+    <Compile Include="Widgets\RootWidget.cs" />
+    <Compile Include="Widgets\Scrollbar.cs" />
+    <Compile Include="Widgets\SimpleTreeNodeWidget.cs" />
+    <Compile Include="Widgets\TextBox.cs" />
+    <Compile Include="Widgets\TextLabel.cs" />
+    <Compile Include="Widgets\TreeNodeWidget.cs" />
+    <Compile Include="Widgets\UpdateWidget.cs" />
+    <Compile Include="Widgets\WidgetCollection.cs" />
+    <Compile Include="Widgets\WidgetEnums.cs" />
+    <Compile Include="Widgets\WidgetInterfaces.cs" />
+    <Compile Include="Widgets\WidgetMenuButton.cs" />
+    <Compile Include="Widgets\WidgetUtilities.cs" />
     <Compile Include="WMSLayerAccessor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -554,9 +596,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CustomVertex\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

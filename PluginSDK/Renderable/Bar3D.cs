@@ -280,7 +280,7 @@ namespace WorldWind.Renderable
         private void RenderBar(DrawArgs drawArgs)
         {
 
-            bool lighting = drawArgs.device.GetRenderState(RenderState.Lighting);
+            bool lighting = drawArgs.device.GetRenderState<bool>(RenderState.Lighting);
             drawArgs.device.SetRenderState(RenderState.Lighting, false);
 
             Matrix translation = Matrix.Translation(

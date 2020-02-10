@@ -299,6 +299,7 @@ using SharpDX;
 using SharpDX.Direct3D9;
 using WorldWind.DataSource;
 using WorldWind.Net.Wms;
+using WorldWind.NewWidgets;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
@@ -338,8 +339,8 @@ namespace WorldWind
         private LineGraph m_FpsGraph = new LineGraph();
 
         ArrayList m_FrameTimes = new ArrayList();
-        Widgets.RootWidget m_RootWidget;
-        Widgets.RootWidget m_NewRootWidget;
+        RootWidget m_RootWidget;
+        RootWidget m_NewRootWidget;
 
         private const int positionAlphaStep = 20;
         private int positionAlpha = 255;

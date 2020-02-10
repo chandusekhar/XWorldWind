@@ -280,7 +280,7 @@ namespace WorldWind
 		/// <returns>The shortest distance between the point and the plane.</returns>
 		public static float DistancePlaneToPoint(Plane p, Vector3 v)
 		{
-			return p.A * v.X + p.B * v.Y + p.C + v.Z + p.D;
+			return p.Normal.X * v.X + p.Normal.Y * v.Y + p.Normal.Z + v.Z + p.D;
 		}
 
 		/// <summary>
@@ -289,20 +289,5 @@ namespace WorldWind
 		public static double Hypot( double x, double y )
 		{
 			return Math.Sqrt(x*x + y*y);
-		}
-
-/*
-		public static Quaternion GetWorldQuaternion(double latitude, double longitude)
-		{
-			return Quaternion.RotationYawPitchRoll((float)-MathEngine.DegreesToRadians(latitude),0.0f, (float)-MathEngine.DegreesToRadians(longitude));
-		}
-
-		public static Quaternion GetViewQuaternion(float eyeTilt, float eyeDirection)
-		{
-			Quaternion q1 = Quaternion.RotationAxis(new Vector3(0,0,-1), eyeDirection * (float)Math.PI / 180.0f);
-			Quaternion q2 = Quaternion.RotationAxis(new Vector3(1,0,0), eyeTilt * (float)Math.PI / 180.0f);
-			return Quaternion.Multiply(q1, q2);
-		}
-*/
-	}
+		} }
 }

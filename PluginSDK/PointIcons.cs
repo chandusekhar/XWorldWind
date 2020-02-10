@@ -376,30 +376,28 @@ namespace WorldWind
                 if (this.m_pointSprites.Count > 0)
                 {
                     // save device state
-                    Texture origTexture = drawArgs.device.GetTexture(0);
-                    VertexFormats origVertexFormat = drawArgs.device.VertexFormat;
-                    float origPointScaleA , drawArgs.device.SetRenderState(RenderState.PointScaleA);
-                    float origPointScaleB , drawArgs.device.SetRenderState(RenderState.PointScaleB);
-                    float origPointScaleC , drawArgs.device.SetRenderState(RenderState.PointScaleC);
-                    bool origPointSpriteEnable , drawArgs.device.SetRenderState(RenderState.PointSpriteEnable);
-                    bool origPointScaleEnable , drawArgs.device.SetRenderState(RenderState.PointScaleEnable);
-                    Blend origSourceBlend , drawArgs.device.SetRenderState(RenderState.SourceBlend);
-                    Blend origDestBlend , drawArgs.device.SetRenderState(RenderState.DestinationBlend);
+                    BaseTexture origTexture = drawArgs.device.GetTexture(0);
+                    VertexFormat origVertexFormat = drawArgs.device.VertexFormat;
+                    float origPointScaleA = drawArgs.device.GetRenderState<float>(RenderState.PointScaleA);
+                    float origPointScaleB = drawArgs.device.GetRenderState<float>(RenderState.PointScaleB);
+                    float origPointScaleC = drawArgs.device.GetRenderState<float>(RenderState.PointScaleC);
+                    bool origPointSpriteEnable = drawArgs.device.GetRenderState<bool>(RenderState.PointSpriteEnable);
+                    bool origPointScaleEnable = drawArgs.device.GetRenderState<bool>(RenderState.PointScaleEnable);
+                    Blend origSourceBlend = drawArgs.device.GetRenderState<Blend>(RenderState.SourceBlend);
+                    Blend origDestBlend = drawArgs.device.GetRenderState<Blend>(RenderState.DestinationBlend);
 
                     // set device to do point sprites
                     drawArgs.device.SetTexture(0, this.m_pointTexture.Texture);
-                    drawArgs.device.VertexFormat = VertexFormats.Position | VertexFormats.PointSize | VertexFormats.Diffuse;
+                    drawArgs.device.VertexFormat = VertexFormat.Position | VertexFormat.PointSize | VertexFormat.Diffuse;
                     drawArgs.device.SetRenderState(RenderState.PointScaleA , 1f);
                     drawArgs.device.SetRenderState(RenderState.PointScaleB , 0f);
                     drawArgs.device.SetRenderState(RenderState.PointScaleC , 0f);
                     drawArgs.device.SetRenderState(RenderState.PointSpriteEnable , true);
                     drawArgs.device.SetRenderState(RenderState.PointScaleEnable , true);
-                    //drawArgs.device.SetRenderState(RenderState.SourceBlend , Blend.One);
-                    //drawArgs.device.SetRenderState(RenderState.DestinationBlend , Blend.BlendFactor);
 
-                    drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorOperation, (int)TextureOperation.Modulate);
-                    drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorArgument1, (int)TextureArgument.TextureColor);
-                    drawArgs.device.SetTextureStageState(0, TextureStageStates.ColorArgument2, (int)TextureArgument.Diffuse);
+                    drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation, (int)TextureOperation.Modulate);
+                    drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, (int)TextureArgument.Texture);
+                    drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg2, (int)TextureArgument.Diffuse);
 
                     // Draw all visible points
                     drawArgs.device.DrawUserPrimitives(PrimitiveType.PointList, this.m_pointSprites.Count, this.m_pointSprites.ToArray());    

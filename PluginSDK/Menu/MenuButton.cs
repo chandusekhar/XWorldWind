@@ -118,11 +118,11 @@ namespace WorldWind.Menu
             int label_x = x - halfWidth + 1;
             int label_y = (int)(y + SelectedSize) + 1;
 
-            DrawTextFormat format = DrawTextFormat.NoClip | DrawTextFormat.Center | DrawTextFormat.WordBreak;
+            FontDrawFlags format = FontDrawFlags.NoClip | FontDrawFlags.Center | FontDrawFlags.WordBreak;
 
             if (anchor == MenuAnchor.Bottom)
             {
-                format |= DrawTextFormat.Bottom;
+                format |= FontDrawFlags.Bottom;
                 label_y = y - 202;
             }
 
@@ -223,9 +223,9 @@ namespace WorldWind.Menu
             float scaleHeight = (float)buttonHeight / this._iconTextureSize.Height;
 
             sprite.Transform = Matrix.Transformation2D(
-                Vector2.Empty, 0.0f,
+                Vector2.Zero, 0.0f,
                 new Vector2(scaleWidth, scaleHeight),
-                Vector2.Empty,
+                Vector2.Zero,
                 0.0f,
                 new Vector2(centerX, centerY));
 

@@ -1,4 +1,6 @@
 using System;
+using SharpDX;
+using SharpDX.Direct3D9;
 
 namespace WorldWind
 {
@@ -285,7 +287,7 @@ namespace WorldWind
             if (drawArgs.WorldCamera.ViewFrustum.ContainsPoint(t1))
             {
                 t1 = drawArgs.WorldCamera.Project(t1 - referenceCenter);
-                drawArgs.defaultDrawingFont.DrawText(null, label, new System.Drawing.Rectangle((int)t1.X, (int)t1.Y, drawArgs.screenWidth, drawArgs.screenHeight), DrawTextFormat.NoClip, World.Settings.tropicLinesColor);
+                drawArgs.defaultDrawingFont.DrawText(null, label, new System.Drawing.Rectangle((int)t1.X, (int)t1.Y, drawArgs.screenWidth, drawArgs.screenHeight), FontDrawFlags.NoClip, World.Settings.tropicLinesColor);
             }
         }
 

@@ -5,6 +5,7 @@ using System.Threading;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
+using WorldWind.Extensions;
 using WorldWind.Net;
 using WorldWind.Terrain;
 using WorldWind.VisualControl;
@@ -670,13 +671,13 @@ namespace WorldWind
 				}
 
 				drawArgs.device.SetRenderState(RenderState.ZEnable , true);
-				drawArgs.device.Clear(ClearFlags.ZBuffer, 0, 1.0f, 0);
+				drawArgs.device.Clear(ClearFlags.ZBuffer, System.Drawing.Color.Black.ToArgb(), 1.0f, 0);
 
                 drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
                         (float)-drawArgs.WorldCamera.ReferenceCenter.X,
                         (float)-drawArgs.WorldCamera.ReferenceCenter.Y,
                         (float)-drawArgs.WorldCamera.ReferenceCenter.Z
-                        );
+                        ));
                 this.device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
 
                 if (!this.RenderGrayscale || (this.device.Capabilities.PixelShaderVersion.Major < 1))
@@ -691,11 +692,11 @@ namespace WorldWind
 
                         this.device.SetRenderState(RenderState.Lighting , true);
                         Material material = new Material();
-                        material.Diffuse = System.Drawing.Color.White;
-                        material.Ambient = System.Drawing.Color.White;
+                        material.Diffuse = System.Drawing.Color.White.ToRawColor4();
+                        material.Ambient = System.Drawing.Color.White.ToRawColor4();
 
                         this.device.Material = material;
-                        this.device.SetRenderState(RenderState.Ambient , World.Settings.ShadingAmbientColor.ToArgb();
+                        this.device.SetRenderState(RenderState.Ambient , World.Settings.ShadingAmbientColor.ToArgb());
                         this.device.SetRenderState(RenderState.NormalizeNormals , true);
                         this.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 
@@ -834,7 +835,7 @@ namespace WorldWind
 				drawArgs.defaultDrawingFont.DrawText(null,
 					"Downloading Remote Image...",
 					new System.Drawing.Rectangle((int)v.X + 5, (int)v.Y + 5, 200, 50),
-					DrawTextFormat.NoClip, this.textColor);
+					FontDrawFlags.NoClip, this.textColor);
 
                 this.DrawProgressBar(drawArgs, v.X + 100, v.Y + 30, 180, 10, World.Settings.downloadProgressColor);
 			}

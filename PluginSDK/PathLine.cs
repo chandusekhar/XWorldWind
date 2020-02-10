@@ -350,7 +350,7 @@ namespace WorldWind
 					if(this.linePoints != null)
 					{
                         //Fix for sunshading screwing with everything
-                        bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
+                        bool lighting = drawArgs.device.GetRenderState<bool>(RenderState.Lighting);
                         drawArgs.device.SetRenderState(RenderState.Lighting , this.m_enableLighting);
 
                         drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
@@ -360,7 +360,7 @@ namespace WorldWind
 							(float)-drawArgs.WorldCamera.ReferenceCenter.X,
 							(float)-drawArgs.WorldCamera.ReferenceCenter.Y,
 							(float)-drawArgs.WorldCamera.ReferenceCenter.Z
-							);
+							));
 
 						drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, this.linePoints.Length - 1, this.linePoints);
 						drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;

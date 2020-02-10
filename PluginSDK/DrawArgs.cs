@@ -5,6 +5,7 @@ using SharpDX;
 using SharpDX.Direct3D9;
 using WorldWind.Net;
 using Utility;
+using WorldWind.NewWidgets;
 
 namespace WorldWind
 {
@@ -34,8 +35,8 @@ namespace WorldWind
         public static bool IsLeftMouseButtonDown = false;
         public static bool IsRightMouseButtonDown = false;
         public static DownloadQueue DownloadQueue = new DownloadQueue();
-        public static Widgets.RootWidget RootWidget = null;
-        public static Widgets.RootWidget NewRootWidget = null;
+        public static RootWidget RootWidget = null;
+        public static RootWidget NewRootWidget = null;
         public int TexturesLoadedThisFrame;
         private static System.Drawing.Bitmap bitmap;
         public static System.Drawing.Graphics Graphics;

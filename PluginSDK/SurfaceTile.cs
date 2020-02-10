@@ -147,15 +147,10 @@ namespace WorldWind
 
 		private void OnDeviceDispose(object sender, EventArgs e)
 		{
-			if(this.m_RenderTexture != null && !this.m_RenderTexture.Disposed)
+			if(this.m_RenderTexture != null && !this.m_RenderTexture.IsDisposed)
 			{
                 this.m_RenderTexture.Dispose();
 			}
-
-		/*	if(m_RenderSurface != null && !m_RenderSurface.Disposed)
-			{
-				m_RenderSurface.Dispose();
-			}*/
 		}
 
 		/// <summary>
@@ -302,7 +297,7 @@ namespace WorldWind
 							drawArgs.device.SamplerState[1].BorderColor = System.Drawing.Color.FromArgb(0,0,0,0);
 							drawArgs.device.SetTexture(0, currentSurfaceImage.ImageTexture);
 							drawArgs.device.SetTexture(1, currentSurfaceImage.ImageTexture);
-							drawArgs.device.SetTextureStageState(1, TextureStage.TextureCoordinateIndex , 0);
+							drawArgs.device.SetTextureStageState(1, TextureStage.TexCoordIndex , 0);
 							
 							drawArgs.device.SetSamplerState(0, SamplerState.MinFilter = TextureFilter.Linear;
 							drawArgs.device.SetSamplerState(0, SamplerState.MagFilter = TextureFilter.Linear;
@@ -337,7 +332,7 @@ namespace WorldWind
 							drawArgs.device.SetTexture(0, null);
 							drawArgs.device.SetTexture(1, null);
 
-                            drawArgs.device.SetTextureStageState(1, TextureStageStates.TextureCoordinateIndex, 1);
+                            drawArgs.device.SetTextureStageState(1, TextureStage.TexCoordIndex, 1);
 						}
 
                         this.m_ParentWorldSurfaceRenderer.RenderToSurface.EndScene(Filter.Box);

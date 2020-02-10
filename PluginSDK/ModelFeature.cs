@@ -5,6 +5,8 @@ using System.IO;
 using System.Xml;
 using SharpDX;
 using SharpDX.Direct3D9;
+using SharpDX.Mathematics.Interop;
+using WorldWind.Extensions;
 using WorldWind.Net;
 using Color = System.Drawing.Color;
 
@@ -264,35 +266,33 @@ namespace WorldWind
             }
 
             // save current state
-            Matrix currentWorld = drawArgs.device.SetTransform(TransformState.World;
-            Cull cullMode , drawArgs.device.SetRenderState(RenderState.CullMode);
-            bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
-            int ambientColor , drawArgs.device.SetRenderState(RenderState.AmbientColor);
-            bool normalizeNormals , drawArgs.device.SetRenderState(RenderState.NormalizeNormals);
+            Matrix currentWorld = drawArgs.device.GetTransform(TransformState.World);
+            Cull cullMode = drawArgs.device.GetRenderState<Cull>(RenderState.CullMode);
+            bool lighting = drawArgs.device.GetRenderState<bool>(RenderState.Lighting);
+            int ambientColor = drawArgs.device.GetRenderState<int>(RenderState.Ambient);
+            bool normalizeNormals = drawArgs.device.GetRenderState<bool>(RenderState.NormalizeNormals);
 
             drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
             drawArgs.device.SetRenderState(RenderState.Lighting , true);
-            drawArgs.device.SetRenderState(RenderState.AmbientColor , 0xCCCCCC); //  0x808080);
+            drawArgs.device.SetRenderState(RenderState.Ambient , 0xCCCCCC); //  0x808080);
             drawArgs.device.SetRenderState(RenderState.NormalizeNormals , true);
 
-            drawArgs.device.Lights[0].Diffuse = Color.FromArgb(255, 255, 255);
-            drawArgs.device.Lights[0].Ambient = this.TintColor;
-            drawArgs.device.Lights[0].Type = LightType.Directional;
-            drawArgs.device.Lights[0].Direction = new Vector3(1f, 1f, 1f);
-            drawArgs.device.Lights[0].Enabled = true;
+            Light lLight = new Light();
+            lLight.Diffuse = new RawColor4(1, 1, 1, 1);
+            lLight.Ambient = this.TintColor.ToRawColor4();
+            lLight.Type = LightType.Directional;
+            lLight.Direction = new Vector3(1f, 1f, 1f);
+            lLight.Position = new Vector3((float) this.worldXyz.X * 2f, (float) this.worldXyz.Y * 1f,  (float) this.worldXyz.Z * 1.5f);
 
-            drawArgs.device.SetSamplerState(0, SamplerState.AddressU = TextureAddress.Wrap;
-            drawArgs.device.SetSamplerState(0, SamplerState.AddressV = TextureAddress.Wrap;
+            drawArgs.device.SetSamplerState(0, SamplerState.AddressU, TextureAddress.Wrap);
+            drawArgs.device.SetSamplerState(0, SamplerState.AddressV, TextureAddress.Wrap);
 
             drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , true);
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
             drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
 
             // Put the light somewhere up in space
-            drawArgs.device.Lights[0].Position = new Vector3(
-                (float) this.worldXyz.X * 2f,
-                (float) this.worldXyz.Y * 1f,
-                (float) this.worldXyz.Z * 1.5f);
+            
 
             drawArgs.device.SetTransform(TransformState.World, Matrix.RotationX((float)MathEngine.DegreesToRadians(this.RotX));
             drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(this.RotY));
@@ -632,10 +632,10 @@ namespace WorldWind
 
                 for (int i = 0; i < numSubSets; i++)
                 {
-                    this.m_meshElems[j].meshMaterials[i].Ambient = Color.FromArgb(255, 255, 43, 48);
-                    this.m_meshElems[j].meshMaterials[i].Diffuse = Color.FromArgb(255, 155, 113, 148);
-                    this.m_meshElems[j].meshMaterials[i].Emissive = Color.FromArgb(255, 255, 143, 98);
-                    this.m_meshElems[j].meshMaterials[i].Specular = Color.FromArgb(255, 155, 243, 48);
+                    this.m_meshElems[j].meshMaterials[i].Ambient = Color.FromArgb(255, 255, 43, 48).ToRawColor4();;
+                    this.m_meshElems[j].meshMaterials[i].Diffuse = Color.FromArgb(255, 155, 113, 148).ToRawColor4();;
+                    this.m_meshElems[j].meshMaterials[i].Emissive = Color.FromArgb(255, 255, 143, 98).ToRawColor4();;
+                    this.m_meshElems[j].meshMaterials[i].Specular = Color.FromArgb(255, 155, 243, 48).ToRawColor4();;
                 }
             }
 

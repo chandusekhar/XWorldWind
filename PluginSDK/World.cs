@@ -399,7 +399,7 @@ namespace WorldWind
                 if (drawArgs.CurrentWorld.IsEarth && Settings.EnableAtmosphericScattering)
                 {
                     // Render atmospheric scattering
-                    bool origFog = drawArgs.device.GetRenderState(RenderState.FogEnable);
+                    bool origFog = drawArgs.device.GetRenderState<bool>(RenderState.FogEnable);
                     drawArgs.device.SetRenderState(RenderState.FogEnable, false);
                     float aspectRatio = (float)drawArgs.WorldCamera.Viewport.Width / drawArgs.WorldCamera.Viewport.Height;
                     float zNear = (float)drawArgs.WorldCamera.Altitude * 0.1f;

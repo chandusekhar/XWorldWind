@@ -158,7 +158,7 @@ namespace WorldWind.Renderable
 
         public override void Dispose()
         {
-            if (this.m_texture != null && !this.m_texture.Disposed)
+            if (this.m_texture != null && !this.m_texture.IsDisposed)
             {
                 this.m_texture.Dispose();
                 this.m_texture = null;
@@ -226,7 +226,7 @@ namespace WorldWind.Renderable
 
         private void renderHighlight(DrawArgs drawArgs)
         {
-            bool lighting , drawArgs.device.SetRenderState(RenderState.Lighting);
+            bool lighting = drawArgs.device.GetRenderState<bool>(RenderState.Lighting);
             drawArgs.device.SetRenderState(RenderState.Lighting , false);
 
             if (m_highlightVertices == null)
@@ -277,8 +277,8 @@ namespace WorldWind.Renderable
 
             drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(surfacePos - rc);
             drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
-            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
-            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.TextureColor);
+            drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
+            drawArgs.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Texture);
             drawArgs.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.SelectArg1);
             drawArgs.device.SetRenderState(RenderState.ZEnable , false);
             drawArgs.device.SetTexture(0, HighlightTexture);
@@ -306,11 +306,11 @@ namespace WorldWind.Renderable
                     this.Bar3D.Render(drawArgs);
                     offset = this.Bar3D.RenderedHeight;
                 }
-                Cull cull , drawArgs.device.SetRenderState(RenderState.CullMode);
+                Cull cull = drawArgs.device.GetRenderState<Cull>(RenderState.CullMode);
                 drawArgs.device.SetRenderState(RenderState.CullMode , Cull.None);
                 drawArgs.device.SetRenderState(RenderState.ZEnable , true);
                 drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
-                drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.TextureColor);
+                drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
 
                 Vector3 surfacePos = MathEngine.SphericalToCartesian(this.m_latitude, this.m_longitude, this.World.EquatorialRadius);
 

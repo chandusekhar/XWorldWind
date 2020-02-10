@@ -6,6 +6,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
+using WorldWind.CustomVertex;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
@@ -200,11 +201,11 @@ namespace WorldWind
 		public override void Dispose()
 		{
             this.isInitialized = false;
-			if(this.m_IconTexture != null && !this.m_IconTexture.Disposed)
+			if(this.m_IconTexture != null && !this.m_IconTexture.IsDisposed)
 			{
                 this.m_IconTexture.Dispose();
 			}
-			if(this.m_Sprite != null && !this.m_Sprite.Disposed)
+			if(this.m_Sprite != null && !this.m_Sprite.IsDisposed)
 			{
                 this.m_Sprite.Dispose();
 			}
@@ -369,14 +370,14 @@ namespace WorldWind
 				{
 					drawArgs.device.VertexFormat = CustomVertex.PositionColored.Format;
 						
-					float curPointSize , drawArgs.device.SetRenderState(RenderState.PointSize);
+					float curPointSize = drawArgs.device.GetRenderState<float>(RenderState.PointSize);
 						
 					drawArgs.device.SetRenderState(RenderState.PointSize , 5.0f);
 					drawArgs.device.SetRenderState(RenderState.ZEnable , false);
-					CustomVertex.PositionColored[] verts = new SharpDX.Direct3D9.CustomVertex.PositionColored[1];
+                    PositionColored[] verts = new PositionColored[1];
 					Vector3 camPoint = MathEngine.SphericalToCartesian(drawArgs.WorldCamera.Latitude.Degrees, drawArgs.WorldCamera.Longitude.Degrees, this.m_ShapeTileArgs.LayerRadius);
 					
-					drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(-referenceCenter);
+					drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(-referenceCenter));
 					foreach(Vector3 v in this.m_PointList)
 					{
 						if(Vector3.Subtract(v, camPoint).Length() < this.m_ShapeTileArgs.LayerRadius)
@@ -495,7 +496,7 @@ namespace WorldWind
 										labelWidth, 
 										drawArgs.screenHeight );
 
-									drawArgs.defaultDrawingFont.DrawText(this.m_Sprite, p.Tag.ToString(), rect, DrawTextFormat.Center, this.m_ShapeTileArgs.LabelColor);
+									drawArgs.defaultDrawingFont.DrawText(this.m_Sprite, p.Tag.ToString(), rect, FontDrawFlags.Center, this.m_ShapeTileArgs.LabelColor);
 								}
 								else
 								{
@@ -511,7 +512,7 @@ namespace WorldWind
 										labelWidth, 
 										drawArgs.screenHeight );
 
-									drawArgs.defaultDrawingFont.DrawText(this.m_Sprite, p.Tag.ToString(), rect, DrawTextFormat.WordBreak, this.m_ShapeTileArgs.LabelColor);
+									drawArgs.defaultDrawingFont.DrawText(this.m_Sprite, p.Tag.ToString(), rect, FontDrawFlags.WordBreak, this.m_ShapeTileArgs.LabelColor);
 								}
 							}
 						}

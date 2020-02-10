@@ -4,6 +4,7 @@ using System.Threading;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
+using WorldWind.CustomVertex;
 using WorldWind.Net;
 using WorldWind.Terrain;
 using Color = System.Drawing.Color;
@@ -263,8 +264,8 @@ namespace WorldWind
 		int iconSize;
 		DrawArgs drawArgs;
 		TerrainAccessor _terrainAccessor;
-		CustomVertex.TransformedColored[] progressBar = new SharpDX.Direct3D9.CustomVertex.TransformedColored[4];
-		CustomVertex.TransformedColored[] progressBarOutline = new SharpDX.Direct3D9.CustomVertex.TransformedColored[5];
+		CustomVertex.TransformedColored[] progressBar = new TransformedColored[4];
+		CustomVertex.TransformedColored[] progressBarOutline = new TransformedColored[5];
 		static int progressDefaultColor =  Color.Red.ToArgb();
 		static int progressColorLoading = Color.CornflowerBlue.ToArgb();
 		static int progressColorConversion = Color.YellowGreen.ToArgb();
@@ -520,7 +521,7 @@ namespace WorldWind
 					this.imageLayer.DisableZBuffer = true;
 
 				this.imageLayer.Render(drawArgs);
-				drawArgs.defaultDrawingFont.DrawText(null,this.caption, new Rectangle(10, drawArgs.screenHeight - 50, drawArgs.screenWidth - 10, 50), DrawTextFormat.NoClip | DrawTextFormat.WordBreak, bottomLeftTextColor );
+				drawArgs.defaultDrawingFont.DrawText(null,this.caption, new Rectangle(10, drawArgs.screenHeight - 50, drawArgs.screenWidth - 10, 50), FontDrawFlags.NoClip | FontDrawFlags.WordBreak, bottomLeftTextColor );
 				return;
 			}
 

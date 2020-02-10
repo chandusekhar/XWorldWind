@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using SharpDX;
 using SharpDX.Direct3D9;
+using WorldWind.Terrain;
 
 namespace WorldWind
 {
@@ -596,9 +597,9 @@ namespace WorldWind
             // Compute matrices
             this.ComputeProjectionMatrix(this.viewPort);
             this.ComputeViewMatrix();
-			device.SetTransform(TransformState.Projection = this.m_ProjectionMatrix;
-			device.SetTransform(TransformState.View = this.m_ViewMatrix;
-			device.SetTransform(TransformState.World, this.m_WorldMatrix;
+			device.SetTransform(TransformState.Projection, this.m_ProjectionMatrix);
+			device.SetTransform(TransformState.View , this.m_ViewMatrix);
+			device.SetTransform(TransformState.World, this.m_WorldMatrix);
 
             this.ViewFrustum.Update(
 				Matrix.Multiply(this.m_absoluteWorldMatrix,
@@ -823,13 +824,13 @@ namespace WorldWind
 			Vector3 v1 = new Vector3();
 			v1.X = screenX;
 			v1.Y = screenY;
-			v1.Z = this.viewPort.MinZ;
+			v1.Z = this.viewPort.MinDepth;
 			v1.Unproject(this.viewPort, this.m_absoluteProjectionMatrix, this.m_absoluteViewMatrix, this.m_absoluteWorldMatrix);
 
 			Vector3 v2 = new Vector3();
 			v2.X = screenX;
 			v2.Y = screenY;
-			v2.Z = this.viewPort.MaxZ;
+			v2.Z = this.viewPort.MaxDepth;
 			v2.Unproject(this.viewPort, this.m_absoluteProjectionMatrix, this.m_absoluteViewMatrix, this.m_absoluteWorldMatrix);
 
 			Point3d p1 = new Point3d(v1.X, v1.Y, v1.Z);
