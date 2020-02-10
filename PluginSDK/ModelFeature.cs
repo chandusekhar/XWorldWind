@@ -283,6 +283,7 @@ namespace WorldWind
             lLight.Type = LightType.Directional;
             lLight.Direction = new Vector3(1f, 1f, 1f);
             lLight.Position = new Vector3((float) this.worldXyz.X * 2f, (float) this.worldXyz.Y * 1f,  (float) this.worldXyz.Z * 1.5f);
+            drawArgs.device.SetLight(0, ref lLight);
 
             drawArgs.device.SetSamplerState(0, SamplerState.AddressU, TextureAddress.Wrap);
             drawArgs.device.SetSamplerState(0, SamplerState.AddressV, TextureAddress.Wrap);

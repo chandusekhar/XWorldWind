@@ -1280,7 +1280,7 @@ namespace WorldWind
                     {
                         effect.BeginPass(i);
                         device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0,
-                                                         verts.Length, this.vertexIndexes.Length/3, this.vertexIndexes, true,
+                                                         verts.Length, this.vertexIndexes.Length/3, this.vertexIndexes, Format.Index16,
                                                          verts);
 
                         effect.EndPass();
@@ -1309,10 +1309,14 @@ namespace WorldWind
                         device.SetRenderState(RenderState.NormalizeNormals, true);
                         device.SetRenderState(RenderState.AlphaBlendEnable, true);
 
-                        device.Lights[0].Enabled = true;
-                        device.Lights[0].Type = LightType.Directional;
-                        device.Lights[0].Diffuse = World.Settings.LightColor;
-                        device.Lights[0].Direction = sunVector;
+                        Light lLight = new Light
+                        {
+                            Diffuse = World.Settings.LightColor.ToRawColor4(),
+                            Type = LightType.Directional,
+                            Range = 100000,
+                            Direction = sunVector,
+                        };
+                        device.SetLight(0, ref lLight);
 
                         device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Modulate);
                         device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
@@ -1321,7 +1325,7 @@ namespace WorldWind
                     else
                     {
                         device.SetRenderState(RenderState.Lighting, false);
-                        device.SetRenderState(RenderState.Ambient, World.Settings.StandardAmbientColor.ToRawColor4());
+                        device.SetRenderState(RenderState.Ambient, World.Settings.StandardAmbientColor.ToArgb());
                     }
 
                     device.SetRenderState(RenderState.TextureFactor,Color.FromArgb(this.m_CurrentOpacity, 255, 255, 255).ToArgb());
@@ -1329,7 +1333,7 @@ namespace WorldWind
                     device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Texture);
                     device.SetTextureStageState(0, TextureStage.AlphaArg2,TextureArgument.TFactor);
 
-                    device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, verts.Length, this.vertexIndexes.Length/3, this.vertexIndexes, true, verts);
+                    device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, verts.Length, this.vertexIndexes.Length/3, this.vertexIndexes, Format.Index16, verts);
                 }
                 else
                 {
@@ -1354,7 +1358,7 @@ namespace WorldWind
                     {
                         grayscaleEffect.BeginPass(i);
                         device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0,
-                                                         verts.Length, this.vertexIndexes.Length/3, this.vertexIndexes, true,
+                                                         verts.Length, this.vertexIndexes.Length/3, this.vertexIndexes, Format.Index16,
                                                          verts);
 
                         grayscaleEffect.EndPass();

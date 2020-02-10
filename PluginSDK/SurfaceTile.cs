@@ -1153,7 +1153,7 @@ namespace WorldWind
 						0, this.m_DynamicTexture.nwVerts.Length,
 						(this.m_NwIndices != null ? this.m_NwIndices.Length / 3 : this.m_IndicesElevated.Length / 3),
 						(this.m_NwIndices != null ? this.m_NwIndices : this.m_IndicesElevated),
-						true, this.m_DynamicTexture.nwVerts);
+                        Format.Index16, this.m_DynamicTexture.nwVerts);
 				}
 	
 				if(!neRendered && this.m_DynamicTexture.neVerts != null)
@@ -1163,7 +1163,7 @@ namespace WorldWind
 						0, this.m_DynamicTexture.neVerts.Length,
 						(this.m_NeIndices != null ? this.m_NeIndices.Length / 3 : this.m_IndicesElevated.Length / 3),
 						(this.m_NeIndices != null ? this.m_NeIndices : this.m_IndicesElevated),
-						true, this.m_DynamicTexture.neVerts);
+                        Format.Index16, this.m_DynamicTexture.neVerts);
 				}	
 
 				if(!swRendered && this.m_DynamicTexture.swVerts != null)
@@ -1173,7 +1173,7 @@ namespace WorldWind
 						0, this.m_DynamicTexture.nwVerts.Length,
 						(this.m_SwIndices != null ? this.m_SwIndices.Length / 3 : this.m_IndicesElevated.Length / 3),
 						(this.m_SwIndices != null ? this.m_SwIndices : this.m_IndicesElevated),
-						true, this.m_DynamicTexture.swVerts);
+                        Format.Index16, this.m_DynamicTexture.swVerts);
 				}	
 						
 				if(!seRendered && this.m_DynamicTexture.seVerts != null)
@@ -1183,7 +1183,7 @@ namespace WorldWind
 						0, this.m_DynamicTexture.seVerts.Length,
 						(this.m_SeIndices != null ? this.m_SeIndices.Length / 3 : this.m_IndicesElevated.Length / 3),
 						(this.m_SeIndices != null ? this.m_SeIndices : this.m_IndicesElevated),
-						true, this.m_DynamicTexture.seVerts);
+                        Format.Index16, this.m_DynamicTexture.seVerts);
 				}
 			}
 			catch(System.Threading.ThreadAbortException)

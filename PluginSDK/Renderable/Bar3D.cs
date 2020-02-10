@@ -381,9 +381,9 @@ namespace WorldWind.Renderable
 
             drawArgs.device.TextureState[0].AlphaOperation = TextureOperation.SelectArg1;
 
-            drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, m_extrudeVertices.Length, m_extrudeIndices.Length / 3, m_extrudeIndices, true, m_extrudeVertices);
+            drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, m_extrudeVertices.Length, m_extrudeIndices.Length / 3, m_extrudeIndices, Format.Index16, m_extrudeVertices);
 
-            drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.LineList, 0, m_outlineVertices.Length, m_outlineIndices.Length / 2, m_outlineIndices, true, m_outlineVertices);
+            drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.LineList, 0, m_outlineVertices.Length, m_outlineIndices.Length / 2, m_outlineIndices, Format.Index16, m_outlineVertices);
 
             drawArgs.device.RenderState.Lighting = lighting;
         }

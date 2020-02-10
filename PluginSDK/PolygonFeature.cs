@@ -841,10 +841,14 @@ namespace WorldWind
                         drawArgs.device.SetRenderState(RenderState.NormalizeNormals , true);
                         drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 
-                        drawArgs.device.Lights[0].Enabled = true;
-                        drawArgs.device.Lights[0].Type = LightType.Directional;
-                        drawArgs.device.Lights[0].Diffuse = Color.White;
-                        drawArgs.device.Lights[0].Direction = sunVector;
+                        Light lLight = new Light
+                        {
+                            Diffuse = System.Drawing.Color.White.ToRawColor4(),
+                            Type = LightType.Directional,
+                            Range = 100000,
+                            Direction = sunVector,
+                        };
+                        drawArgs.device.SetLight(0, ref lLight);
 
                         drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Modulate);
                         drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
@@ -853,7 +857,7 @@ namespace WorldWind
                     else
                     {
                         drawArgs.device.SetRenderState(RenderState.Lighting , false);
-                        drawArgs.device.SetRenderState(RenderState.Ambient , World.Settings.StandardAmbientColor);
+                        drawArgs.device.SetRenderState(RenderState.Ambient , World.Settings.StandardAmbientColor.ToArgb());
                     }
 
                     //if(m_vertices != null)

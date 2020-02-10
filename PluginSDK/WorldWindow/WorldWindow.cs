@@ -483,8 +483,8 @@ namespace WorldWind
 
                     //Post mDevice3d creation initialization
                     this.drawArgs = new DrawArgs(this.mDevice3d, this);
-                    this.m_RootWidget = new Widgets.RootWidget(this);
-                    this.m_NewRootWidget = new Widgets.RootWidget(this);
+                    this.m_RootWidget = new RootWidget(this);
+                    this.m_NewRootWidget = new RootWidget(this);
 
                     //this.m_RootWidget.ChildWidgets.Add(layerManager);
                     DrawArgs.RootWidget = this.m_RootWidget;
@@ -607,7 +607,7 @@ namespace WorldWind
             this.mDevice3d.SetRenderState(RenderState.Clipping, true);
             this.mDevice3d.SetRenderState(RenderState.CullMode, Cull.Clockwise);
             this.mDevice3d.SetRenderState(RenderState.Lighting, false);
-            this.mDevice3d.SetRenderState(RenderState.Ambient, World.Settings.StandardAmbientColor);
+            this.mDevice3d.SetRenderState(RenderState.Ambient, World.Settings.StandardAmbientColor.ToArgb());
 
             this.mDevice3d.SetRenderState(RenderState.ZEnable, true);
             this.mDevice3d.SetRenderState(RenderState.AlphaBlendEnable, true);
@@ -906,15 +906,12 @@ namespace WorldWind
             }
             catch (SharpDXException)
             {
-                try
-                {
-                    this.AttemptRecovery();
+                this.AttemptRecovery();
 
-                    // Our surface was lost, force re-render
-                    this.Render();
+                // Our surface was lost, force re-render
+                this.Render();
 
-                    this.mDevice3d.Present();
-                }
+                this.mDevice3d.Present();
             }
         }
 

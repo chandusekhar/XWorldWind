@@ -412,10 +412,10 @@ namespace WorldWind.Renderable
             drawArgs.device.PixelShader = null;
             drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 
                 0, m_flagPoleVertices.Length, m_flagPoleIndices.Length / 3, m_flagPoleIndices, 
-                true, m_flagPoleVertices);
+                Format.Index16, m_flagPoleVertices);
             drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.LineList, 0, 
                 m_outlineFlagPoleVertices.Length, m_outlineFlagPoleIndices.Length / 2, 
-                m_outlineFlagPoleIndices, true, m_outlineFlagPoleVertices);
+                m_outlineFlagPoleIndices, Format.Index16, m_outlineFlagPoleVertices);
             drawArgs.device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
             drawArgs.device.VertexDeclaration = m_vertexDeclaration;
             this.m_angle += .04f;

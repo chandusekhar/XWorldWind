@@ -700,10 +700,14 @@ namespace WorldWind
                         this.device.SetRenderState(RenderState.NormalizeNormals , true);
                         this.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 
-                        this.device.Lights[0].Enabled = true;
-                        this.device.Lights[0].Type = LightType.Directional;
-                        this.device.Lights[0].Diffuse = System.Drawing.Color.White;
-                        this.device.Lights[0].Direction = sunVector;
+                        Light lLight = new Light
+                        {
+                            Diffuse = System.Drawing.Color.White.ToRawColor4(),
+                            Type = LightType.Directional,
+                            Range = 100000,
+                            Direction = sunVector,
+                        };
+                        drawArgs.device.SetLight(0, ref lLight);
 
                         this.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.Modulate);
                         this.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Diffuse);
@@ -712,7 +716,7 @@ namespace WorldWind
                     else
                     {
                         this.device.SetRenderState(RenderState.Lighting , false);
-                        this.device.SetRenderState(RenderState.Ambient , World.Settings.StandardAmbientColor);
+                        this.device.SetRenderState(RenderState.Ambient , World.Settings.StandardAmbientColor.ToArgb());
 
                         drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation , TextureOperation.SelectArg1);
                         drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
@@ -725,7 +729,7 @@ namespace WorldWind
 
                     drawArgs.device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
 
-                    drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.vertices.Length, this.indices.Length / 3, this.indices, true, this.vertices);
+                    drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.vertices.Length, this.indices.Length / 3, this.indices, Format.Index16, this.vertices);
 
                     
                 }
@@ -749,7 +753,7 @@ namespace WorldWind
                     {
                         grayscaleEffect.BeginPass(i);
 
-                        drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.vertices.Length, this.indices.Length / 3, this.indices, true, this.vertices);
+                        drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.vertices.Length, this.indices.Length / 3, this.indices, Format.Index16, this.vertices);
 
                         grayscaleEffect.EndPass();
                     }

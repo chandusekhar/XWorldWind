@@ -1449,9 +1449,9 @@ namespace WorldWind
 							{
 								shader.BeginPass(j);
 								if (doHighResolution)
-									drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.m_meshList[i].HigherResolutionVertices.Length, this.m_indicesHighResolution.Length / 3, this.m_indicesHighResolution, true, this.m_meshList[i].HigherResolutionVertices);
+									drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.m_meshList[i].HigherResolutionVertices.Length, this.m_indicesHighResolution.Length / 3, this.m_indicesHighResolution, Format.Index16, this.m_meshList[i].HigherResolutionVertices);
 								else
-									drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.m_meshList[i].Vertices.Length, this.m_indices.Length / 3, this.m_indices, true, this.m_meshList[i].Vertices);
+									drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.TriangleList, 0, this.m_meshList[i].Vertices.Length, this.m_indices.Length / 3, this.m_indices, Format.Index16, this.m_meshList[i].Vertices);
 								shader.EndPass();
 							}
 							shader.End();
