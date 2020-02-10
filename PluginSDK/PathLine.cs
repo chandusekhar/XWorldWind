@@ -4,6 +4,7 @@ using System.IO;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
+using WorldWind.CustomVertex;
 
 namespace WorldWind
 {
@@ -247,7 +248,7 @@ namespace WorldWind
 
 
 				Vector3 newPoint = MathEngine.SphericalToCartesian(latitude, longitude, this._parentWorld.EquatorialRadius + this.verticalExaggeration * heightAboveSurface );
-                newLine[newLine.Length - 1] = new SharpDX.Direct3D9.CustomVertex.PositionColored(newPoint.X, newPoint.Y, newPoint.Z, this.lineColor);
+                newLine[newLine.Length - 1] = new PositionColored(newPoint.X, newPoint.Y, newPoint.Z, this.lineColor);
 			
 				//Need to build path if points are spread too far apart
 
@@ -265,7 +266,7 @@ namespace WorldWind
 
 
 					//Vector3 newPoint = MathEngine.SphericalToCartesian(latitude, longitude, this._parentWorld.EquatorialRadius + this.verticalExaggeration * heightAboveSurface );
-                    newLine[newLine.Length - 1] = new SharpDX.Direct3D9.CustomVertex.PositionColored(newPoint.X, newPoint.Y, newPoint.Z, this.lineColor);
+                    newLine[newLine.Length - 1] = new PositionColored(newPoint.X, newPoint.Y, newPoint.Z, this.lineColor);
 			
 					//Need to build path if points are spread too far apart
 
@@ -363,7 +364,7 @@ namespace WorldWind
 							));
 
 						drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, this.linePoints.Length - 1, this.linePoints);
-						drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
+						drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix);
 
                         //put lighting back like it was (see above fix)
                         drawArgs.device.SetRenderState(RenderState.Lighting , lighting);

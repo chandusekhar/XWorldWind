@@ -192,6 +192,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\DeviceExtensions.cs" />
     <Compile Include="GeoRSS\GeoRssDataSet.cs">
       <DependentUpon>GeoRssDataSet.xsd</DependentUpon>
     </Compile>

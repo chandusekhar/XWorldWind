@@ -1,4 +1,5 @@
 using SharpDX.Direct3D9;
+using WorldWind.CustomVertex;
 
 namespace WorldWind
 {
@@ -95,7 +96,7 @@ namespace WorldWind
 			
 		}
 
-		CustomVertex.TransformedColored[] m_Verts = new SharpDX.Direct3D9.CustomVertex.TransformedColored[0];
+		CustomVertex.TransformedColored[] m_Verts = new TransformedColored[0];
 
 		public void Render(DrawArgs drawArgs)
 		{

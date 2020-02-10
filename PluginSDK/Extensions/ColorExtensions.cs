@@ -12,5 +12,10 @@ namespace WorldWind.Extensions
         {
             return new RawColor4(pThis.R / 255.0f, pThis.G/255.0f, pThis.B/255.0f, pThis.A/255.0f);
         }
+
+        public static RawColorBGRA ToRawColorBGRA(this System.Drawing.Color pThis)
+        {
+            return new RawColorBGRA(pThis.R, pThis.G, pThis.B, pThis.A);
+        }
     }
 }

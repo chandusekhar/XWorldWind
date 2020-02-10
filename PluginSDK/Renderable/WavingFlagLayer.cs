@@ -3,6 +3,8 @@ using System.IO;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
+using WorldWind.CustomVertex;
+using WorldWind.Extensions;
 
 namespace WorldWind.Renderable
 {
@@ -22,10 +24,10 @@ namespace WorldWind.Renderable
 
         // share these across all flag objects
         static Texture HighlightTexture;
-        static CustomVertex.PositionColoredTextured[] m_highlightVertices;
-        static CustomVertex.PositionNormalTextured[] m_vertices;
+        static PositionColoredTextured[] m_highlightVertices;
+        static PositionNormalTextured[] m_vertices;
         static VertexDeclaration m_vertexDeclaration;
-        static CustomVertex.PositionColored[] m_flagPoleVertices;
+        static PositionColored[] m_flagPoleVertices;
         static short[] m_flagPoleIndices;
         static short[] m_outlineFlagPoleIndices;
         static CustomVertex.PositionColored[] m_outlineFlagPoleVertices;
@@ -426,12 +428,11 @@ namespace WorldWind.Renderable
 
             drawArgs.device.SetTransform(TransformState.World, Matrix.Scaling(World.Settings.VerticalExaggeration * this.ScaleX, 
                 World.Settings.VerticalExaggeration * this.ScaleY, World.Settings.VerticalExaggeration * this.ScaleZ);
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude));
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(this.m_latitude)));
+            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.m_longitude)));
             drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(pos - rc);
 
-            Matrix worldViewProj = drawArgs.device.SetTransform(TransformState.World * 
-                drawArgs.device.SetTransform(TransformState.View * drawArgs.device.SetTransform(TransformState.Projection;
+            //Matrix worldViewProj = drawArgs.device.GetWorldViewProjMatrix();
 
             DateTime currentTime = TimeKeeper.CurrentTimeUtc;
             Point3d sunPosition = SunCalculator.GetGeocentricPosition(currentTime);
@@ -444,20 +445,20 @@ namespace WorldWind.Renderable
             m_effect.Technique = "VertexAndPixelShader";
             m_effect.SetValue("angle", (float) this.m_angle);
             m_effect.SetValue("attentuation", this.Attentuation);
-            m_effect.SetValue("World", drawArgs.device.GetTransform(TransformState.World);
-            m_effect.SetValue("View", drawArgs.device.GetTransform(TransformState.View);
-            m_effect.SetValue("Projection", drawArgs.device.GetTransform(TransformState.Projection);
-            m_effect.SetValue("Tex0", this.m_texture);
+            m_effect.SetValue("World", drawArgs.device.GetTransform(TransformState.World));
+            m_effect.SetValue("View", drawArgs.device.GetTransform(TransformState.View));
+            m_effect.SetValue("Projection", drawArgs.device.GetTransform(TransformState.Projection));
+            m_effect.SetValue("Tex0", this.m_texture.NativePointer);
             m_effect.SetValue("lightDir", new Vector4(sunVector.X, sunVector.Y, sunVector.Z, 0));
 
             drawArgs.device.Indices = m_indexBuffer;
-            drawArgs.device.SetStreamSource(0, m_vertexBuffer, 0);
+            drawArgs.device.SetStreamSource(0, m_vertexBuffer, 0, 0);
             int numPasses = m_effect.Begin(0);
 
             for (int i = 0; i < numPasses; i++)
             {
                 m_effect.BeginPass(i);
-                drawArgs.device.DrawIndexedPrimitives(
+                drawArgs.device.DrawIndexedPrimitive(
                     PrimitiveType.TriangleList, 0, 0, m_vertices.Length, 0,
                     m_indices.Length / 3);
 
@@ -465,8 +466,8 @@ namespace WorldWind.Renderable
             }
             m_effect.End();
             drawArgs.device.Indices = null;
-            drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
-            drawArgs.device.SetTransform(TransformState.View = drawArgs.WorldCamera.ViewMatrix;
+            drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix);
+            drawArgs.device.SetTransform(TransformState.View, drawArgs.WorldCamera.ViewMatrix);
         }
 
         private void CreateFlagPole(Device device)
@@ -554,23 +555,16 @@ namespace WorldWind.Renderable
         private void device_DeviceReset(object sender, EventArgs e)
         {
             Device device = (Device)sender;
-            m_vertexBuffer = new VertexBuffer(
-                typeof(CustomVertex.PositionNormalTextured),
-                m_vertices.Length,
-                device,
-                Usage.Dynamic | Usage.WriteOnly,
-                CustomVertex.PositionNormalTextured.Format,
-                Pool.Default);
+            m_vertexBuffer = new VertexBuffer(device, m_vertices.Length * 32, Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionNormalTextured.Format, Pool.Default);
 
-            m_vertexBuffer.SetData(m_vertices, 0, LockFlags.NoOverwrite | LockFlags.Discard);
-            m_indexBuffer = new IndexBuffer(
-                typeof(short),
-                m_indices.Length,
-                device,
-                Usage.Dynamic | Usage.WriteOnly,
-                Pool.Default);
+            DataStream lVertexStream = m_vertexBuffer.Lock(0, 0, LockFlags.NoOverwrite | LockFlags.Discard);
+            lVertexStream.WriteRange(m_vertices);
+            m_vertexBuffer.Unlock();
 
-            m_indexBuffer.SetData(m_indices, 0, LockFlags.NoOverwrite | LockFlags.Discard);
+            m_indexBuffer = new IndexBuffer(device, m_indices.Length * 2, Usage.Dynamic | Usage.WriteOnly, Pool.Default, true);
+            DataStream lIndexStream = m_indexBuffer.Lock(0, 0, LockFlags.NoOverwrite | LockFlags.Discard);
+            lIndexStream.WriteRange(m_indices);
+            m_indexBuffer.Unlock();
         }
     }
 }

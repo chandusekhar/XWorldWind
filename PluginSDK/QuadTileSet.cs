@@ -7,6 +7,7 @@ using System.Xml;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
+using WorldWind.Extensions;
 using Color = System.Drawing.Color;
 using Rectangle = System.Drawing.Rectangle;
 
@@ -850,62 +851,34 @@ namespace WorldWind
 					// Temporary fix: Clear Z buffer between rendering
 					// terrain mapped layers to avoid Z buffer fighting
 					//if (lastRenderTime == DrawArgs.CurrentFrameStartTicks)
-					device.Clear(ClearFlags.ZBuffer, 0, 1.0f, 0);
+					device.Clear(ClearFlags.ZBuffer, Color.Black.ToRawColorBGRA(), 1.0f, 0);
 					device.SetRenderState(RenderState.ZEnable , true);
 					lastRenderTime = DrawArgs.CurrentFrameStartTicks;
 
-					//							  if (m_renderPriority < RenderPriority.TerrainMappedImages)
-					//									  // No Z buffering needed for "flat" layers
-					//									  device.SetRenderState(RenderState.ZEnable , false);
-
-
-					/*	  if (m_opacity < 255 && device.Capabilities.DestinationBlendCaps.SupportsBlendFactor)
-							{
-									// Blend
-									device.SetRenderState(RenderState.AlphaBlendEnable , true);
-									device.SetRenderState(RenderState.SourceBlend , m_sourceBlend);
-									device.SetRenderState(RenderState.DestinationBlend , m_destinationBlend);
-									// Set Red, Green and Blue = opacity
-									device.SetRenderState(RenderState.BlendFactorColor , (m_opacity << 16) | (m_opacity << 8) | m_opacity;
-							}
-							else if (EnableColorKeying && device.Capabilities.TextureCaps.SupportsAlpha)
-							{
-									device.SetRenderState(RenderState.AlphaBlendEnable , true);
-									device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
-									device.SetRenderState(RenderState.DestinationBlend , Blend.InvSourceAlpha);
-							}
-		*/
 					if (!World.Settings.EnableSunShading)
 					{
 						// Set the render states for rendering of quad tiles.
 						// Any quad tile rendering code that adjusts the state should restore it to below values afterwards.
 						device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
-						device.SetTextureStageState(0, TextureStageStates.ColorOperation, (int)TextureOperation.SelectArg1);
-						device.SetTextureStageState(0, TextureStageStates.ColorArgument1, (int)TextureArgument.TextureColor);
-						device.SetTextureStageState(0, TextureStageStates.AlphaArgument1, (int)TextureArgument.TextureColor);
-						device.SetTextureStageState(0, TextureStageStates.AlphaOperation, (int)TextureOperation.SelectArg1);
+						device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.SelectArg1);
+						device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
+						device.SetTextureStageState(0, TextureStage.AlphaArg1, TextureArgument.Texture);
+						device.SetTextureStageState(0, TextureStage.AlphaOperation, (int)TextureOperation.SelectArg1);
 
 						// Be prepared for multi-texturing
-						device.SetTextureStageState(1, TextureStageStates.ColorArgument2, (int)TextureArgument.Current);
-						device.SetTextureStageState(1, TextureStageStates.ColorArgument1, (int)TextureArgument.TextureColor);
-						device.SetTextureStageState(1, TextureStageStates.TextureCoordinateIndex, 0);
+						device.SetTextureStageState(1, TextureStage.ColorArg2, TextureArgument.Current);
+						device.SetTextureStageState(1, TextureStage.ColorArg1, TextureArgument.Texture);
+						device.SetTextureStageState(1, TextureStage.TexCoordIndex, 0);
 					}
 					device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
 					foreach (QuadTile qt in this.m_topmostTiles.Values)
 						qt.Render(drawArgs);
 
 					// Restore device states
-					device.SetTextureStageState(1, TextureStageStates.TextureCoordinateIndex, 1);
+					device.SetTextureStageState(1, TextureStage.TexCoordIndex, 1);
 
 					if (this.RenderPriority < RenderPriority.TerrainMappedImages)
 						device.SetRenderState(RenderState.ZEnable , true);
-					/*
-														   if (m_opacity < 255 || EnableColorKeying)
-														   {
-																   // Restore alpha blend state
-																   device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
-																   device.SetRenderState(RenderState.DestinationBlend , Blend.InvSourceAlpha);
-														   }*/
 				}
 			}
 			catch
@@ -936,7 +909,7 @@ namespace WorldWind
 
 				int i = 0;
 
-				foreach (global::GeoSpatialDownloadRequest request in this.m_activeDownloads)
+				foreach (GeoSpatialDownloadRequest request in this.m_activeDownloads)
 				{
                     
 					if (request != null && !request.IsComplete && i < 10)
@@ -1211,14 +1184,14 @@ namespace WorldWind
 		/// <summary>
 		/// Removes a request from the download queue.
 		/// </summary>
-		public virtual void RemoveFromDownloadQueue(global::GeoSpatialDownloadRequest removeRequest)
+		public virtual void RemoveFromDownloadQueue(GeoSpatialDownloadRequest removeRequest)
 		{
             Log.Write(Log.Levels.Verbose, "QTS", "RemoveFromDownloadQueue: " + removeRequest.QuadTile.ToString());
 
             lock (this.m_downloadRequests.SyncRoot)
 			{
 				string key = removeRequest.QuadTile.ToString();
-				global::GeoSpatialDownloadRequest request = (global::GeoSpatialDownloadRequest) this.m_downloadRequests[key];
+				GeoSpatialDownloadRequest request = (GeoSpatialDownloadRequest) this.m_downloadRequests[key];
 				if (request != null)
 				{
                     this.m_downloadRequests.Remove(key);

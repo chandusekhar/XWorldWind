@@ -265,7 +265,7 @@ namespace WorldWind
                 }
                 if (this.DownloadRequests != null)
                 {
-                    foreach (global::GeoSpatialDownloadRequest request in this.DownloadRequests)
+                    foreach (GeoSpatialDownloadRequest request in this.DownloadRequests)
                     {
                         this.QuadTileSet.RemoveFromDownloadQueue(request);
                         request.Dispose();
@@ -1002,7 +1002,7 @@ namespace WorldWind
                         (float) drawArgs.WorldCamera.ReferenceCenter.Y,
                         (float) drawArgs.WorldCamera.ReferenceCenter.Z);
 
-                    this.RenderDownloadRectangle(drawArgs, Color.FromArgb(255, 0, 0).ToArgb(), referenceCenter);
+                    this.RenderDownloadRectangle(drawArgs, Color.Red.ToArgb(), referenceCenter);
 
                     Vector3 cartesianPoint = MathEngine.SphericalToCartesian(this.CenterLatitude.Degrees, this.CenterLongitude.Degrees,
                         drawArgs.WorldCamera.WorldRadius + drawArgs.WorldCamera.TerrainElevation);
@@ -1049,7 +1049,7 @@ namespace WorldWind
                     (float) (this.localOrigin.X - drawArgs.WorldCamera.ReferenceCenter.X),
                     (float) (this.localOrigin.Y - drawArgs.WorldCamera.ReferenceCenter.Y),
                     (float) (this.localOrigin.Z - drawArgs.WorldCamera.ReferenceCenter.Z)
-                    );
+                    ));
 
                 for (pass = 0; pass < numpasses; pass++)
                 {
@@ -1059,7 +1059,7 @@ namespace WorldWind
                     if (!southEastChildRendered) this.Render(device, this.southEastVertices, this.southEastChild);
                 }
 
-                drawArgs.device.SetTransform(TransformState.World, DrawArgs.Camera.WorldMatrix;
+                drawArgs.device.SetTransform(TransformState.World, DrawArgs.Camera.WorldMatrix);
 
                 return true;
             }
@@ -1260,7 +1260,7 @@ namespace WorldWind
                             Point3d localFrameOrigin = northHalf + eastHalf - centerPoint - this.localOrigin;
                             Vector4 lfoW = localFrameOrigin.Vector4;
                             lfoW.W = 1;
-                            lfoW.Transform(device.GetTransform(TransformState.World);
+                            lfoW.Transform(device.GetTransform(TransformState.World));
                             effect.SetValue(param, localFrameOrigin.Vector4);
 
                             param = (EffectHandle) this.QuadTileSet.EffectParameters["LocalFrameXAxis"];
@@ -1344,10 +1344,7 @@ namespace WorldWind
                     }
 
                     grayscaleEffect.Technique = "RenderGrayscaleBrightness";
-                    grayscaleEffect.SetValue("WorldViewProj",
-                                             Matrix.Multiply(device.SetTransform(TransformState.World,
-                                                             Matrix.Multiply(device.SetTransform(TransformState.View,
-                                                                             device.SetTransform(TransformState.Projection)));
+                    grayscaleEffect.SetValue("WorldViewProj", Matrix.Multiply(device.GetTransform(TransformState.World), Matrix.Multiply(device.GetTransform(TransformState.View), device.GetTransform(TransformState.Projection))));
                     grayscaleEffect.SetValue("Tex0", this.textures[0].NativePointer);
                     grayscaleEffect.SetValue("Brightness", this.QuadTileSet.GrayscaleBrightness);
                     float opacity = (float) this.QuadTileSet.Opacity/255.0f;

@@ -837,7 +837,7 @@ namespace WorldWind
                         material.Ambient = Color.White.ToRawColor4();;
 
                         drawArgs.device.Material = material;
-                        drawArgs.device.SetRenderState(RenderState.Ambient , World.Settings.ShadingAmbientColor.ToArgb();
+                        drawArgs.device.SetRenderState(RenderState.Ambient , World.Settings.ShadingAmbientColor.ToArgb());
                         drawArgs.device.SetRenderState(RenderState.NormalizeNormals , true);
                         drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , true);
 

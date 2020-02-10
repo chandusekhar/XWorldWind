@@ -17,6 +17,20 @@ namespace WorldWind.CustomVertex
         public Int32 Color;
         public static readonly VertexFormat Format = VertexFormat.Position | VertexFormat.Diffuse;
 
+        public Vector3 Position
+        {
+            get
+            {
+                return new Vector3(this.X, this.Y, this.Z);
+            }
+            set
+            {
+                this.X = value.X;
+                this.Y = value.Y;
+                this.Z = value.Z;
+            }
+        }
+
         public PositionColored(Single x, Single y, Single z, Int32 color)
         {
             this.X = x;

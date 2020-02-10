@@ -294,27 +294,23 @@ namespace WorldWind
 
             // Put the light somewhere up in space
             
-
-            drawArgs.device.SetTransform(TransformState.World, Matrix.RotationX((float)MathEngine.DegreesToRadians(this.RotX));
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(this.RotY));
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotZ));
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.Scaling(this.Scale, this.Scale, this.Scale);
+            Matrix lWorldMatrix = drawArgs.device.GetTransform(TransformState.World);
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix,  Matrix.RotationX((float)MathEngine.DegreesToRadians(this.RotX)));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix,Matrix.RotationY((float)MathEngine.DegreesToRadians(this.RotY)));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix, Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.RotZ)));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix, Matrix.Scaling(this.Scale, this.Scale, this.Scale));
 
             // Move the mesh to desired location on earth
             if (this.IsVertExaggerable == true)
                 this.vertExaggeration = World.Settings.VerticalExaggeration;
             else
                 this.vertExaggeration = 1;
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(0, 0, (float)(drawArgs.WorldCamera.WorldRadius + ((this.currentElevation + this.Altitude) * this.vertExaggeration)));
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationY((float)MathEngine.DegreesToRadians(90 - this.Latitude));
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.Longitude));
 
-
-            drawArgs.device.SetTransform(TransformState.World *= Matrix.Translation(
-                (float)-drawArgs.WorldCamera.ReferenceCenter.X,
-                (float)-drawArgs.WorldCamera.ReferenceCenter.Y,
-                (float)-drawArgs.WorldCamera.ReferenceCenter.Z
-                );
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix,Matrix.Translation(0, 0, (float)(drawArgs.WorldCamera.WorldRadius + ((this.currentElevation + this.Altitude) * this.vertExaggeration))));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix, Matrix.RotationY((float)MathEngine.DegreesToRadians(90 - this.Latitude)));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix, Matrix.RotationZ((float)MathEngine.DegreesToRadians(this.Longitude)));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix, Matrix.Translation((float)-drawArgs.WorldCamera.ReferenceCenter.X, (float)-drawArgs.WorldCamera.ReferenceCenter.Y, (float)-drawArgs.WorldCamera.ReferenceCenter.Z));
+            drawArgs.device.SetTransform(TransformState.World, lWorldMatrix);
 
             foreach (MeshElem me in this.m_meshElems)
             {
@@ -336,10 +332,10 @@ namespace WorldWind
                 }
             }
 
-            drawArgs.device.SetTransform(TransformState.World, currentWorld;
+            drawArgs.device.SetTransform(TransformState.World, currentWorld);
             drawArgs.device.SetRenderState(RenderState.Lighting , lighting);
             drawArgs.device.SetRenderState(RenderState.CullMode , cullMode);
-            drawArgs.device.SetRenderState(RenderState.AmbientColor , ambientColor);
+            drawArgs.device.SetRenderState(RenderState.Ambient, ambientColor);
             drawArgs.device.SetRenderState(RenderState.NormalizeNormals , normalizeNormals);
         }
 
@@ -772,7 +768,7 @@ namespace WorldWind
             Vector3 v1 = new Vector3();
             v1.X = DrawArgs.LastMousePosition.X;
             v1.Y = DrawArgs.LastMousePosition.Y;
-            v1.Z = drawArgs.WorldCamera.Viewport.MinZ;
+            v1.Z = drawArgs.WorldCamera.Viewport.MinDepth;
             v1.Unproject(drawArgs.WorldCamera.Viewport,
                     drawArgs.WorldCamera.ProjectionMatrix,
                     drawArgs.WorldCamera.ViewMatrix,
@@ -781,7 +777,7 @@ namespace WorldWind
             Vector3 v2 = new Vector3();
             v2.X = DrawArgs.LastMousePosition.X;
             v2.Y = DrawArgs.LastMousePosition.Y;
-            v2.Z = drawArgs.WorldCamera.Viewport.MaxZ;
+            v2.Z = drawArgs.WorldCamera.Viewport.MaxDepth;
             v2.Unproject(drawArgs.WorldCamera.Viewport,
                     drawArgs.WorldCamera.ProjectionMatrix,
                     drawArgs.WorldCamera.ViewMatrix,

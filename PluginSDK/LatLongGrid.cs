@@ -110,7 +110,7 @@ namespace WorldWind
                     (float)-drawArgs.WorldCamera.ReferenceCenter.X,
                     (float)-drawArgs.WorldCamera.ReferenceCenter.Y,
                     (float)-drawArgs.WorldCamera.ReferenceCenter.Z
-                    );
+                    ));
 
             Vector3 referenceCenter = new Vector3(
                     (float)drawArgs.WorldCamera.ReferenceCenter.X,
@@ -118,7 +118,7 @@ namespace WorldWind
                     (float)drawArgs.WorldCamera.ReferenceCenter.Z);
 
             // Turn off light
-            if (World.Settings.EnableSunShading) drawArgs.device.SetRenderState(RenderState.Lighting , false;
+            if (World.Settings.EnableSunShading) drawArgs.device.SetRenderState(RenderState.Lighting , false);
 
             // Draw longitudes
             for (float longitude = this.MinVisibleLongitude; longitude < this.MaxVisibleLongitude; longitude += this.LongitudeInterval)
@@ -208,11 +208,11 @@ namespace WorldWind
             if (World.Settings.showTropicLines && this.IsEarth) this.RenderTropicLines(drawArgs);
 
             // Restore state
-            drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
+            drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix);
             if (!this.useZBuffer)
                 // Reset Z buffer setting
                 drawArgs.device.SetRenderState(RenderState.ZEnable , true);
-            if (World.Settings.EnableSunShading) drawArgs.device.SetRenderState(RenderState.Lighting , true;
+            if (World.Settings.EnableSunShading) drawArgs.device.SetRenderState(RenderState.Lighting , true);
         }
 
         public override void Initialize(DrawArgs drawArgs)

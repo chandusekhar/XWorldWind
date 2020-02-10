@@ -1,6 +1,8 @@
 using System;
 using SharpDX;
+using SharpDX.Direct2D1;
 using SharpDX.Direct3D9;
+using Device = SharpDX.Direct3D9.Device;
 
 
 namespace WorldWind.Renderable
@@ -339,7 +341,7 @@ namespace WorldWind.Renderable
 
                 RenderedHeight = m_currentPercent * World.Settings.VerticalExaggeration * m_height;
 
-                drawArgs.device.Transform.World = Matrix.Scaling(m_scaleX, m_scaleY, (float)-m_currentPercent * World.Settings.VerticalExaggeration * (float)m_height);
+                drawArgs.device.SetTransform(TransformState.World, Matrix.Scaling(m_scaleX, m_scaleY, (float)-m_currentPercent * World.Settings.VerticalExaggeration * (float)m_height));
 
             }
 
@@ -355,19 +357,16 @@ namespace WorldWind.Renderable
 
                 RenderedHeight = m_height * World.Settings.VerticalExaggeration;
 
-                drawArgs.device.Transform.World = Matrix.Scaling(m_scaleX, m_scaleY, (float)-m_height * World.Settings.VerticalExaggeration);
+                drawArgs.device.SetTransform(TransformState.World, Matrix.Scaling(m_scaleX, m_scaleY, (float)-m_height * World.Settings.VerticalExaggeration));
 
             }
 
-
-
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(90));
-
-            drawArgs.device.Transform.World *= Matrix.RotationY((float)-MathEngine.DegreesToRadians(m_latitude));
-
-            drawArgs.device.Transform.World *= Matrix.RotationZ((float)MathEngine.DegreesToRadians(m_longitude));
-
-            drawArgs.device.Transform.World *= translation;
+            Matrix lWorldMatrix = drawArgs.device.GetTransform(TransformState.World);
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix,  Matrix.RotationY((float)-MathEngine.DegreesToRadians(90)));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix,Matrix.RotationY((float)-MathEngine.DegreesToRadians(m_latitude)));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix, Matrix.RotationZ((float)MathEngine.DegreesToRadians(m_longitude)));
+            lWorldMatrix = Matrix.Multiply(lWorldMatrix, translation);
+            drawArgs.device.SetTransform(TransformState.World, lWorldMatrix);
 
 
 
@@ -385,7 +384,7 @@ namespace WorldWind.Renderable
 
             drawArgs.device.DrawIndexedUserPrimitives(PrimitiveType.LineList, 0, m_outlineVertices.Length, m_outlineIndices.Length / 2, m_outlineIndices, Format.Index16, m_outlineVertices);
 
-            drawArgs.device.RenderState.Lighting = lighting;
+            drawArgs.device.SetRenderState(RenderState.Lighting, lighting);
         }
 
 

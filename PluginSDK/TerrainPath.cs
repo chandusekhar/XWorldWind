@@ -366,7 +366,7 @@ namespace WorldWind
                 if (!this.isLoaded) this.Load();
 
                 if (this.linePoints != null)
-                    if ((this.lastUpdatedPosition - drawArgs.WorldCamera.Position).LengthSq() < 10 * 10) // Update if camera moved more than 10 meters
+                    if ((this.lastUpdatedPosition - drawArgs.WorldCamera.Position).LengthSquared() < 10 * 10) // Update if camera moved more than 10 meters
                         if (Math.Abs(this.verticalExaggeration - World.Settings.VerticalExaggeration) < 0.01)
                             // Already loaded and up-to-date
                             return;
@@ -483,7 +483,7 @@ namespace WorldWind
                 drawArgs.device.SetRenderState(RenderState.Lighting, this.m_enableLighting);
 
                 drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, this.linePoints.Length - 1, this.linePoints);
-                drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
+                drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix);
 
                 //put lighting back like it was (see above fix)
                 drawArgs.device.SetRenderState(RenderState.Lighting, lighting);

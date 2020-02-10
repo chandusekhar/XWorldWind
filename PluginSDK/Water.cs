@@ -228,17 +228,16 @@ namespace WorldWind
         private void setupReflectionEffect(DrawArgs drawArgs)
         {
             //Calculate the matrices
-            Matrix worldViewProj = drawArgs.device.SetTransform(TransformState.World * drawArgs.device.GetTransform(TransformState.View) * drawArgs.device.GetTransform(TransformState.Projection));
+            Matrix worldViewProj = drawArgs.device.GetWorldViewProjMatrix();
             Matrix worldIT = drawArgs.device.GetTransform(TransformState.World);
             worldIT.Invert();
-            worldIT = Matrix.TransposeMatrix(worldIT);
-            Matrix viewI = drawArgs.device.SetTransform(TransformState.View;
+            worldIT = Matrix.Transpose(worldIT);
+            Matrix viewI = drawArgs.device.GetTransform(TransformState.View);
             viewI.Invert();
-            //Point3d sunPosition = SunCalculator.GetGeocentricPosition(currentTime);
 
             //set the technique
             this.effect.Technique = "Textured";
-            //set the texturs
+            //set the textures
             this.effect.SetValue("ColorTexture", this.texture.NativePointer);
             this.effect.SetValue("CubeEnvMap", this.texCube.NativePointer);
             //set the matrices

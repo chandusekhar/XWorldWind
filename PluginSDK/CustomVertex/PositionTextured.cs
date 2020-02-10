@@ -18,6 +18,15 @@ namespace WorldWind.CustomVertex
         public Single Tv;
         public static readonly VertexFormat Format = VertexFormat.Position | VertexFormat.Texture0;
 
+        public PositionTextured(Single x, Single y, Single z, Single tu, Single tv)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+            this.Tu = tu;
+            this.Tv = tv;
+        }
+
         public PositionTextured(Vector3 position, Vector2 textureCoords)
         {
             this.X = position.X;

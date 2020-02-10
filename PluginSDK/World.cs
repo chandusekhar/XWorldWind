@@ -6,6 +6,7 @@ using Utility;
 using System.Collections.Generic;
 using SharpDX;
 using SharpDX.Direct3D9;
+using WorldWind.Extensions;
 
 namespace WorldWind
 {
@@ -274,7 +275,7 @@ namespace WorldWind
 				);
 
 			drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, 1, axis);
-			drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
+			drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix);
 
 		}
 
@@ -1419,10 +1420,10 @@ namespace WorldWind
 						shader.Technique = "Sky";
 						shader.SetValue("v3CameraPos", new Vector4(this.vCamera.X, this.vCamera.Y, this.vCamera.Z, 0));
 						shader.SetValue("v3LightPos", Vector4.Normalize(new Vector4(this.m_vLightDirection.X, this.m_vLightDirection.Y, this.m_vLightDirection.Z, 0)));
-						shader.SetValue("WorldViewProj", Matrix.Multiply(drawArgs.device.SetTransform(TransformState.World, Matrix.Multiply(drawArgs.device.SetTransform(TransformState.View, drawArgs.device.SetTransform(TransformState.Projection)));
+						shader.SetValue("WorldViewProj", drawArgs.device.GetWorldViewProjMatrix());
 						shader.SetValue("v3InvWavelength", new Vector4(1.0f / this.m_fWavelength4[0], 1.0f / this.m_fWavelength4[1], 1.0f / this.m_fWavelength4[2], 0));
 						shader.SetValue("fCameraHeight", this.vCamera.Length());
-						shader.SetValue("fCameraHeight2", this.vCamera.LengthSq());
+						shader.SetValue("fCameraHeight2", this.vCamera.LengthSquared());
 						shader.SetValue("fInnerRadius", m_fInnerRadius);
 						shader.SetValue("fInnerRadius2", m_fInnerRadius * m_fInnerRadius);
 						shader.SetValue("fOuterRadius", m_fOuterRadius);

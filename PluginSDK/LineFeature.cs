@@ -755,7 +755,7 @@ namespace WorldWind
                         (float)-drawArgs.WorldCamera.ReferenceCenter.X + this.m_localOrigin.X,
                         (float)-drawArgs.WorldCamera.ReferenceCenter.Y + this.m_localOrigin.Y,
                         (float)-drawArgs.WorldCamera.ReferenceCenter.Z + this.m_localOrigin.Z
-                        );
+                        ));
 
                     //Fix for sunshading screwing with everything
                     bool lighting = drawArgs.device.GetRenderState<bool>(RenderState.Lighting);
@@ -834,7 +834,7 @@ namespace WorldWind
                         drawArgs.device.DrawUserPrimitives(PrimitiveType.LineStrip, this.m_topVertices.Length - 1, this.m_topVertices);
                     }
 
-                    drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
+                    drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix);
                     drawArgs.device.SetRenderState(RenderState.CullMode , currentCull);
                     drawArgs.device.SetRenderState(RenderState.AlphaBlendEnable , currentAlpha);
 

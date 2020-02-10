@@ -11,7 +11,7 @@ namespace WorldWind.Terrain
 	/// <summary>
 	/// Terrain tile download request
 	/// </summary>
-	public class TerrainDownloadRequest : global::GeoSpatialDownloadRequest
+	public class TerrainDownloadRequest : GeoSpatialDownloadRequest
 	{
 		public TerrainTile TerrainTile;
 

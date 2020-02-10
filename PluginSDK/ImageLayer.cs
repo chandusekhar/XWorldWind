@@ -671,7 +671,7 @@ namespace WorldWind
 				}
 
 				drawArgs.device.SetRenderState(RenderState.ZEnable , true);
-				drawArgs.device.Clear(ClearFlags.ZBuffer, System.Drawing.Color.Black.ToArgb(), 1.0f, 0);
+				drawArgs.device.Clear(ClearFlags.ZBuffer, System.Drawing.Color.Black.ToRawColorBGRA(), 1.0f, 0);
 
                 drawArgs.device.SetTransform(TransformState.World, Matrix.Translation(
                         (float)-drawArgs.WorldCamera.ReferenceCenter.X,
@@ -722,7 +722,7 @@ namespace WorldWind
                         drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
                     }
 
-                    this.device.SetRenderState(RenderState.TextureFactor , System.Drawing.Color.FromArgb(this.m_opacity, 255, 255, 255).ToArgb();
+                    this.device.SetRenderState(RenderState.TextureFactor , System.Drawing.Color.FromArgb(this.m_opacity, 255, 255, 255).ToArgb());
                     this.device.SetTextureStageState(0, TextureStage.AlphaOperation,  TextureOperation.Modulate);
                     this.device.SetTextureStageState(0, TextureStage.AlphaArg1,TextureArgument.Texture);
                     this.device.SetTextureStageState(0, TextureStage.AlphaArg2,TextureArgument.TFactor);
@@ -761,7 +761,7 @@ namespace WorldWind
                     grayscaleEffect.End();
                 }
 
-                drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix;
+                drawArgs.device.SetTransform(TransformState.World, drawArgs.WorldCamera.WorldMatrix);
 				
 			}
 			finally
@@ -803,7 +803,7 @@ namespace WorldWind
 				(float)-drawArgs.WorldCamera.ReferenceCenter.X,
 				(float)-drawArgs.WorldCamera.ReferenceCenter.Y,
 				(float)-drawArgs.WorldCamera.ReferenceCenter.Z
-			);
+			));
 
             this.device.SetRenderState(RenderState.ZEnable , false);
 			double centerLat = 0.5 * (this.maxLat + this.minLat);
@@ -815,7 +815,7 @@ namespace WorldWind
 				MathEngine.SphericalDistanceDegrees(centerLat, centerLon, drawArgs.WorldCamera.Latitude.Degrees, drawArgs.WorldCamera.Longitude.Degrees) < 2 * drawArgs.WorldCamera.ViewRange.Degrees
 				)
 			{
-				v.Project(drawArgs.device.Viewport, drawArgs.device.SetTransform(TransformState.Projection, drawArgs.device.SetTransform(TransformState.View, drawArgs.device.SetTransform(TransformState.World);
+				v.Project(drawArgs.device.Viewport, drawArgs.device.GetTransform(TransformState.Projection), drawArgs.device.GetTransform(TransformState.View), drawArgs.device.GetTransform(TransformState.World));
 
 				MenuUtils.DrawBox((int)v.X, (int)v.Y, 200, 40, 0.0f, this.progressBarBackColor, drawArgs.device);
 				Vector2[] boxOutline = new Vector2[5];

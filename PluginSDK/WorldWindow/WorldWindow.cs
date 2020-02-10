@@ -298,6 +298,7 @@ using System.Security.Permissions;
 using SharpDX;
 using SharpDX.Direct3D9;
 using WorldWind.DataSource;
+using WorldWind.Extensions;
 using WorldWind.Net.Wms;
 using WorldWind.NewWidgets;
 using Color = System.Drawing.Color;
@@ -949,7 +950,7 @@ namespace WorldWind
                             (int)(World.Settings.SkyColor.B*percent));
                     }*/
 
-                    this.mDevice3d.Clear(ClearFlags.Target | ClearFlags.ZBuffer, backgroundColor, 1.0f, 0);
+                    this.mDevice3d.Clear(ClearFlags.Target | ClearFlags.ZBuffer, backgroundColor.ToRawColorBGRA(), 1.0f, 0);
 
                     if (this.m_World == null)
                     {
@@ -1254,7 +1255,7 @@ namespace WorldWind
             vertical[1].Y = this.Height / 2 + crossHairSize + 1;
 
             this.crossHairs.Begin();
-            this.crossHairs.Draw(horizontal, crossHairColor);
+            this.crossHairs.Draw(horizontal, crossHairColor.ToRawColor4());
             this.crossHairs.Draw(vertical, crossHairColor);
             this.crossHairs.End();
         }

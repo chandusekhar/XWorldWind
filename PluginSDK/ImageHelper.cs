@@ -3,6 +3,7 @@ using System;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using SharpDX.Direct3D9;
 using Utility;
 
 namespace WorldWind
@@ -195,7 +196,7 @@ namespace WorldWind
             image.Dispose();
             using (transparentImage)
             {
-                return new Texture(DrawArgs.Device, transparentImage, Usage.None, Pool.Managed);
+                return new Texture(DrawArgs.Device, transparentImage, dstInfo.Width, dstInfo.Width, 1, Usage.None, Format.A8R8G8B8, Pool.Managed);
             }
 		}
 

@@ -2,6 +2,7 @@ using System;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Utility;
+using WorldWind.Extensions;
 
 namespace WorldWind
 {
@@ -220,7 +221,7 @@ namespace WorldWind
 			using(Surface renderSurface = this.m_RenderTexture.GetSurfaceLevel(0))
 			{
                 this.m_ParentWorldSurfaceRenderer.RenderToSurface.BeginScene(renderSurface, view);
-					drawArgs.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, System.Drawing.Color.Black, 1.0f, 0);
+					drawArgs.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, System.Drawing.Color.Black.ToRawColorBGRA(), 1.0f, 0);
 
 					drawArgs.device.VertexFormat = CustomVertex.TransformedColoredTextured.Format;
 					drawArgs.device.SetRenderState(RenderState.ZEnable , false);
@@ -293,21 +294,21 @@ namespace WorldWind
 							drawArgs.device.SetRenderState(RenderState.SourceBlend , Blend.SourceAlpha);
 							drawArgs.device.SetRenderState(RenderState.DestinationBlend , Blend.InverseSourceAlpha);
 
-							drawArgs.device.SetSamplerState(0, SamplerState.BorderColor = System.Drawing.Color.FromArgb(0,0,0,0);
-							drawArgs.device.SamplerState[1].BorderColor = System.Drawing.Color.FromArgb(0,0,0,0);
+							drawArgs.device.SetSamplerState(0, SamplerState.BorderColor, System.Drawing.Color.FromArgb(0,0,0,0).ToRawColor4());
+							drawArgs.device.SetSamplerState(1 , SamplerState.BorderColor, System.Drawing.Color.FromArgb(0,0,0,0));
 							drawArgs.device.SetTexture(0, currentSurfaceImage.ImageTexture);
 							drawArgs.device.SetTexture(1, currentSurfaceImage.ImageTexture);
 							drawArgs.device.SetTextureStageState(1, TextureStage.TexCoordIndex , 0);
 							
-							drawArgs.device.SetSamplerState(0, SamplerState.MinFilter = TextureFilter.Linear;
-							drawArgs.device.SetSamplerState(0, SamplerState.MagFilter = TextureFilter.Linear;
-							drawArgs.device.SetSamplerState(0, SamplerState.AddressU = TextureAddress.Clamp;
-							drawArgs.device.SetSamplerState(0, SamplerState.AddressV = TextureAddress.Clamp;
-					
-							drawArgs.device.SamplerState[1].MinFilter = TextureFilter.Point;
-							drawArgs.device.SamplerState[1].MagFilter = TextureFilter.Point;
-							drawArgs.device.SamplerState[1].AddressU = TextureAddress.Border;
-							drawArgs.device.SamplerState[1].AddressV = TextureAddress.Border;
+							drawArgs.device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
+							drawArgs.device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
+							drawArgs.device.SetSamplerState(0, SamplerState.AddressU, TextureAddress.Clamp);
+							drawArgs.device.SetSamplerState(0, SamplerState.AddressV, TextureAddress.Clamp);
+
+                            drawArgs.device.SetSamplerState(1, SamplerState.MinFilter, TextureFilter.Point);
+							drawArgs.device.SetSamplerState(1, SamplerState.MagFilter, TextureFilter.Point);
+							drawArgs.device.SetSamplerState(1, SamplerState.AddressU, TextureAddress.Border);
+							drawArgs.device.SetSamplerState(1, SamplerState.AddressV, TextureAddress.Border);
 
                             drawArgs.device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.SelectArg1);
 							drawArgs.device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);

@@ -409,7 +409,7 @@ namespace WorldWind
 		{
 			string url = this.GetDownloadUrl(qt);
 			qt.QuadTileSet.AddToDownloadQueue(qt.QuadTileSet.Camera, 
-				new global::GeoSpatialDownloadRequest(qt, this, filePath, url));
+				new GeoSpatialDownloadRequest(qt, this, filePath, url));
 		}
 
         public virtual XmlNode ToXml(XmlDocument worldDoc)
